@@ -26,6 +26,7 @@ public class HelloServlet extends HttpServlet {
         out.println("</body></html>");
     }
     // tao nhanh 'dat'
+    //chuc nang user
 
     public void destroy() {
     }
