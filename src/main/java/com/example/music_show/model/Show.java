@@ -8,21 +8,23 @@ public class Show {
     private String showName;
     private Date timeStart;
     private Date timeEnd;
-    private String description;
     private String poster;
     private Location location;
+    private TicketInfor ticketInfor;
+    private String seatDiagramImage;
 
-    public Show(int id, String showName, Date timeStart, Date timeEnd, String description, String poster, Location location) {
+    public Show() {
+    }
+
+    public Show(int id, String showName, Date timeStart, Date timeEnd, String poster, Location location, TicketInfor ticketInfor, String seatDiagramImage) {
         this.id = id;
         this.showName = showName;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
-        this.description = description;
         this.poster = poster;
         this.location = location;
-    }
-
-    public Show() {
+        this.ticketInfor = ticketInfor;
+        this.seatDiagramImage = seatDiagramImage;
     }
 
     public int getId() {
@@ -57,20 +59,28 @@ public class Show {
         this.timeEnd = timeEnd;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getPoster() {
         return poster;
     }
 
     public void setPoster(String poster) {
         this.poster = poster;
+    }
+
+    public TicketInfor getTicketInfor() {
+        return ticketInfor;
+    }
+
+    public void setTicketInfor(TicketInfor ticketInfor) {
+        this.ticketInfor = ticketInfor;
+    }
+
+    public String getSeatDiagramImage() {
+        return seatDiagramImage;
+    }
+
+    public void setSeatDiagramImage(String seatDiagramImage) {
+        this.seatDiagramImage = seatDiagramImage;
     }
 
     public Location getLocation() {

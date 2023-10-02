@@ -130,7 +130,7 @@
 
         <!-- List event mucsic -->
         <article id="list">
-            <div class="card" style="">
+            <div class="card" style="width: 100%;">
                 <img src="./images/list-pic1.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title"><a href="#">Bùi Lan Hương</a></h5>

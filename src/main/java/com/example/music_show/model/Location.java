@@ -1,9 +1,12 @@
 package com.example.music_show.model;
 
+import java.util.List;
+
 public class Location {
     private int id;
     private String city;
     private String address;
+    private List<Seat> seatList;
 
     public Location() {
     }
@@ -36,5 +39,12 @@ public class Location {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+    public List<Seat> getSeatList() {
+        return seatList;
+    }
+
+    public void setSeatList(List<Seat> seatList) {
+        this.seatList = seatList;
     }
 }
