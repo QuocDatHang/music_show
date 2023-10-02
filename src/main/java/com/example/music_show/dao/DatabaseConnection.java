@@ -1,4 +1,4 @@
-package dao;
+package com.example.music_show.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,6 +1,6 @@
-package model;
+package com.example.music_show.model;
 
-import model.enumeration.ERole;
+import com.example.music_show.model.enumeration.ERole;
 
 public class User {
     private int id;

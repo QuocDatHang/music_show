@@ -1,4 +1,4 @@
-package model;
+package com.example.music_show.model;
 
 public class Singer {
     private int id;

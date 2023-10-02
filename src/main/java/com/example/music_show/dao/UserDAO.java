@@ -1,7 +1,8 @@
-package dao;
+package com.example.music_show.dao;
 
-import model.User;
-import model.enumeration.ERole;
+import com.example.music_show.dao.DatabaseConnection;
+import com.example.music_show.model.User;
+import com.example.music_show.model.enumeration.ERole;
 
 import java.sql.*;
 import java.util.ArrayList;

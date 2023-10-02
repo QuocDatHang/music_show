@@ -1,13 +1,9 @@
-package service;
+package com.example.music_show.service;
 
-import dao.UserDAO;
-import model.User;
-import utils.PasswordUtils;
+import com.example.music_show.dao.UserDAO;
+import com.example.music_show.model.User;
+import com.example.music_show.utils.PasswordUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 
 public class UserService {
