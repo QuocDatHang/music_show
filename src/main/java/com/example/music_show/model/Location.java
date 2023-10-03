@@ -17,6 +17,10 @@ public class Location {
         this.address = address;
     }
 
+    public Location(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

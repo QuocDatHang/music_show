@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Singer Management Page</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -36,16 +36,17 @@
     <div class="d-flex justify-content-between" id="link">
         <div class="top-misc-layout"></div>
         <ul>
-            <li><a href="./show">Show</a></li>
-            <li><a href="#">Địa điểm</a></li>
-            <li><a href="#">Doanh thu</a></li>
-            <li><a href="#">Ca sĩ</a></li>
-            <li><a href="#">Hóa đơn</a></li>
+            <li><a href="./show">Singer Management</a></li>
         </ul>
         <div class="top-misc-layout"></div>
     </div>
 </nav>
+<main>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <a class="btn btn-warning" href ="/show?action=showCreate">Add new singer</a>
+    </div>
 
+</main>
 
 
 <script src="./js/bootstrap.min.js"></script>

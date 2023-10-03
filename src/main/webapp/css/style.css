@@ -73,7 +73,7 @@ footer a:hover {
 header {
   background-color: var(--primary-color);
   color: var(--black-color);
-  padding: 45px 0;
+  padding: 0 0;
 }
 
 header #logo,

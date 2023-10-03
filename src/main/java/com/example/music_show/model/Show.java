@@ -1,22 +1,24 @@
 package com.example.music_show.model;
 
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class Show {
     private int id;
     private String showName;
-    private Date timeStart;
-    private Date timeEnd;
+    private LocalDateTime timeStart;
+    private LocalDateTime timeEnd;
     private String poster;
     private Location location;
     private TicketInfor ticketInfor;
     private String seatDiagramImage;
+    private List<ShowDetail> showDetailList;
 
     public Show() {
     }
 
-    public Show(int id, String showName, Date timeStart, Date timeEnd, String poster, Location location, TicketInfor ticketInfor, String seatDiagramImage) {
+    public Show(int id, String showName, LocalDateTime timeStart, LocalDateTime timeEnd, String poster, Location location, TicketInfor ticketInfor, String seatDiagramImage) {
         this.id = id;
         this.showName = showName;
         this.timeStart = timeStart;
@@ -43,19 +45,19 @@ public class Show {
         this.showName = showName;
     }
 
-    public Date getTimeStart() {
+    public LocalDateTime getTimeStart() {
         return timeStart;
     }
 
-    public void setTimeStart(Date timeStart) {
+    public void setTimeStart(LocalDateTime timeStart) {
         this.timeStart = timeStart;
     }
 
-    public Date getTimeEnd() {
+    public LocalDateTime getTimeEnd() {
         return timeEnd;
     }
 
-    public void setTimeEnd(Date timeEnd) {
+    public void setTimeEnd(LocalDateTime timeEnd) {
         this.timeEnd = timeEnd;
     }
 
