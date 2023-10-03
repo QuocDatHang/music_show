@@ -47,6 +47,9 @@
 </nav>
 
 <main>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button type="button" class="btn btn-warning">Create new show</button>
+    </div>
     <!-- List event mucsic -->
     <article id="list">
         <div class="card" style="width: 100%;">
@@ -152,7 +155,6 @@
             </div>
         </div>
     </article>
-    </section>
 
     <footer id="footer">
         <div class="d-flex justify-content-center align-items-center footer-logo" id="footer-logo">
