@@ -40,13 +40,20 @@
     <div class="d-flex justify-content-between" id="link">
         <div class="top-misc-layout"></div>
         <ul>
-            <li><a href="#">Create Show</a></li>
+            <li><a href="./show">Show</a></li>
+            <li><a href="#">Địa điểm</a></li>
+            <li><a href="#">Doanh thu</a></li>
+            <li><a href="#">Ca sĩ</a></li>
+            <li><a href="#">Hóa đơn</a></li>
         </ul>
         <div class="top-misc-layout"></div>
     </div>
 </nav>
 
 <main>
+    <div style="text-align: center; font-size: large; font-weight: bold; padding-top:10px;">
+        Tạo Show
+    </div>
     <div class="container">
         <form action="/show?action=create" method="post" enctype="multipart/form-data">
             <div class="mb-3" style="padding-top:10px;">

@@ -23,14 +23,19 @@ public class ShowController extends HttpServlet {
         if (action == null){
             action = "";
         }
-        switch (action){
+        switch (action) {
             case "showCreate" -> showCreate(req, resp);
-            default -> showList(req,resp);
+            case "showEdit" -> showEdit(req, resp);
+            default -> showList(req, resp);
         }
     }
 
+    private void showEdit(HttpServletRequest req, HttpServletResponse resp) {
+
+    }
+
     private void showList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("./show/showManagement.jsp").forward(req, resp);
+        req.getRequestDispatcher("./show/show.jsp").forward(req, resp);
     }
 
     public void showCreate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

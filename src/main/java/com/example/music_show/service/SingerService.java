@@ -10,4 +10,10 @@ public class SingerService {
     public List<Singer> getAllSinger(){
         return singerDAO.findAll();
     }
+    public void create(String singerName){
+        singerDAO.create(singerName);
+    }
+    public void delete(int id){
+        singerDAO.delete(id);
+    }
 }

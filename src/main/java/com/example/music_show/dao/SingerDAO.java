@@ -25,10 +25,32 @@ public class SingerDAO extends DatabaseConnection {
         }
         return content;
     }
-    private Singer getSingerByResultSet(ResultSet rs) throws SQLException {
+    public Singer getSingerByResultSet(ResultSet rs) throws SQLException {
         var singer = new Singer();
         singer.setId(rs.getInt("id"));
         singer.setName(rs.getString("name"));
         return singer;
+    }
+    public void create(String singerName){
+        var CREATE_SINGER = "INSERT INTO `singers` (`name`) VALUES (?)";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_SINGER)) {
+            preparedStatement.setString(1, singerName);
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void delete(int id){
+        var DELETE_SINGER = "DELETE FROM `singers` WHERE (`id` = ?)";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SINGER)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

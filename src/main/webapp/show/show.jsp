@@ -36,14 +36,18 @@
     <div class="d-flex justify-content-between" id="link">
         <div class="top-misc-layout"></div>
         <ul>
-            <li><a href="#">Show Management</a></li>
+            <li><a href="./show">Show</a></li>
+            <li><a href="#">Địa điểm</a></li>
+            <li><a href="#">Doanh thu</a></li>
+            <li><a href="#">Ca sĩ</a></li>
+            <li><a href="#">Hóa đơn</a></li>
         </ul>
         <div class="top-misc-layout"></div>
     </div>
 </nav>
 
 <main>
-    <div class="d-grid gap-2 col-6 mx-auto">
+    <div class="d-grid gap-2 col-2 mx-auto">
         <a class="btn btn-warning" href ="/show?action=showCreate">Create new show</a>
     </div>
     <!-- List event mucsic -->
