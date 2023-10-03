@@ -10,8 +10,8 @@ public class BillService {
         billDAO = new BillDAO();
     }
 
-    public Page<Bill> getAllBill(int page, boolean isShowRestore, String search){
-        return BillDAO.findAll(page, isShowRestore,search);
-    }
+//    public Page<Bill> getAllBill(int page, boolean isShowRestore, String search){
+//        return BillDAO.findAll(page, isShowRestore,search);
+//    }
 
 }

@@ -1,5 +1,7 @@
 package com.example.music_show.filter;
 
+import com.example.music_show.model.User;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +19,7 @@ public class AdminFilter implements Filter {
             ((HttpServletResponse) servletResponse).sendRedirect("/auth");
             return;
         }
-        if (!user.getRole().getName().equals("ADMIN")) {
+        if (!user.getRole().equals("Admin")) {
             ((HttpServletResponse) servletResponse).sendRedirect("/auth");
             return;
         }
