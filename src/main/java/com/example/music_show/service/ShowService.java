@@ -1,5 +1,6 @@
 package com.example.music_show.service;
 
+import com.example.music_show.dao.ShowDAO;
 import com.example.music_show.model.Show;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.http.Part;
 import java.io.*;
 
 public class ShowService {
+    private ShowDAO showDAO = new ShowDAO();
     public void getAllShow(){
 
     }
@@ -35,5 +37,7 @@ public class ShowService {
 
     }
 
-
+    public Show findById(int id){
+        return showDAO.findById(id);
+    }
 }

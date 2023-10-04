@@ -60,6 +60,11 @@
         </c:if>
         <div class="d-grid gap-2 col-2 mx-auto">
             <a class="btn btn-warning" href="/singer?action=showCreate">Thêm Ca Sĩ Mới</a>
+            <form action="/singer?page=${pageSinger.currentPage}">
+                <input type="text" id="searchSinger" value="${searchSinger}" name="searchSinger" class="form-control d-flex"
+                       style="width: 85%" placeholder="Tìm tên ca sĩ">
+                <button id="searchButton" class="btn btn-primary">Search</button>
+            </form>
         </div>
 
         <table class="table table-striped">
@@ -74,7 +79,7 @@
                     Chọn
                 </td>
             </tr>
-            <c:forEach var="singer" items="${singers}">
+            <c:forEach var="singer" items="${pageSinger.content}">
                 <tr>
                     <td>
                             ${singer.id}
@@ -95,6 +100,31 @@
                 </tr>
             </c:forEach>
         </table>
+
+        <nav aria-label="...">
+            <c:set var="url" value="/singer?page="/>
+            <ul class="pagination" style="background: white;" >
+                <li class="page-item <c:if test="${pageSinger.currentPage == 1}" >disabled</c:if>" style="line-height: 12px; margin: 0;">
+                    <a class="page-link" href="${url}${(pageSinger.currentPage - 1)}" tabindex="-1"
+                       aria-disabled="true">Previous</a>
+                </li>
+                <c:forEach var="number" begin="1" end="${pageSinger.totalPage}">
+                    <c:if test="${number == pageSinger.currentPage}">
+                        <li class="page-item active" aria-current="page" style="line-height: 12px; margin: 0;">
+                            <a class="page-link" href="${url}${number}">${number}</a>
+                        </li>
+                    </c:if>
+                    <c:if test="${number != pageSinger.currentPage}">
+                        <li class="page-item" style="line-height: 12px; margin: 0;">
+                            <a class="page-link" href="${url}${number}">${number}</a>
+                        </li>
+                    </c:if>
+                </c:forEach>
+                <li class="page-item <c:if test="${pageSinger.currentPage == pageSinger.totalPage}">disabled</c:if>" style="line-height: 12px; margin: 0;">
+                    <a class="page-link" href="${url}${(pageSinger.currentPage + 1)}">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
     <footer id="footer">

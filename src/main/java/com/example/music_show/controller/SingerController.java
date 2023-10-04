@@ -42,9 +42,14 @@ public class SingerController extends HttpServlet {
     }
 
     private void showList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("singers", singerService.getAllSinger());
+        String pageString = req.getParameter("page");
+        if (pageString == null) {
+            pageString = "1";
+        }
+        req.setAttribute("pageSinger", singerService.getAllSinger(Integer.parseInt(pageString), req.getParameter("searchSinger")));
+        req.setAttribute("searchSinger", req.getParameter("searchSinger"));
         req.setAttribute("message", req.getParameter("message"));
-        req.getRequestDispatcher("./singer/singer.jsp").forward(req, resp);
+        req.getRequestDispatcher("singer/singer.jsp").forward(req, resp);
     }
 
     @Override

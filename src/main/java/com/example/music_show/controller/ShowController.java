@@ -2,6 +2,8 @@ package com.example.music_show.controller;
 
 import com.example.music_show.service.LocationService;
 import com.example.music_show.service.ShowService;
+import com.example.music_show.service.SingerService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -17,6 +19,7 @@ import java.io.*;
 public class ShowController extends HttpServlet {
     private LocationService locationService;
     private ShowService showService;
+    private SingerService singerService;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
@@ -43,6 +46,9 @@ public class ShowController extends HttpServlet {
         if(pageString == null){
             pageString="1";
         }
+        var singers = singerService.getAllSinger(Integer.parseInt(pageString), req.getParameter("searchSinger"));
+        req.setAttribute("singersJSON", new ObjectMapper().writeValueAsString(singers));
+        req.setAttribute("pageSinger", singers);
         req.setAttribute("pageLocation", locationService.getAllLocation(Integer.parseInt(pageString),req.getParameter("search")));
         req.getRequestDispatcher("./show/create.jsp").forward(req, resp);
     }
@@ -65,5 +71,6 @@ public class ShowController extends HttpServlet {
     public void init() throws ServletException {
         locationService = new LocationService();
         showService = new ShowService();
+        singerService = new SingerService();
     }
 }

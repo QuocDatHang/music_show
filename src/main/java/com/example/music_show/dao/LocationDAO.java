@@ -1,19 +1,22 @@
 package com.example.music_show.dao;
-
 import com.example.music_show.model.Location;
 import com.example.music_show.model.Seat;
 import com.example.music_show.model.enumeration.EStatus;
 import com.example.music_show.model.enumeration.EType;
+import com.example.music_show.service.LocationService;
 import com.example.music_show.service.dto.Page;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 public class LocationDAO extends DatabaseConnection{
+    //    private LocationService locationService;
+//    private LocationDAO locationDAO = new LocationDAO();
+//    public LocationDAO(){
+//        locationService = new LocationService();
+//    }
     public Page<Location> getAllLocation(int page, String search){
         Page<Location> result = new Page<>();
         final int TOTAL_ELEMENT = 10;
@@ -23,7 +26,6 @@ public class LocationDAO extends DatabaseConnection{
             search="";
         }
         search="%" + search.toLowerCase() +"%";
-
         String SELECT_ALL = "select l.* from locations l where (LOWER(l.city) LIKE ?) " +
                 "limit 10 offset ?";
         String COUNT_ALL = "select count(*) cnt FROM locations l where (LOWER(l.city) LIKE ?)";
@@ -46,8 +48,7 @@ public class LocationDAO extends DatabaseConnection{
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }
-        return result;
+        }return result;
     }
     private Location getLocationByResultSet(ResultSet rs) throws SQLException {
         Location location = new Location();
@@ -77,5 +78,88 @@ public class LocationDAO extends DatabaseConnection{
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }return seatList;
+    }
+    public Location findById(int id){
+        String SELECT_BY_ID = "SELECT * FROM locations where id=?";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return getLocationByResultSet(rs);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    public int create(Location location){
+        String CREATE= "INSERT INTO `music_show_db`.`locations` ( `city`, `address`) VALUES ( ?, ?)";
+        String MAX_ID = "SELECT MAX(ID) as max_id FROM locations";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE)) {
+            preparedStatement.setString(1, location.getCity());
+            preparedStatement.setString(2, location.getAddress());
+            preparedStatement.executeUpdate();
+            PreparedStatement statementId = connection.prepareStatement(MAX_ID);
+            ResultSet rs = statementId.executeQuery();
+            if(rs.next()){
+                return rs.getInt("max_id");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());;
+        }
+        return -1;
+    }
+    public void createSeat(String position, EStatus status, EType type, int locationID){
+        String CREATE_SEAT= "INSERT INTO `music_show_db`.`seats` (`position`, `status`, `type`, `location_id`) VALUES ( ?, ?, ?, ?)";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_SEAT)) {
+            preparedStatement.setString(1, position);
+            preparedStatement.setString(2, String.valueOf(EStatus.valueOf(String.valueOf(status))));
+            preparedStatement.setString(3, String.valueOf(EType.valueOf(String.valueOf(type))));
+            preparedStatement.setInt(4, locationID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());;
+        }
+    }
+    public void deleteSeat(int locationId){
+        String DELETE_SEAT = "DELETE FROM `music_show_db`.`seats` WHERE (`location_id` = ?)";
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement= connection.prepareStatement(DELETE_SEAT)){
+            preparedStatement.setInt(1,locationId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void updateLocation(Location location){
+        String UPDATE_LOCATION= "UPDATE `music_show_db`.`locations` SET `city` = ?, `address` = ? WHERE (`id` = ?)";
+        try(Connection connection= getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LOCATION)) {
+            preparedStatement.setString(1, location.getCity());
+            preparedStatement.setString(2, location.getAddress());
+            preparedStatement.setInt(3, location.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void deleteLocation(int id){
+        String DELETE_SEAT = "DELETE FROM `music_show_db`.`seats` WHERE (`location_id` = ?)";
+        String DELETE_LOCATION = "DELETE FROM `music_show_db`.`locations` WHERE (`id` = ?)";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SEAT);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+            PreparedStatement preparedStatement1 = connection.prepareStatement(DELETE_LOCATION);
+            preparedStatement1.setInt(1, id);
+            preparedStatement1.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

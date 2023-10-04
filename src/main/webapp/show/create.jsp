@@ -19,8 +19,13 @@
     <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://kit.fontawesome.com/4f6aa91745.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.9/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.9/jquery.datetimepicker.css"
+          integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <%--    multi-select-tag--%>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
 </head>
 
 <body>
@@ -43,7 +48,7 @@
             <li><a href="./show">Show</a></li>
             <li><a href="#">Địa điểm</a></li>
             <li><a href="#">Doanh thu</a></li>
-            <li><a href="#">Ca sĩ</a></li>
+            <li><a href="./singer">Ca sĩ</a></li>
             <li><a href="#">Hóa đơn</a></li>
         </ul>
         <div class="top-misc-layout"></div>
@@ -57,28 +62,39 @@
     <div class="container">
         <form action="/show?action=create" method="post" enctype="multipart/form-data">
             <div class="mb-3" style="padding-top:10px;">
-                <label for="showName" class="form-label">Show name:</label>
+                <label for="showName" class="form-label">Tên show</label>
                 <input type="text" class="form-control" id="showName" name="showName" required>
             </div>
             <div class="mb-3">
-                <label for="timeStart" class="form-label">Time Start</label>
+                <label for="timeStart" class="form-label">Thời gian bắt đầu</label>
                 <input type="text" class="form-control" id="timeStart" name="timeStart" required>
             </div>
             <div class="mb-3">
-                <label for="timeEnd" class="form-label">Time End</label>
+                <label for="timeEnd" class="form-label">Thời gian kết thúc</label>
                 <input type="text" class="form-control" id="timeEnd" name="timeEnd" required>
             </div>
-            <div class="col-4" style="padding-bottom: 10px;" >
-                <label for="location" class="form-label">Location</label>
+            <div class="col-4" style="padding-bottom: 10px;">
+                <label for="location" class="form-label">Địa điểm</label>
                 <select class="form-control" name="location" id="location">
-                    <option value="">-------------------Please choose--------------------</option>
+                    <option value="">----------------------------Chọn địa điểm-----------------------------</option>
                     <c:forEach var="location" items="${pageLocation.content}">
                         <option value="${location.id}">${location.address}</option>
                     </c:forEach>
                 </select>
             </div>
 
-            <label class="form-label">Ticket information</label>
+            <label for="singer" class="col-4">Ca Sĩ</label>
+            <div class="row mb-3" id="singer-1">
+                <div class="col-6 mb-3">
+                    <select class="form-control" name="singer" id="singer" multiple>
+                        <c:forEach var="singer" items="${pageSinger.content}">
+                            <option value="${singer.id}">${singer.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+
+            <label class="form-label">Thông tin vé</label>
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -89,28 +105,31 @@
                 <tbody>
                 <tr>
                     <td style="text-align: center; vertical-align: middle;">PREMIUM</td>
-                    <td class="input-group"><input type="number" class="form-control" value="premium"><span class="input-group-text">VND</span></td>
+                    <td class="input-group"><input type="number" class="form-control" value="premium"><span
+                            class="input-group-text">VND</span></td>
                 </tr>
                 <tr>
                     <td style="text-align: center;vertical-align: middle;">VIP</td>
-                    <td class="input-group"><input type="number" class="form-control" value="vip"><span class="input-group-text">VND</span></td>
+                    <td class="input-group"><input type="number" class="form-control" value="vip"><span
+                            class="input-group-text">VND</span></td>
                 </tr>
                 <tr>
                     <td style="text-align: center;vertical-align: middle;">Standard</td>
-                    <td class="input-group"><input type="number" class="form-control" value="standard"><span class="input-group-text">VND</span></td>
+                    <td class="input-group"><input type="number" class="form-control" value="standard"><span
+                            class="input-group-text">VND</span></td>
                 </tr>
                 </tbody>
             </table>
             <div class="mb-3">
-                <label for="poster" class="form-label" style="padding-right: 10px;">Poster</label>
+                <label for="poster" class="form-label" style="padding-right: 10px;">Ảnh bìa</label>
                 <input type="file" name="poster" id="poster" accept="image/*">
             </div>
             <div class="mb-3">
-                <label for="seatDiagramImage" class="form-label" style="padding-right: 10px;">Seat Diagram Image</label>
+                <label for="seatDiagramImage" class="form-label" style="padding-right: 10px;">Sơ đồ chỗ ngồi</label>
                 <input type="file" name="seatDiagramImage" id="seatDiagramImage" accept="image/*">
             </div>
-            <button type="submit" class="btn btn-primary mb-2">Create Show</button>
-            <a href="/show" class="btn btn-success mb-2">Cancel</a>
+            <button type="submit" class="btn btn-primary mb-2">Tạo show</button>
+            <a href="/show" class="btn btn-success mb-2">Hủy</a>
         </form>
     </div>
 
@@ -139,6 +158,37 @@
     </footer>
 
 </main>
+
+<script>
+    const singerId = document.getElementById('singer');
+    const showDetail = document.getElementById('show-detail');
+    const singers = ${singersJSON};
+    let rowSingerImport = 1;
+
+    function addMore() {
+        let selectStr = '<select class="form-control" name="singer" id="singer">' +
+            '<option value="">-------------------------------Chọn ca sĩ--------------------------------</option>';
+        for (const singer of singers) {
+            selectStr += `<option value=\${singer.id}>\${singer.name}</option>`;
+        }
+
+        selectStr += '</select>';
+        const strRow = `<div class="row mb-3" id="singer-\${++rowSingerImport}">
+            <div class="col-4">
+                \${selectStr}
+            </div>
+            <div class="col-2 d-flex justify-content-end">
+                <button class="btn btn-danger" onclick="deleteRow(\${rowSingerImport})">Delete</button>
+            </div>
+        </div>`
+        document.querySelector('#show-detail').innerHTML += strRow;
+    }
+
+    function deleteRow(number) {
+        const row = document.getElementById('singer-' + number);
+        showDetail.removeChild(row);
+    }
+</script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/bootstrap.bundle.min.js"></script>
 <script src="../js/script.js"></script>
@@ -153,6 +203,12 @@
     $('#timeEnd').datetimepicker({
         // options here
     });
+</script>
+
+<%--multi-select-tag--%>
+<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
+<script>
+    new MultiSelectTag('singer')  // id
 </script>
 </body>
 
