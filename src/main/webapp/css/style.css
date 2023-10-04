@@ -225,6 +225,9 @@ nav ul li a:hover {
   text-decoration: none;
   color: var(--secondary-color);
 }
+.input-group .form-control {
+  text-align: right;
+}
 
 #footer {
   background-color: var(--black-color);

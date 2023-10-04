@@ -83,8 +83,8 @@
                 </select>
             </div>
 
-            <label for="singer" class="col-4">Ca Sĩ</label>
-            <div class="row mb-3" id="singer-1">
+            <label for="singer" class="col-4 mb-2">Ca Sĩ</label>
+            <div class="row" id="singer-1">
                 <div class="col-6 mb-3">
                     <select class="form-control" name="singer" id="singer" multiple>
                         <c:forEach var="singer" items="${pageSinger.content}">
@@ -95,7 +95,7 @@
             </div>
 
             <label class="form-label">Thông tin vé</label>
-            <table class="table table-bordered">
+            <table class="table table-bordered" style="width:50%">
                 <thead>
                 <tr>
                     <td style="text-align: center;">Loại vé</td>
