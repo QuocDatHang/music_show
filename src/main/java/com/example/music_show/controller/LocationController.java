@@ -1,5 +1,6 @@
 package com.example.music_show.controller;
 
+import com.example.music_show.dao.LocationDAO;
 import com.example.music_show.model.Seat;
 import com.example.music_show.model.enumeration.EStatus;
 import com.example.music_show.model.enumeration.EType;
@@ -19,11 +20,13 @@ import java.util.List;
 public class LocationController extends HttpServlet {
     private LocationService locationService;
     private SeatService seatService;
+    private LocationDAO locationDAO;
 
     @Override
     public void init() throws ServletException {
         locationService = new LocationService();
         seatService = new SeatService();
+        locationDAO = new LocationDAO();
     }
 
     @Override
@@ -36,16 +39,44 @@ public class LocationController extends HttpServlet {
             case "create":
                 showCreate(req,resp);
                 break;
+            case "edit":
+                showEdit(req,resp);
+                break;
+            case "delete":
+                delete(req,resp);
+                break;
+            case "showSeat":
+                showSeat(req,resp);
+                break;
             default:
                 showLocation(req,resp);
         }
+    }
+
+    private void showSeat(HttpServletRequest req, HttpServletResponse resp) {
+        req.setAttribute("show", locationService.findBySeat(Integer.parseInt(req.getParameter("id"))));
+
+    }
+
+    private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        locationService.deleteLocation(id);
+        resp.sendRedirect("/location?message=Deleted Successfully");
+    }
+    private void showEdit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        req.setAttribute("location", locationService.findById(id));
+        req.setAttribute("type", EType.values());
+        List<Seat> seats = locationDAO.getSeatList(id);
+        req.setAttribute("seats", seats);
+        req.getRequestDispatcher("location/edit.jsp").forward(req, resp);
     }
 
     private void showCreate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Seat> seats = seatService.findAll();
         req.setAttribute("status", EStatus.values());
         req.setAttribute("type", EType.values());
-        req.setAttribute("SeatsJSON", new ObjectMapper().writeValueAsString(seats));
+//        req.setAttribute("SeatsJSON", new ObjectMapper().writeValueAsString(seats));
         req.getRequestDispatcher("location/create.jsp").forward(req,resp);
     }
 
@@ -70,13 +101,17 @@ public class LocationController extends HttpServlet {
             case "create":
                 create(req,resp);
                 break;
-//            case "showProduct":
-//                showProduct1(req,resp);
-//                break;
+            case "edit":
+                update(req,resp);
+                break;
 //            default:
 //                showList(req,resp);
         }
 
+    }
+    private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        locationService.update(req);
+        resp.sendRedirect("/location?message=Edited Successfully");
     }
     private void create(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         locationService.create(req);

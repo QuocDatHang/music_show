@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/4f6aa91745.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/styles.css" />
 </head>
 
 <body>
@@ -95,6 +96,97 @@
                 </div>
             </div>
         </article>
+        <div class="progress-bar" role="progressbar" style="width: 100%; height: 50px; background: #22326c; color: white" aria-valuenow="100"
+             aria-valuemin="0"  aria-valuemax="100">SƠ ĐỒ CHÕ NGỒI
+        </div>
+        <div class="movie-container">
+            <%--    <label> Select a movie:</label>--%>
+            <div id="movie">
+                <%--        <option value="220">Godzilla vs Kong (RS.220)</option>--%>
+                <%--        <option value="320">Radhe (RS.320)</option>--%>
+                <%--        <option value="250">RRR (RS.250)</option>--%>
+                <%--        <option value="260">F9 (RS.260)</option>--%>
+            </div>
+        </div>
+        <div class="diagram">
+            <div class="square-container">
+                <div class="container">
+                    <div class="screen"></div>
+                 
+                    <div class="row">
+                        <div class="seat">A01</div>
+                        <div class="seat">A02</div>
+                        <div class="seat">A03</div>
+                        <div class="seat">A04</div>
+                        <div class="seat">A05</div>
+                        <div class="seat">A06</div>
+                        <div class="seat">A07</div>
+                        <div class="seat">A08</div>
+                    </div>
+                    <div class="row">
+                        <div class="seat">B01</div>
+                        <div class="seat">B02</div>
+                        <div class="seat">B03</div>
+                        <div class="seat occupied">B04</div>
+                        <div class="seat occupied">B05</div>
+                        <div class="seat">B06</div>
+                        <div class="seat">B07</div>
+                        <div class="seat">B08</div>
+                    </div>
+                    <div class="row">
+                        <div class="seat">C01</div>
+                        <div class="seat">C02</div>
+                        <div class="seat">C03</div>
+                        <div class="seat">C04</div>
+                        <div class="seat">C05</div>
+                        <div class="seat">C06</div>
+                        <div class="seat occupied">C07</div>
+                        <div class="seat occupied">C08</div>
+                    </div>
+                    <div class="row">
+                        <div class="seat">D01</div>
+                        <div class="seat">D02</div>
+                        <div class="seat">D03</div>
+                        <div class="seat">D04</div>
+                        <div class="seat">D05</div>
+                        <div class="seat">D06</div>
+                        <div class="seat">D07</div>
+                        <div class="seat">D08</div>
+                    </div>
+                    <div class="row">
+                        <div class="seat">E01</div>
+                        <div class="seat">E02</div>
+                        <div class="seat">E03</div>
+                        <div class="seat occupied">E04</div>
+                        <div class="seat occupied">E05</div>
+                        <div class="seat">E06</div>
+                        <div class="seat">E07</div>
+                        <div class="seat">E08</div>
+                    </div>
+                    <div class="row">
+                        <div class="seat">F01</div>
+                        <div class="seat">F02</div>
+                        <div class="seat">F03</div>
+                        <div class="seat">F04</div>
+                        <div class="seat occupied">F05</div>
+                        <div class="seat occupied">F06</div>
+                        <div class="seat occupied">F07</div>
+                        <div class="seat">F08</div>
+                    </div>
+                </div>
+                <div>
+
+                </div>
+            </div>
+            <div class="right-container">
+                <div> Các ghế đặt
+                </div>
+                <div>
+                    <input type="Textarea" style="width: 500px; height: 450px">
+                </div>
+
+            </div>
+        </div>
 
         <article>
 
@@ -132,10 +224,31 @@
         </div>
     </footer>
 </main>
-
+<script src="./js/scripts.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/bootstrap.bundle.min.js"></script>
 <script src="./js/script.js"></script>
+<script>
+    function addSeat() {
+        let seatQuantity = document.getElementById('quantity').value;
+        let seatList = '';
+        for (let i = 1; i <= seatQuantity; i++) {
+            seatList += `
+           <div class="row">
+                        <div class="seat">F01</div>
+                        <div class="seat">F02</div>
+                        <div class="seat">F03</div>
+                        <div class="seat">F04</div>
+                        <div class="seat occupied">F05</div>
+                        <div class="seat occupied">F06</div>
+                        <div class="seat occupied">F07</div>
+                        <div class="seat">F08</div>
+                    </div>
+        `
+        }
+        document.getElementById('product-import-detail').innerHTML = seatList;
+    }
+</script>
 </body>
 
 </html>

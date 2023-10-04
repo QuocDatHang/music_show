@@ -22,22 +22,14 @@ public class LocationService {
 //    public int amountSeat(int id){
 //        return locationDAO.getSeatList(id);
 //    }
-//    public Location findById(int id){
-//        return locationDAO.findById(id);
-//    }
+    public Location findById(int id){
+        return locationDAO.findById(id);
+    }
+    public Location findBySeat(int id){
+        return locationDAO.findByIdSeat(id);
+    }
 public void create(HttpServletRequest req) {
-//    String city = req.getParameter("city");
-//    String address = req.getParameter("address");
-//    String position = req.getParameter("position");
-//
-//    EStatus status = EStatus.AVAILABLE;
-//    EType type = EType.valueOf(Arrays.toString(req.getParameterValues("type")));
-//
-//
-//    Location location = new Location(0, city,address);
-//    location.setId(locationDAO.create(location));
-//
-//    locationDAO.createSeat(position, status, type, location.getId());
+
     String city = req.getParameter("city");
     String address = req.getParameter("address");
     String[] typeValues = req.getParameterValues("type");
@@ -58,4 +50,30 @@ public void create(HttpServletRequest req) {
     }
 
 }
+    public void update(HttpServletRequest req) {
+        int locationId= Integer.parseInt(req.getParameter("id"));
+        locationDAO.deleteSeat(locationId);
+        String city = req.getParameter("city");
+        String address = req.getParameter("address");
+        String[] typeValues = req.getParameterValues("type");
+        String position = req.getParameter("position");
+
+        EStatus status = EStatus.AVAILABLE;
+        EType[] types = new EType[typeValues.length];
+
+        for (int i = 0; i < typeValues.length; i++) {
+            types[i] = EType.valueOf(typeValues[i]); // Chuyển đổi từ chuỗi sang enum
+        }
+
+        Location location = new Location(locationId, city, address);
+        locationDAO.updateLocation(location);
+
+        for (EType type : types) {
+            locationDAO.createSeat(position, status, type, location.getId());
+        }
+
+    }
+    public void deleteLocation(int id){
+        locationDAO.deleteLocation(id);
+    }
 }

@@ -55,6 +55,24 @@ public class LocationDAO extends DatabaseConnection{
             System.out.println(e.getMessage());
         }return result;
     }
+    public Location findByIdSeat(int id){
+        String SELECT_BY_ID = "SELECT * FROM locations where location_id=?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                Location location = getLocationByResultSet(rs);
+                location.setSeatList(getSeatList(location.getId()));
+                return location;
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
     private Location getLocationByResultSet(ResultSet rs) throws SQLException {
         Location location = new Location();
         location.setId(rs.getInt("id"));
@@ -84,21 +102,21 @@ public class LocationDAO extends DatabaseConnection{
             System.out.println(e.getMessage());
         }return seatList;
     }
-//    public Location findById(int id){
-//        String SELECT_BY_ID = "SELECT * FROM locations where id=?";
-//        try (Connection connection = getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
-//            preparedStatement.setInt(1, id);
-//            System.out.println(preparedStatement);
-//            ResultSet rs = preparedStatement.executeQuery();
-//            if (rs.next()) {
-//                return getLocationByResultSet(rs);
-//            }
-//        }catch (Exception e){
-//            System.out.println(e.getMessage());
-//        }
-//        return null;
-//    }
+    public Location findById(int id){
+        String SELECT_BY_ID = "SELECT * FROM locations where id=?";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return getLocationByResultSet(rs);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
     public int create(Location location){
         String CREATE= "INSERT INTO `music_show_db`.`locations` ( `city`, `address`) VALUES ( ?, ?)";
@@ -132,4 +150,42 @@ public class LocationDAO extends DatabaseConnection{
          System.out.println(e.getMessage());;
      }
  }
+ public void deleteSeat(int locationId){
+        String DELETE_SEAT = "DELETE FROM `music_show_db`.`seats` WHERE (`location_id` = ?)";
+        try(Connection connection = getConnection();
+        PreparedStatement preparedStatement= connection.prepareStatement(DELETE_SEAT)){
+            preparedStatement.setInt(1,locationId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+ }
+ public void updateLocation(Location location){
+        String UPDATE_LOCATION= "UPDATE `music_show_db`.`locations` SET `city` = ?, `address` = ? WHERE (`id` = ?)";
+        try(Connection connection= getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LOCATION)) {
+            preparedStatement.setString(1, location.getCity());
+            preparedStatement.setString(2, location.getAddress());
+            preparedStatement.setInt(3, location.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+ }
+    public void deleteLocation(int id){
+        String DELETE_SEAT = "DELETE FROM `music_show_db`.`seats` WHERE (`location_id` = ?)";
+        String DELETE_LOCATION = "DELETE FROM `music_show_db`.`locations` WHERE (`id` = ?)";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SEAT);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+
+            PreparedStatement preparedStatement1 = connection.prepareStatement(DELETE_LOCATION);
+            preparedStatement1.setInt(1, id);
+            preparedStatement1.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

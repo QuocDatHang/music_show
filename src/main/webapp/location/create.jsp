@@ -59,10 +59,9 @@
             <%--                    <button type="button" class="btn btn-danger" onclick="deleteRow(1)">Delete</button>--%>
             <%--                </div>--%>
         </div>
+        <button type="submit" class="btn btn-primary">Tạo Location</button>
 </div>
-<button type="submit" class="btn btn-primary">Tạo Location</button>
-</form>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
@@ -104,6 +103,7 @@
         productImportDetail.removeChild(row);
     }
 
+
     function addSeat() {
         let seatQuantity = document.getElementById('quantity').value;
         let seatList = '';
@@ -113,9 +113,13 @@
                 <input type="text" class="form-control" name="position" required>
             </div
             <div class="col-3">
-                <input type="text" class="form-control" name="type" required>
+                    <select class="form-control" name="type" id="type">
+                    <option value="PREMIUM" ${seat.type == 'PREMIUM' ? 'selected' : ''}>PREMIUM</option>
+                    <option value="VIP" ${seat.type == 'VIP' ? 'selected' : ''}>VIP</option>
+                    <option value="STANDARD" ${seat.type == 'STANDARD' ? 'selected' : ''}>STANDARD</option>
+                 </select>
             </div>
-            <div class="col-2 d-flex justify-content-end">
+            <div class="col-2">
                 <button type="button" class="btn btn-danger" onclick="deleteRow(1)">Delete</button>
             </div>
         `

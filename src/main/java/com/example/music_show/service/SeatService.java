@@ -16,4 +16,7 @@ public class SeatService {
     public List<Seat> findAll(){
         return seatDAO.findAll();
     }
+    public Seat findByID(int id){
+        return seatDAO.findById(id);
+    }
 }
