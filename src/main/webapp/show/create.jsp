@@ -59,7 +59,7 @@
     <div style="text-align: center; font-size: large; font-weight: bold; padding-top:10px;">
         Tạo Show
     </div>
-    <div class="container">
+    <div class="container" style="width: 50%">
         <form action="/show?action=create" method="post" enctype="multipart/form-data">
             <div class="mb-3" style="padding-top:10px;">
                 <label for="showName" class="form-label">Tên show</label>
@@ -73,21 +73,21 @@
                 <label for="timeEnd" class="form-label">Thời gian kết thúc</label>
                 <input type="text" class="form-control" id="timeEnd" name="timeEnd" required>
             </div>
-            <div class="col-4" style="padding-bottom: 10px;">
+            <div class="col-12" style="padding-bottom: 10px;">
                 <label for="location" class="form-label">Địa điểm</label>
                 <select class="form-control" name="location" id="location">
-                    <option value="">----------------------------Chọn địa điểm-----------------------------</option>
+                    <option style="text-align: center;" value="">- - - - - - - - - - - - - - - - - - - - - - - - - - - - -Chọn địa điểm- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</option>
                     <c:forEach var="location" items="${pageLocation.content}">
                         <option value="${location.id}">${location.address}</option>
                     </c:forEach>
                 </select>
             </div>
 
-            <label for="singer" class="col-4 mb-2">Ca Sĩ</label>
+            <label for="singer" class="col-12 mb-2">Ca Sĩ</label>
             <div class="row" id="singer-1">
-                <div class="col-6 mb-3">
+                <div class="col-12 mb-3">
                     <select class="form-control" name="singer" id="singer" multiple>
-                        <c:forEach var="singer" items="${pageSinger.content}">
+                        <c:forEach var="singer" items="${singers}">
                             <option value="${singer.id}">${singer.name}</option>
                         </c:forEach>
                     </select>
@@ -95,7 +95,7 @@
             </div>
 
             <label class="form-label">Thông tin vé</label>
-            <table class="table table-bordered" style="width:50%">
+            <table class="table table-bordered" style="width:70%">
                 <thead>
                 <tr>
                     <td style="text-align: center;">Loại vé</td>
@@ -105,17 +105,17 @@
                 <tbody>
                 <tr>
                     <td style="text-align: center; vertical-align: middle;">PREMIUM</td>
-                    <td class="input-group"><input type="number" class="form-control" value="premium"><span
+                    <td class="input-group"><input type="number" class="form-control" name="premium"><span
                             class="input-group-text">VND</span></td>
                 </tr>
                 <tr>
                     <td style="text-align: center;vertical-align: middle;">VIP</td>
-                    <td class="input-group"><input type="number" class="form-control" value="vip"><span
+                    <td class="input-group"><input type="number" class="form-control" name="vip"><span
                             class="input-group-text">VND</span></td>
                 </tr>
                 <tr>
                     <td style="text-align: center;vertical-align: middle;">Standard</td>
-                    <td class="input-group"><input type="number" class="form-control" value="standard"><span
+                    <td class="input-group"><input type="number" class="form-control" name="standard"><span
                             class="input-group-text">VND</span></td>
                 </tr>
                 </tbody>
@@ -134,6 +134,7 @@
     </div>
 
 
+<%----------------------------------------FOOTER---------------------------------------------------%>
     <footer id="footer">
         <div class="d-flex justify-content-center align-items-center footer-logo" id="footer-logo">
             <image class="footer-logo__img" src="images/MAYLANGTHANG_LOGO_WHITE.png"></image>

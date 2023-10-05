@@ -1,5 +1,6 @@
 package com.example.music_show.dao;
 
+import com.example.music_show.model.Seat;
 import com.example.music_show.model.Singer;
 import com.example.music_show.service.dto.Page;
 
@@ -47,6 +48,22 @@ public class SingerDAO extends DatabaseConnection {
             System.out.println(e.getMessage());
         }
         return result;
+    }
+
+    public List<Singer> getAllSinger(){
+        List<Singer> singers = new ArrayList<>();
+        String SELECT_ALL = "SELECT * FROM singers ";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                singers.add(getSingerByResultSet(rs));
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return singers;
     }
 
     public Singer getSingerByResultSet(ResultSet rs) throws SQLException {

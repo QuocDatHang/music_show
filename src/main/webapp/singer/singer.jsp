@@ -76,6 +76,9 @@
                     Tên Ca Sĩ
                 </td>
                 <td>
+                    Cát-xê
+                </td>
+                <td>
                     Chọn
                 </td>
             </tr>
@@ -86,6 +89,9 @@
                     </td>
                     <td>
                             ${singer.name}
+                    </td>
+                    <td>
+                            ${singer.salary}
                     </td>
                     <td>
                         <a class="btn btn-info" href="/singer?action=edit&id=${singer.id}">

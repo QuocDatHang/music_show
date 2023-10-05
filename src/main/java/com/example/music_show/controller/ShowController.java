@@ -46,9 +46,7 @@ public class ShowController extends HttpServlet {
         if(pageString == null){
             pageString="1";
         }
-        var singers = singerService.getAllSinger(Integer.parseInt(pageString), req.getParameter("searchSinger"));
-        req.setAttribute("singersJSON", new ObjectMapper().writeValueAsString(singers));
-        req.setAttribute("pageSinger", singers);
+        req.setAttribute("singers", singerService.getAllSinger());
         req.setAttribute("pageLocation", locationService.getAllLocation(Integer.parseInt(pageString),req.getParameter("search")));
         req.getRequestDispatcher("./show/create.jsp").forward(req, resp);
     }

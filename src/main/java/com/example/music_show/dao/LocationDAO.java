@@ -162,4 +162,20 @@ public class LocationDAO extends DatabaseConnection{
             throw new RuntimeException(e);
         }
     }
+    // tim location theo address
+    public Location findByAddress(String address){
+        String FIND_BY_ADDRESS = "SELECT * FROM `locations` WHERE (`address` = ?)";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ADDRESS);
+            preparedStatement.setString(1, address);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                return getLocationByResultSet(rs);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }

@@ -8,8 +8,11 @@ import java.util.List;
 
 public class SingerService {
     private final SingerDAO singerDAO = new SingerDAO();
-    public Page<Singer> getAllSinger(int page, String search){
+    public Page<Singer> findAll(int page, String search){
         return singerDAO.findAll(page, search);
+    }
+    public List<Singer> getAllSinger(){
+        return singerDAO.getAllSinger();
     }
     public void create(String singerName){
         singerDAO.create(singerName);

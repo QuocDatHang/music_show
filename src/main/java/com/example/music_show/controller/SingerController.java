@@ -46,7 +46,7 @@ public class SingerController extends HttpServlet {
         if (pageString == null) {
             pageString = "1";
         }
-        req.setAttribute("pageSinger", singerService.getAllSinger(Integer.parseInt(pageString), req.getParameter("searchSinger")));
+        req.setAttribute("pageSinger", singerService.findAll(Integer.parseInt(pageString), req.getParameter("searchSinger")));
         req.setAttribute("searchSinger", req.getParameter("searchSinger"));
         req.setAttribute("message", req.getParameter("message"));
         req.getRequestDispatcher("singer/singer.jsp").forward(req, resp);

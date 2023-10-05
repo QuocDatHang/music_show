@@ -59,4 +59,8 @@ public class LocationService {
     public void deleteLocation(int id){
         locationDAO.deleteLocation(id);
     }
+
+    public Location findByAddress(String address){
+        return locationDAO.findByAddress(address);
+    }
 }
