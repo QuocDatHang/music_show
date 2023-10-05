@@ -6,14 +6,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class TicketInforDAO extends DatabaseConnection{
-    public TicketInfor findById(int id){
+public class TicketInforDAO extends DatabaseConnection {
+    public TicketInfor findById(int id) {
         String FIND_BY_ID = "SELECT * FROM ticket_infors WHERE id = ?";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 var ticketInfor = new TicketInfor();
                 ticketInfor.setId(rs.getInt("id"));
                 ticketInfor.setPremium(rs.getBigDecimal("premium"));
@@ -25,6 +25,28 @@ public class TicketInforDAO extends DatabaseConnection{
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public int create(TicketInfor ticketInfor) {
+        String CREATE_TICKET_INFO = "INSERT INTO `ticket_infors` (`premium`, `vip`, `standard`) VALUES (?, ?, ?)";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TICKET_INFO);
+            preparedStatement.setBigDecimal(1, ticketInfor.getPremium());
+            preparedStatement.setBigDecimal(2, ticketInfor.getVip());
+            preparedStatement.setBigDecimal(3, ticketInfor.getStandard());
+            preparedStatement.executeUpdate();
+
+            String SELECT_MAX_ID = "SELECT MAX(id) as max_id FROM `ticket_infors`";
+            PreparedStatement statementId = connection.prepareStatement(SELECT_MAX_ID);
+            var rs = statementId.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("max_id");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return -1;
     }
 
 }

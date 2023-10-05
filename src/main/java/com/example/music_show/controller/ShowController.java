@@ -14,7 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
 
-@MultipartConfig
+
+@MultipartConfig(
+        location = "D:\\C0623G1\\Module-3\\Case study\\music_show\\src\\main\\webapp\\images",
+        fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 50, // 50MB
+        maxRequestSize = 1024 * 1024 * 50) // 50MB
 @WebServlet(name = "showController", urlPatterns = "/show")
 public class ShowController extends HttpServlet {
     private LocationService locationService;
@@ -63,6 +68,7 @@ public class ShowController extends HttpServlet {
 
     public void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         showService.create(req);
+        resp.sendRedirect("/show");
     }
 
     @Override

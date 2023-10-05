@@ -8,4 +8,7 @@ public class TicketInforService {
     public TicketInfor findById(int id){
         return ticketInforDAO.findById(id);
     }
+    public int create(TicketInfor ticketInfor){
+        return ticketInforDAO.create(ticketInfor);
+    }
 }

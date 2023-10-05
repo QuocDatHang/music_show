@@ -63,4 +63,16 @@ public class ShowDAO extends DatabaseConnection {
         }
         return -1;
     }
+    public void createShowDetail(int showId, int singerId){
+        String CREATE_SHOW_DETAIL = "INSERT INTO `show_details` (`show_id`, `singer_id`) VALUES (?, ?)";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_SHOW_DETAIL);
+            preparedStatement.setInt(1, showId);
+            preparedStatement.setInt(2, singerId);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

@@ -83,10 +83,10 @@
                 </select>
             </div>
 
-            <label for="singer" class="col-12 mb-2">Ca Sĩ</label>
-            <div class="row" id="singer-1">
+            <label for="singers" class="col-12 mb-2">Ca Sĩ</label>
+            <div class="row">
                 <div class="col-12 mb-3">
-                    <select class="form-control" name="singer" id="singer" multiple>
+                    <select class="form-control" name="singerIds" id="singers" multiple>
                         <c:forEach var="singer" items="${singers}">
                             <option value="${singer.id}">${singer.name}</option>
                         </c:forEach>
@@ -122,11 +122,11 @@
             </table>
             <div class="mb-3">
                 <label for="poster" class="form-label" style="padding-right: 10px;">Ảnh bìa</label>
-                <input type="file" name="poster" id="poster" accept="image/*">
+                <input type="file" name="poster" id="poster">
             </div>
             <div class="mb-3">
                 <label for="seatDiagramImage" class="form-label" style="padding-right: 10px;">Sơ đồ chỗ ngồi</label>
-                <input type="file" name="seatDiagramImage" id="seatDiagramImage" accept="image/*">
+                <input type="file" name="seatDiagramImage" id="seatDiagramImage" >
             </div>
             <button type="submit" class="btn btn-primary mb-2">Tạo show</button>
             <a href="/show" class="btn btn-success mb-2">Hủy</a>
@@ -160,42 +160,11 @@
 
 </main>
 
-<script>
-    const singerId = document.getElementById('singer');
-    const showDetail = document.getElementById('show-detail');
-    const singers = ${singersJSON};
-    let rowSingerImport = 1;
-
-    function addMore() {
-        let selectStr = '<select class="form-control" name="singer" id="singer">' +
-            '<option value="">-------------------------------Chọn ca sĩ--------------------------------</option>';
-        for (const singer of singers) {
-            selectStr += `<option value=\${singer.id}>\${singer.name}</option>`;
-        }
-
-        selectStr += '</select>';
-        const strRow = `<div class="row mb-3" id="singer-\${++rowSingerImport}">
-            <div class="col-4">
-                \${selectStr}
-            </div>
-            <div class="col-2 d-flex justify-content-end">
-                <button class="btn btn-danger" onclick="deleteRow(\${rowSingerImport})">Delete</button>
-            </div>
-        </div>`
-        document.querySelector('#show-detail').innerHTML += strRow;
-    }
-
-    function deleteRow(number) {
-        const row = document.getElementById('singer-' + number);
-        showDetail.removeChild(row);
-    }
-</script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/bootstrap.bundle.min.js"></script>
 <script src="../js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://www.jqueryscript.net/demo/Clean-jQuery-Date-Time-Picker-Plugin-datetimepicker/jquery.datetimepicker.js"></script>
-
 
 <script>
     $('#timeStart').datetimepicker({
@@ -209,7 +178,7 @@
 <%--multi-select-tag--%>
 <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
 <script>
-    new MultiSelectTag('singer')  // id
+    new MultiSelectTag('singers')  // id
 </script>
 </body>
 

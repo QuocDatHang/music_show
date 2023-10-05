@@ -84,7 +84,6 @@ public class LocationDAO extends DatabaseConnection{
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
             preparedStatement.setInt(1, id);
-            System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 return getLocationByResultSet(rs);
