@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +18,7 @@
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/4f6aa91745.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/styles.css"/>
 </head>
 
 <body>
@@ -96,8 +97,9 @@
                 </div>
             </div>
         </article>
-        <div class="progress-bar" role="progressbar" style="width: 100%; height: 50px; background: #22326c; color: white" aria-valuenow="100"
-             aria-valuemin="0"  aria-valuemax="100">SƠ ĐỒ CHÕ NGỒI
+        <div class="progress-bar" role="progressbar"
+             style="width: 100%; height: 50px; background: #22326c; color: white" aria-valuenow="100"
+             aria-valuemin="0" aria-valuemax="100">SƠ ĐỒ CHÕ NGỒI
         </div>
         <div class="movie-container">
             <%--    <label> Select a movie:</label>--%>
@@ -109,82 +111,55 @@
             </div>
         </div>
         <div class="diagram">
-            <div class="square-container">
+            <div class="col-7 square-container">
+                <div class="screen"></div>
                 <div class="container">
-                    <div class="screen"></div>
-                 
-                    <div class="row">
-                        <div class="seat">A01</div>
-                        <div class="seat">A02</div>
-                        <div class="seat">A03</div>
-                        <div class="seat">A04</div>
-                        <div class="seat">A05</div>
-                        <div class="seat">A06</div>
-                        <div class="seat">A07</div>
-                        <div class="seat">A08</div>
+                    <%--                <div class="container">--%>
+                    <div class="row mx-lg-auto">
+                        <c:forEach var="seat" items="${seats}">
+                            <c:if test="${(seat.position).contains('A')}">
+                                <div class="seat" id="seat${seat.id}" value="${seat}"
+                                     onclick="toggleSeat(this)" data-seat-id="seat${seat.id}">${seat.position}</div>
+                            </c:if>
+                        </c:forEach>
                     </div>
-                    <div class="row">
-                        <div class="seat">B01</div>
-                        <div class="seat">B02</div>
-                        <div class="seat">B03</div>
-                        <div class="seat occupied">B04</div>
-                        <div class="seat occupied">B05</div>
-                        <div class="seat">B06</div>
-                        <div class="seat">B07</div>
-                        <div class="seat">B08</div>
+                    <div class="row mx-lg-auto">
+                        <c:forEach var="seat" items="${seats}">
+                            <c:if test="${(seat.position).contains('B')}">
+                                <div class="seat" id="seat${seat.id}" value="${seat}"
+                                     onclick="toggleSeat(this)" data-seat-id="seat${seat.id}">${seat.position}</div>
+                            </c:if>
+                        </c:forEach>
                     </div>
-                    <div class="row">
-                        <div class="seat">C01</div>
-                        <div class="seat">C02</div>
-                        <div class="seat">C03</div>
-                        <div class="seat">C04</div>
-                        <div class="seat">C05</div>
-                        <div class="seat">C06</div>
-                        <div class="seat occupied">C07</div>
-                        <div class="seat occupied">C08</div>
+                    <div class="row mx-lg-auto">
+                        <c:forEach var="seat" items="${seats}">
+                            <c:if test="${(seat.position).contains('C')}">
+                                <div class="seat" id="seat${seat.id}" value="${seat}"
+                                     onclick="toggleSeat(this)" data-seat-id="seat${seat.id}">${seat.position}</div>
+                            </c:if>
+                        </c:forEach>
                     </div>
-                    <div class="row">
-                        <div class="seat">D01</div>
-                        <div class="seat">D02</div>
-                        <div class="seat">D03</div>
-                        <div class="seat">D04</div>
-                        <div class="seat">D05</div>
-                        <div class="seat">D06</div>
-                        <div class="seat">D07</div>
-                        <div class="seat">D08</div>
+                    <div class="row mx-lg-auto">
+                        <c:forEach var="seat" items="${seats}">
+                            <c:if test="${(seat.position).contains('D')}">
+                                <div class="seat" id="seat${seat.id}" value="${seat}"
+                                     onclick="toggleSeat(this)" data-seat-id="seat${seat.id}">${seat.position}</div>
+                            </c:if>
+                        </c:forEach>
                     </div>
-                    <div class="row">
-                        <div class="seat">E01</div>
-                        <div class="seat">E02</div>
-                        <div class="seat">E03</div>
-                        <div class="seat occupied">E04</div>
-                        <div class="seat occupied">E05</div>
-                        <div class="seat">E06</div>
-                        <div class="seat">E07</div>
-                        <div class="seat">E08</div>
-                    </div>
-                    <div class="row">
-                        <div class="seat">F01</div>
-                        <div class="seat">F02</div>
-                        <div class="seat">F03</div>
-                        <div class="seat">F04</div>
-                        <div class="seat occupied">F05</div>
-                        <div class="seat occupied">F06</div>
-                        <div class="seat occupied">F07</div>
-                        <div class="seat">F08</div>
-                    </div>
-                </div>
-                <div>
-
                 </div>
             </div>
-            <div class="right-container">
-                <div> Các ghế đặt
-                </div>
-                <div>
-                    <input type="Textarea" style="width: 500px; height: 450px">
-                </div>
-
+            <div class="col-5" id="inputTicket">
+                <table id="selected-seats">
+                    <thead>
+                    <tr>
+                        <th>Ghế đã chọn</th>
+                    </tr>
+                    </thead>
+                    <tbody id="selected-seats-body">
+                    <!-- Nơi hiển thị danh sách các ghế đã chọn -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -229,25 +204,81 @@
 <script src="./js/bootstrap.bundle.min.js"></script>
 <script src="./js/script.js"></script>
 <script>
-    function addSeat() {
-        let seatQuantity = document.getElementById('quantity').value;
-        let seatList = '';
-        for (let i = 1; i <= seatQuantity; i++) {
-            seatList += `
-           <div class="row">
-                        <div class="seat">F01</div>
-                        <div class="seat">F02</div>
-                        <div class="seat">F03</div>
-                        <div class="seat">F04</div>
-                        <div class="seat occupied">F05</div>
-                        <div class="seat occupied">F06</div>
-                        <div class="seat occupied">F07</div>
-                        <div class="seat">F08</div>
-                    </div>
-        `
+    <%--function addSeat() {--%>
+    <%--    let seatList = ${seatListJson};--%>
+    <%--    let seatHTML = '';--%>
+    <%--    seatList.forEach(function (seat) {--%>
+    <%--        seatHTML += `<div class="seat" value="${seat.id}" name="id" required></div>`;--%>
+    <%--    });--%>
+    <%--    document.getElementById('container').innerHTML = seatHTML;--%>
+    <%--}--%>
+
+    function bookSeat() {
+        let seat = document.getElementById('seat${seat.id}').getAttribute('value');
+        let ticketList = '';
+        for (let i; i <= seatPosition; i++) {
+            ticketList += `
+        <div class="row">
+        <div class="col-4">
+        <input name="position" va
+        </div>
+        <div class="col-4">
+        <!-- Nội dung cột 2 -->
+        </div>
+        <div class="col-4">
+        <!-- Nội dung cột 3 -->
+        </div>
+        <div class="col-4">
+        <!-- Nội dung cột 3 -->
+        </div>
+        </div>`
         }
-        document.getElementById('product-import-detail').innerHTML = seatList;
+
+        document.getElementById('inputTicket').innerHTML = ticketList;
     }
+
+    let listSeat = []
+    function toggleSeat(seat) {
+        var seatId = seat.id;
+        var selectedSeatsBody = document.getElementById('selected-seats-body');
+
+        if (listSeat.includes(seat)) {
+            listSeat.splice(seat, 1);
+        } else {
+            listSeat.push(seat);
+        }
+
+        console.log(listSeat)
+
+        // Kiểm tra xem ghế đã được chọn hay chưa
+        if (seat.classList.contains('selected')) {
+            // Ghế đã được chọn trước đó, nên xóa khỏi bảng danh sách
+            var selectedSeatRow = document.getElementById('selected-seat-' + seatId);
+            // selectedSeatsBody.removeChild(selectedSeatRow);
+
+            // Bỏ lớp 'selected' khỏi ghế
+            // seat.classList.remove('selected');
+            // Kiểm tra list seat
+
+        } else {
+            // Ghế chưa được chọn trước đó, nên thêm vào bảng danh sách
+            var seatPosition = seat.getAttribute('value');
+
+            // Tạo một hàng mới trong bảng danh sách
+            var newRow = document.createElement('tr');
+            newRow.id = 'selected-seat-' + seatId;
+            var newCell = document.createElement('td');
+            newCell.textContent = seatPosition;
+            newRow.appendChild(newCell);
+            selectedSeatsBody.appendChild(newRow);
+
+            // Thêm lớp 'selected' vào ghế
+            seat.classList.add('selected');
+
+        }
+    }
+
+
 </script>
 </body>
 

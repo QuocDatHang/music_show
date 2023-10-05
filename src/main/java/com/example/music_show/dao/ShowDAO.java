@@ -18,7 +18,7 @@ public class ShowDAO extends DatabaseConnection{
                 show.setShowName(rs.getString("showName"));
                 show.setTimeStart((rs.getTimestamp("timeStart")).toLocalDateTime());
                 show.setTimeEnd((rs.getTimestamp("timeEnd")).toLocalDateTime());
-                show.setLocation(locationDAO.findByIdSeat(rs.getInt("location_id")));
+                show.setLocation(locationDAO.findById(rs.getInt("location_id")));
                 show.setPoster(rs.getString("poster"));
                 show.setTicketInfor(ticketInforDAO.findById(rs.getInt("ticket_infor_id")));
                 show.setSeatDiagramImage(rs.getString("seatDiagramImage"));

@@ -1,12 +1,12 @@
 package com.example.music_show.controller;
 
 import com.example.music_show.dao.LocationDAO;
-import com.example.music_show.model.Location;
-import com.example.music_show.model.Seat;
+import com.example.music_show.model.*;
 import com.example.music_show.model.enumeration.EType;
 import com.example.music_show.service.LocationService;
 import com.example.music_show.service.SeatService;
 import com.example.music_show.service.ShowService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 @WebServlet(name="TicketController", urlPatterns = "/ticket")
@@ -39,27 +40,46 @@ public class TicketController extends HttpServlet {
             action="";
         }
         switch (action){
+            case "create":
+                showDetail(req,resp);
+                break;
             default:
                 showDetail(req,resp);
+                break;
         }
     }
 
-    public void showDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Show
-        // Show show = ...
-        // Location location = show.getLocation()
-        // List<Seat> seats = localtionDAO.getListSeat
+    private void createTicket(HttpServletRequest req, HttpServletResponse resp) {
 
-        // request.setAttribute("show", show)
-//        int idShow = Integer.parseInt(req.getParameter("id"));
-//        req.setAttribute("show", showService.findById(idShow));
-        int id = Integer.parseInt(req.getParameter("id"));
-        req.setAttribute("show", showService.findById(id));
-        req.setAttribute("type", EType.values());
-        List<Seat> seats = locationDAO.getSeatList(id);
+    }
+
+    public void showDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        int id = 1;
+        Show showdetail = showService.findById(id);
+        req.setAttribute("show", showdetail);
+        List<Seat> seats = locationDAO.getSeatList(showdetail.getLocation().getId());
         req.setAttribute("seats", seats);
+        req.setAttribute("seatListJson", new ObjectMapper().writeValueAsString(seats));
         req.getRequestDispatcher("detail.jsp").forward(req, resp);
 
 
     }
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+        switch (action) {
+            case "create":
+                createTicket(req, resp);
+                break;
+//            case "edit":
+//                update(req,resp);
+//                break;
+//            default:
+//                showList(req,resp);
+        }
+    }
 }
+

@@ -13,6 +13,10 @@ public class Bill {
     public Bill() {
     }
 
+    public Bill(int id) {
+        this.id = id;
+    }
+
     public Bill(int id, User user, double discount, Date createAt, BigDecimal total) {
         this.id = id;
         this.user = user;

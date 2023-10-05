@@ -83,7 +83,6 @@ public class LocationDAO extends DatabaseConnection{
     public List<Seat> getSeatList(int id){
        String AMOUNT_SEAT= "select * from seats s where s.location_id=?";
        List<Seat> seatList = new ArrayList<>();
-       int amountSeat = 0;
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(AMOUNT_SEAT)){
             preparedStatement.setInt(1, id);
@@ -96,7 +95,6 @@ public class LocationDAO extends DatabaseConnection{
                 seat.setType(EType.valueOf(rs.getString("type")));
                 seat.setLocation(new Location(rs.getInt("location_id")));
                 seatList.add(seat);
-                amountSeat++;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
