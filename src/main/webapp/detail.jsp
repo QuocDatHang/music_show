@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="com.example.music_show.model.enumeration.EType" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -118,32 +119,32 @@
                     <div class="row mx-lg-auto">
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('A')}">
-                                <div class="seat" id="seat${seat.id}" value="${seat}"
-                                     onclick="toggleSeat(this)" data-seat-id="seat${seat.id}">${seat.position}</div>
+                                <div class="seat" id="seat${seat.id}" value="${seat.type}"
+                                     onclick="toggleSeat(${seat.id})" data-seat-id="seat${seat.id}">${seat.position}</div>
                             </c:if>
                         </c:forEach>
                     </div>
                     <div class="row mx-lg-auto">
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('B')}">
-                                <div class="seat" id="seat${seat.id}" value="${seat}"
-                                     onclick="toggleSeat(this)" data-seat-id="seat${seat.id}">${seat.position}</div>
+                                <div class="seat" id="seat${seat.id}" value="${seat.type}"
+                                     onclick="toggleSeat(${seat.id})" data-seat-id="seat${seat.id}">${seat.position}</div>
                             </c:if>
                         </c:forEach>
                     </div>
                     <div class="row mx-lg-auto">
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('C')}">
-                                <div class="seat" id="seat${seat.id}" value="${seat}"
-                                     onclick="toggleSeat(this)" data-seat-id="seat${seat.id}">${seat.position}</div>
+                                <div class="seat" id="seat${seat.id}" value="${seat.type}"
+                                     onclick="toggleSeat(${seat.id})" data-seat-id="seat${seat.id}">${seat.position}</div>
                             </c:if>
                         </c:forEach>
                     </div>
                     <div class="row mx-lg-auto">
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('D')}">
-                                <div class="seat" id="seat${seat.id}" value="${seat}"
-                                     onclick="toggleSeat(this)" data-seat-id="seat${seat.id}">${seat.position}</div>
+                                <div class="seat" id="${seat.id}" value="${seat.type}"
+                                     onclick="toggleSeat(${seat.id})" data-seat-id="seat${seat.id}">${seat.position}</div>
                             </c:if>
                         </c:forEach>
                     </div>
@@ -157,7 +158,9 @@
                     </tr>
                     </thead>
                     <tbody id="selected-seats-body">
-                    <!-- Nơi hiển thị danh sách các ghế đã chọn -->
+                    <ul id="selected-seats-list">
+
+                    </ul>
                     </tbody>
                 </table>
             </div>
@@ -237,44 +240,47 @@
         document.getElementById('inputTicket').innerHTML = ticketList;
     }
 
-    let listSeat = []
-    function toggleSeat(seat) {
-        var seatId = seat.id;
-        var selectedSeatsBody = document.getElementById('selected-seats-body');
+    const seatListJson = ${seatListJson};
+    const showJSON = ${showJSON};
+    let listSeat = [];
 
-        if (listSeat.includes(seat)) {
-            listSeat.splice(seat, 1);
+    function toggleSeat(id) {
+        var seat;
+
+        for (let i = 0; i < seatListJson.length; i++) {
+            if (seatListJson[i].id === id){
+                seat = seatListJson[i];
+                break;
+            }
+        }
+        // var seatPosition = document.getElementById("seatId").value;
+        // var seatType = document.getElementById("seatId").getAttribute("value");
+        var selectedSeatsList = document.getElementById('selected-seats-list');
+
+        var index = listSeat.indexOf(seat);
+        if (index !== -1) {
+            listSeat.splice(index, 1);
         } else {
             listSeat.push(seat);
         }
 
-        console.log(listSeat)
+        console.log(listSeat);
 
-        // Kiểm tra xem ghế đã được chọn hay chưa
-        if (seat.classList.contains('selected')) {
-            // Ghế đã được chọn trước đó, nên xóa khỏi bảng danh sách
-            var selectedSeatRow = document.getElementById('selected-seat-' + seatId);
-            // selectedSeatsBody.removeChild(selectedSeatRow);
-
-            // Bỏ lớp 'selected' khỏi ghế
-            // seat.classList.remove('selected');
-            // Kiểm tra list seat
-
-        } else {
-            // Ghế chưa được chọn trước đó, nên thêm vào bảng danh sách
-            var seatPosition = seat.getAttribute('value');
-
-            // Tạo một hàng mới trong bảng danh sách
-            var newRow = document.createElement('tr');
-            newRow.id = 'selected-seat-' + seatId;
-            var newCell = document.createElement('td');
-            newCell.textContent = seatPosition;
-            newRow.appendChild(newCell);
-            selectedSeatsBody.appendChild(newRow);
-
-            // Thêm lớp 'selected' vào ghế
-            seat.classList.add('selected');
-
+        // Cập nhật danh sách ghế đã chọn trên giao diện
+        selectedSeatsList.innerHTML = '';
+        for (var i = 0; i < listSeat.length; i++) {
+            var seatTemp = listSeat[i];
+            var listItem = document.createElement('li');
+            if (seatTemp.type === "PREMIUM"){
+                listItem.textContent = seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.premium;
+            }
+            if (seatTemp.type === "VIP"){
+                listItem.textContent = seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.vip;
+            }
+            if (seatTemp.type === "STANDARD"){
+                listItem.textContent =  seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.standard;
+            }
+            selectedSeatsList.appendChild(listItem);
         }
     }
 

@@ -6,6 +6,8 @@ import com.example.music_show.model.enumeration.EType;
 import com.example.music_show.service.LocationService;
 import com.example.music_show.service.SeatService;
 import com.example.music_show.service.ShowService;
+import com.example.music_show.service.TicketService;
+import com.example.music_show.service.dto.TicketDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -22,6 +24,7 @@ public class TicketController extends HttpServlet {
     private SeatService seatService;
     private ShowService showService;
     private LocationService locationService;
+    private TicketService ticketService;
     private LocationDAO locationDAO;
 
     @Override
@@ -30,6 +33,7 @@ public class TicketController extends HttpServlet {
         showService = new ShowService();
         locationService = new LocationService();
         locationDAO = new LocationDAO();
+        ticketService = new TicketService();
     }
     // getShowById return TicketDto (List<Seat>)
 
@@ -57,10 +61,13 @@ public class TicketController extends HttpServlet {
 
         int id = 1;
         Show showdetail = showService.findById(id);
+        TicketDto dto = ticketService.detailShow(id);
         req.setAttribute("show", showdetail);
         List<Seat> seats = locationDAO.getSeatList(showdetail.getLocation().getId());
         req.setAttribute("seats", seats);
+        req.setAttribute("type", EType.values());
         req.setAttribute("seatListJson", new ObjectMapper().writeValueAsString(seats));
+        req.setAttribute("showJSON", new ObjectMapper().writeValueAsString(dto));
         req.getRequestDispatcher("detail.jsp").forward(req, resp);
 
 

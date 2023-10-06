@@ -177,3 +177,21 @@
 .info .total {
   color: #7bc47f;
 }
+.diagram {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #f2f2f2;
+}
+
+.square-container {
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+}
+
+#inputTicket {
+  padding: 20px;
+  background-color: #f2f2f2;
+}
