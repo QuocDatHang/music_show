@@ -65,7 +65,6 @@ public class TicketController extends HttpServlet {
         req.setAttribute("show", showdetail);
         List<Seat> seats = locationDAO.getSeatList(showdetail.getLocation().getId());
         req.setAttribute("seats", seats);
-        req.setAttribute("type", EType.values());
         req.setAttribute("seatListJson", new ObjectMapper().writeValueAsString(seats));
         req.setAttribute("showJSON", new ObjectMapper().writeValueAsString(dto));
         req.getRequestDispatcher("detail.jsp").forward(req, resp);

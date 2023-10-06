@@ -120,7 +120,20 @@
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('A')}">
                                 <div class="seat" id="seat${seat.id}" value="${seat.type}"
-                                     onclick="toggleSeat(${seat.id})" data-seat-id="seat${seat.id}">${seat.position}</div>
+                                     onclick="toggleSeat(${seat.id})"
+                                     data-seat-id="seat${seat.id}"
+                                        <c:choose>
+                                            <c:when test="${seat.type == 'VIP'}">
+                                                style="background-color: yellow;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'PREMIUM'}">
+                                                style="background-color: pink;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'STANDARD'}">
+                                                style="background-color: green;"
+                                            </c:when>
+                                        </c:choose>
+                                >${seat.position}</div>
                             </c:if>
                         </c:forEach>
                     </div>
@@ -128,7 +141,20 @@
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('B')}">
                                 <div class="seat" id="seat${seat.id}" value="${seat.type}"
-                                     onclick="toggleSeat(${seat.id})" data-seat-id="seat${seat.id}">${seat.position}</div>
+                                     onclick="toggleSeat(${seat.id})"
+                                     data-seat-id="seat${seat.id}"
+                                        <c:choose>
+                                            <c:when test="${seat.type == 'VIP'}">
+                                                style="background-color: yellow;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'PREMIUM'}">
+                                                style="background-color: pink;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'STANDARD'}">
+                                                style="background-color: green;"
+                                            </c:when>
+                                        </c:choose>
+                                >${seat.position}</div>
                             </c:if>
                         </c:forEach>
                     </div>
@@ -136,7 +162,20 @@
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('C')}">
                                 <div class="seat" id="seat${seat.id}" value="${seat.type}"
-                                     onclick="toggleSeat(${seat.id})" data-seat-id="seat${seat.id}">${seat.position}</div>
+                                     onclick="toggleSeat(${seat.id})"
+                                     data-seat-id="seat${seat.id}"
+                                        <c:choose>
+                                            <c:when test="${seat.type == 'VIP'}">
+                                                style="background-color: yellow;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'PREMIUM'}">
+                                                style="background-color: pink;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'STANDARD'}">
+                                                style="background-color: green;"
+                                            </c:when>
+                                        </c:choose>
+                                >${seat.position}</div>
                             </c:if>
                         </c:forEach>
                     </div>
@@ -144,25 +183,30 @@
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('D')}">
                                 <div class="seat" id="${seat.id}" value="${seat.type}"
-                                     onclick="toggleSeat(${seat.id})" data-seat-id="seat${seat.id}">${seat.position}</div>
+                                     onclick="toggleSeat(${seat.id})"
+                                     data-seat-id="seat${seat.id}"
+                                        <c:choose>
+                                            <c:when test="${seat.type == 'VIP'}">
+                                                style="background-color: yellow;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'PREMIUM'}">
+                                                style="background-color: pink;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'STANDARD'}">
+                                                style="background-color: green;"
+                                            </c:when>
+                                        </c:choose>
+                                >${seat.position}</div>
                             </c:if>
                         </c:forEach>
                     </div>
                 </div>
             </div>
             <div class="col-5" id="inputTicket">
-                <table id="selected-seats">
-                    <thead>
-                    <tr>
-                        <th>Ghế đã chọn</th>
-                    </tr>
-                    </thead>
-                    <tbody id="selected-seats-body">
-                    <ul id="selected-seats-list">
+                <ul id="selected-seats-list">
 
-                    </ul>
-                    </tbody>
-                </table>
+                </ul>
+
             </div>
         </div>
 
@@ -207,39 +251,6 @@
 <script src="./js/bootstrap.bundle.min.js"></script>
 <script src="./js/script.js"></script>
 <script>
-    <%--function addSeat() {--%>
-    <%--    let seatList = ${seatListJson};--%>
-    <%--    let seatHTML = '';--%>
-    <%--    seatList.forEach(function (seat) {--%>
-    <%--        seatHTML += `<div class="seat" value="${seat.id}" name="id" required></div>`;--%>
-    <%--    });--%>
-    <%--    document.getElementById('container').innerHTML = seatHTML;--%>
-    <%--}--%>
-
-    function bookSeat() {
-        let seat = document.getElementById('seat${seat.id}').getAttribute('value');
-        let ticketList = '';
-        for (let i; i <= seatPosition; i++) {
-            ticketList += `
-        <div class="row">
-        <div class="col-4">
-        <input name="position" va
-        </div>
-        <div class="col-4">
-        <!-- Nội dung cột 2 -->
-        </div>
-        <div class="col-4">
-        <!-- Nội dung cột 3 -->
-        </div>
-        <div class="col-4">
-        <!-- Nội dung cột 3 -->
-        </div>
-        </div>`
-        }
-
-        document.getElementById('inputTicket').innerHTML = ticketList;
-    }
-
     const seatListJson = ${seatListJson};
     const showJSON = ${showJSON};
     let listSeat = [];
@@ -248,13 +259,11 @@
         var seat;
 
         for (let i = 0; i < seatListJson.length; i++) {
-            if (seatListJson[i].id === id){
+            if (seatListJson[i].id === id) {
                 seat = seatListJson[i];
                 break;
             }
         }
-        // var seatPosition = document.getElementById("seatId").value;
-        // var seatType = document.getElementById("seatId").getAttribute("value");
         var selectedSeatsList = document.getElementById('selected-seats-list');
 
         var index = listSeat.indexOf(seat);
@@ -271,14 +280,36 @@
         for (var i = 0; i < listSeat.length; i++) {
             var seatTemp = listSeat[i];
             var listItem = document.createElement('li');
-            if (seatTemp.type === "PREMIUM"){
-                listItem.textContent = seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.premium;
+            // if (seatTemp.type === "PREMIUM"){
+            //     listItem.textContent = seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.premium;
+            // }
+            // if (seatTemp.type === "VIP"){
+            //     listItem.textContent = seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.vip;
+            // }
+            // if (seatTemp.type === "STANDARD"){
+            //     listItem.textContent =  seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.standard;
+            // }
+
+
+            if (seatTemp.type === "PREMIUM") {
+                // console.log(seatTemp.position, seatTemp.type)
+                listItem.innerHTML =
+                    `<div class="seat-info">\${seatTemp.position}</div>
+                        <div class="seat-info">\${seatTemp.type}</div>
+                        <div class="seat-info">\${showJSON.ticketInfor.premium}</div>`
             }
-            if (seatTemp.type === "VIP"){
-                listItem.textContent = seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.vip;
+            if (seatTemp.type === "VIP") {
+                listItem.innerHTML =
+                    `<div class="seat-info">\${seatTemp.position}</div>
+                    <div class="seat-info">\${seatTemp.type}</div>
+                    <div class="seat-info">\${showJSON.ticketInfor.vip}</div>`
             }
-            if (seatTemp.type === "STANDARD"){
-                listItem.textContent =  seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.standard;
+            if (seatTemp.type === "STANDARD") {
+                listItem.innerHTML =
+                    `<div class="seat-info">\${seatTemp.position}</div>
+                        <div class="seat-info">\${seatTemp.type}</div>
+                        <div class="seat-info">\${showJSON.ticketInfor.standard}</div>`
+
             }
             selectedSeatsList.appendChild(listItem);
         }
