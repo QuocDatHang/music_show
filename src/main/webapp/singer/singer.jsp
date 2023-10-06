@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,18 +56,21 @@
 </nav>
 
 <main>
-    <div class="card container px-6" style="height: 100vh">
+    <div class="card container px-6" style="height: 100vh; width: 60%">
         <c:if test="${message != null}">
             <h6 class="d-none" id="message">${message}</h6>
         </c:if>
-        <div class="d-grid gap-2 col-2 mx-auto">
-            <a class="btn btn-warning" href="/singer?action=showCreate">Thêm Ca Sĩ Mới</a>
-            <form action="/singer?page=${pageSinger.currentPage}">
-                <input type="text" id="searchSinger" value="${searchSinger}" name="searchSinger" class="form-control d-flex"
-                       style="width: 85%" placeholder="Tìm tên ca sĩ">
-                <button id="searchButton" class="btn btn-primary">Search</button>
-            </form>
-        </div>
+
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="btn btn-warning" href="/singer?action=showCreate">Thêm Ca Sĩ Mới</a>
+                <form class="d-flex" action="/singer?page=${pageSinger.currentPage}">
+                    <input class="form-control me-2" style="width: 300px" type="text" id="searchSinger" value="${searchSinger}"
+                           name="searchSinger" placeholder="Tìm tên ca sĩ" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+                </form>
+            </div>
+        </nav>
 
         <table class="table table-striped">
             <tr>
@@ -78,7 +83,7 @@
                 <td>
                     Cát-xê
                 </td>
-                <td>
+                <td style="text-align: center">
                     Chọn
                 </td>
             </tr>
@@ -91,9 +96,10 @@
                             ${singer.name}
                     </td>
                     <td>
-                            ${singer.salary}
+                        <fmt:setLocale value="vi_VN" />
+                        <fmt:formatNumber value="${singer.salary}" pattern="#,##0 ¤" />
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         <a class="btn btn-info" href="/singer?action=edit&id=${singer.id}">
                             Edit
                         </a>
@@ -109,8 +115,9 @@
 
         <nav aria-label="...">
             <c:set var="url" value="/singer?page="/>
-            <ul class="pagination" style="background: white;" >
-                <li class="page-item <c:if test="${pageSinger.currentPage == 1}" >disabled</c:if>" style="line-height: 12px; margin: 0;">
+            <ul class="pagination" style="background: white;">
+                <li class="page-item <c:if test="${pageSinger.currentPage == 1}" >disabled</c:if>"
+                    style="line-height: 12px; margin: 0;">
                     <a class="page-link" href="${url}${(pageSinger.currentPage - 1)}" tabindex="-1"
                        aria-disabled="true">Previous</a>
                 </li>
@@ -126,7 +133,8 @@
                         </li>
                     </c:if>
                 </c:forEach>
-                <li class="page-item <c:if test="${pageSinger.currentPage == pageSinger.totalPage}">disabled</c:if>" style="line-height: 12px; margin: 0;">
+                <li class="page-item <c:if test="${pageSinger.currentPage == pageSinger.totalPage}">disabled</c:if>"
+                    style="line-height: 12px; margin: 0;">
                     <a class="page-link" href="${url}${(pageSinger.currentPage + 1)}">Next</a>
                 </li>
             </ul>

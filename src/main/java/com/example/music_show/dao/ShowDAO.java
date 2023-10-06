@@ -1,15 +1,64 @@
 package com.example.music_show.dao;
 
 import com.example.music_show.model.Show;
+import com.example.music_show.model.Singer;
+import com.example.music_show.service.dto.Page;
+import com.example.music_show.utils.DateTimeUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class ShowDAO extends DatabaseConnection {
     private LocationDAO locationDAO = new LocationDAO();
     private TicketInforDAO ticketInforDAO = new TicketInforDAO();
+
+    public Page<Show> getAllShow(int page, String search) {
+        var result = new Page<Show>();
+        final int TOTAL_ELEMENT = 9;
+        result.setCurrentPage(page);
+        var content = new ArrayList<Show>();
+        if (search == null) {
+            search = "";
+        }
+        search = "%" + search.toLowerCase() + "%";
+
+        String SELECT_ALL = "SELECT s.*, l.city, GROUP_CONCAT(singers.name SEPARATOR ' - ') as singers FROM shows s" +
+                "JOIN show_details sd ON s.id = sd.show_id" +
+                "JOIN singers ON sd.singer_id = singers.id" +
+                "JOIN locations l ON s.location_id = l.id" +
+                "WHERE LOWER(s.showName) LIKE ?" +
+                "OR LOWER(singers.name) LIKE ? group by s.id LIMIT ? OFFSET ?";
+        String SELECT_COUNT = "SELECT count(1) as count from (" +
+                "SELECT  group_concat(singers.name) as singers FROM shows s" +
+                "JOIN show_details sd ON s.id = sd.show_id" +
+                "JOIN singers ON sd.singer_id = singers.id" +
+                "WHERE LOWER(s.showName) LIKE ?" +
+                "OR LOWER(singers.name) LIKE ? group by s.id ) as list";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
+            preparedStatement.setString(1, search);
+            preparedStatement.setString(2, search);
+            preparedStatement.setInt(3, TOTAL_ELEMENT);
+            preparedStatement.setInt(4, (page - 1) * TOTAL_ELEMENT);
+            var rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                content.add(getShowByResultSet(rs));
+            }
+            result.setContent(content);
+
+            PreparedStatement preparedStatementCount = connection.prepareStatement(SELECT_COUNT);
+            preparedStatementCount.setString(1, search);
+            var rsCount = preparedStatementCount.executeQuery();
+            if (rsCount.next()) {
+                result.setTotalPage((int) Math.ceil((double) rsCount.getInt("count") / TOTAL_ELEMENT));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
 
     public Show findById(int id) {
         var FIND_BY_ID = "SELECT * FROM `shows` WHERE (`id` = ?)";
@@ -19,16 +68,7 @@ public class ShowDAO extends DatabaseConnection {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                Show show = new Show();
-                show.setId(rs.getInt("id"));
-                show.setShowName(rs.getString("showName"));
-                show.setTimeStart((rs.getTimestamp("timeStart")).toLocalDateTime());
-                show.setTimeEnd((rs.getTimestamp("timeEnd")).toLocalDateTime());
-                show.setLocation(locationDAO.findById(rs.getInt("location_id")));
-                show.setPoster(rs.getString("poster"));
-                show.setTicketInfor(ticketInforDAO.findById(rs.getInt("ticket_infor_id")));
-                show.setSeatDiagramImage(rs.getString("seatDiagramImage"));
-                return show;
+                return getShowByResultSet(rs);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -63,7 +103,8 @@ public class ShowDAO extends DatabaseConnection {
         }
         return -1;
     }
-    public void createShowDetail(int showId, int singerId){
+
+    public void createShowDetail(int showId, int singerId) {
         String CREATE_SHOW_DETAIL = "INSERT INTO `show_details` (`show_id`, `singer_id`) VALUES (?, ?)";
         try {
             Connection connection = getConnection();
@@ -74,5 +115,17 @@ public class ShowDAO extends DatabaseConnection {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+    public Show getShowByResultSet(ResultSet rs) throws SQLException {
+        Show show = new Show();
+        show.setId(rs.getInt("id"));
+        show.setShowName(rs.getString("showName"));
+        show.setTimeStart((rs.getTimestamp("timeStart")).toLocalDateTime());
+        show.setTimeEnd((rs.getTimestamp("timeEnd")).toLocalDateTime());
+        show.setLocation(locationDAO.findById(rs.getInt("location_id")));
+        show.setPoster(rs.getString("poster"));
+        show.setTicketInfor(ticketInforDAO.findById(rs.getInt("ticket_infor_id")));
+        show.setSeatDiagramImage(rs.getString("seatDiagramImage"));
+        return show;
     }
 }

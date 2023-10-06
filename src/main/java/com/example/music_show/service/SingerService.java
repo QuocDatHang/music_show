@@ -4,6 +4,7 @@ import com.example.music_show.dao.SingerDAO;
 import com.example.music_show.model.Singer;
 import com.example.music_show.service.dto.Page;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class SingerService {
@@ -14,8 +15,8 @@ public class SingerService {
     public List<Singer> getAllSinger(){
         return singerDAO.getAllSinger();
     }
-    public void create(String singerName){
-        singerDAO.create(singerName);
+    public void create(String singerName, String salary){
+        singerDAO.create(singerName, salary);
     }
     public void delete(int id){
         singerDAO.delete(id);

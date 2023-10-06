@@ -54,13 +54,18 @@ s
     <div style="text-align: center; font-size: large; font-weight: bold; padding-top:10px;">
         Thêm Ca Sĩ Mới
     </div>
-    <div class="container" style="height: 100vh">
+    <div class="container" style="height: 100vh; width: 40%">
         <form action="/singer?action=create" method="post">
-            <div class="mb-3" style="padding-top:10px;">
+            <div class=" row mb-3" style="padding-top:10px;">
                 <label for="singerName" class="form-label">Tên ca sĩ:</label>
                 <input type="text" class="form-control" id="singerName" name="singerName" required>
             </div>
-            <button type="submit" class="btn btn-primary mb-2">Thêm</button>
+            <div class="row mb-3" style="padding-top:10px;">
+                <label for="salary" class="form-label">Cát xê:</label>
+                <input type="number" class="form-control col-10" style="text-align: right" name="salary" id="salary" required>
+                <span class="input-group-text col">VND</span>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Xác nhận</button>
             <a href="/singer" class="btn btn-success mb-2">Huỷ</a>
         </form>
     </div>

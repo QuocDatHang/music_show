@@ -66,7 +66,7 @@ public class SingerController extends HttpServlet {
     }
 
     private void create(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        singerService.create(req.getParameter("singerName"));
+        singerService.create(req.getParameter("singerName"), req.getParameter("salary"));
         resp.sendRedirect("/singer?message=Create successful!");
     }
 

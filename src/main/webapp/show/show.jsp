@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,6 +54,8 @@
     </div>
     <!-- List event mucsic -->
     <article id="list">
+        <c:forEach var="show" items="${paperShow.content}">
+
         <div class="card" style="width: 100%;">
             <img src="../images/list-pic1.jpg" class="card-img-top" alt="...">
             <div class="card-body">
@@ -69,6 +73,10 @@
                 </div>
             </div>
         </div>
+
+        </c:forEach>
+
+
         <div class="card" style="width: 100%;">
             <img src="../images/list-pic2.jpg" class="card-img-top" alt="...">
             <div class="card-body">

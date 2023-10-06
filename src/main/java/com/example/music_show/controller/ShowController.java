@@ -43,6 +43,12 @@ public class ShowController extends HttpServlet {
     }
 
     private void showList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pageString = req.getParameter("page");
+        if (pageString == null) {
+            pageString = "1";
+        }
+        req.setAttribute("pageShow", showService.getAllShow(Integer.parseInt(pageString), req.getParameter("searchShow")));
+        req.setAttribute("searchShow", req.getParameter("searchShow"));
         req.getRequestDispatcher("./show/show.jsp").forward(req, resp);
     }
 

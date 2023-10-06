@@ -16,9 +16,7 @@ public class LocationService {
     public Page<Location> getAllLocation(int page, String search){
         return locationDAO.getAllLocation(page, search);
     }
-    //    public int amountSeat(int id){
-//        return locationDAO.getSeatList(id);
-//    }
+
     public Location findById(int id){
         return locationDAO.findById(id);
     }

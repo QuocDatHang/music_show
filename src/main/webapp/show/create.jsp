@@ -75,7 +75,7 @@
             </div>
             <div class="col-12" style="padding-bottom: 10px;">
                 <label for="location" class="form-label">Địa điểm</label>
-                <select class="form-control" name="location" id="location">
+                <select class="form-control" name="location" id="location" required>
                     <option style="text-align: center;" value="">- - - - - - - - - - - - - - - - - - - - - - - - - - - - -Chọn địa điểm- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</option>
                     <c:forEach var="location" items="${pageLocation.content}">
                         <option value="${location.id}">${location.address}</option>
@@ -86,7 +86,7 @@
             <label for="singers" class="col-12 mb-2">Ca Sĩ</label>
             <div class="row">
                 <div class="col-12 mb-3">
-                    <select class="form-control" name="singerIds" id="singers" multiple>
+                    <select class="form-control" name="singerIds" id="singers" multiple required>
                         <c:forEach var="singer" items="${singers}">
                             <option value="${singer.id}">${singer.name}</option>
                         </c:forEach>
@@ -105,28 +105,28 @@
                 <tbody>
                 <tr>
                     <td style="text-align: center; vertical-align: middle;">PREMIUM</td>
-                    <td class="input-group"><input type="number" class="form-control" name="premium"><span
+                    <td class="input-group"><input type="number" class="form-control" name="premium" required><span
                             class="input-group-text">VND</span></td>
                 </tr>
                 <tr>
                     <td style="text-align: center;vertical-align: middle;">VIP</td>
-                    <td class="input-group"><input type="number" class="form-control" name="vip"><span
+                    <td class="input-group"><input type="number" class="form-control" name="vip" required><span
                             class="input-group-text">VND</span></td>
                 </tr>
                 <tr>
                     <td style="text-align: center;vertical-align: middle;">Standard</td>
-                    <td class="input-group"><input type="number" class="form-control" name="standard"><span
+                    <td class="input-group"><input type="number" class="form-control" name="standard" required><span
                             class="input-group-text">VND</span></td>
                 </tr>
                 </tbody>
             </table>
             <div class="mb-3">
                 <label for="poster" class="form-label" style="padding-right: 10px;">Ảnh bìa</label>
-                <input type="file" name="poster" id="poster">
+                <input type="file" name="poster" id="poster" required>
             </div>
             <div class="mb-3">
                 <label for="seatDiagramImage" class="form-label" style="padding-right: 10px;">Sơ đồ chỗ ngồi</label>
-                <input type="file" name="seatDiagramImage" id="seatDiagramImage" >
+                <input type="file" name="seatDiagramImage" id="seatDiagramImage" required>
             </div>
             <button type="submit" class="btn btn-primary mb-2">Tạo show</button>
             <a href="/show" class="btn btn-success mb-2">Hủy</a>

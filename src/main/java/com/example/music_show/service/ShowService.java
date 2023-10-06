@@ -4,6 +4,7 @@ import com.example.music_show.dao.LocationDAO;
 import com.example.music_show.dao.ShowDAO;
 import com.example.music_show.dao.TicketInforDAO;
 import com.example.music_show.model.*;
+import com.example.music_show.service.dto.Page;
 import com.example.music_show.utils.DateTimeUtils;
 
 import javax.servlet.ServletContext;
@@ -31,21 +32,10 @@ public class ShowService {
     private LocationService locationService = new LocationService();
 
     private final String UPLOAD_DIRECTORY = "D:\\C0623G1\\Module-3\\Case study\\music_show\\src\\main\\webapp\\images";
-    public void getAllShow(){
-
+    public Page<Show> getAllShow(int page, String search){
+        return showDAO.getAllShow(page, search);
     }
     public void create(HttpServletRequest req) throws ServletException, IOException {
-        //
-        /* Receive file uploaded to the Servlet from the HTML5 form */
-//        String uploadPath = UPLOAD_DIRECTORY;
-//        File uploadDir = new File(uploadPath);
-//        if (!uploadDir.exists()) { uploadDir.mkdir(); };
-//        for (Part part : req.getParts()) {
-//            String fileName = extractFileName(part);
-//            if (fileName != null) {
-//                part.write(uploadPath + File.separator + fileName);
-//            }
-//        }
         Part part = req.getPart("poster");
         String poster = extractFileName(part);
         part.write(poster);
