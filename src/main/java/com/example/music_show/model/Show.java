@@ -93,4 +93,12 @@ public class Show {
     public void setLocation(Location location) {
         this.location = location;
     }
+
+    public List<ShowDetail> getShowDetailList() {
+        return showDetailList;
+    }
+
+    public void setShowDetailList(List<ShowDetail> showDetailList) {
+        this.showDetailList = showDetailList;
+    }
 }

@@ -5,6 +5,7 @@ import com.example.music_show.dao.ShowDAO;
 import com.example.music_show.dao.TicketInforDAO;
 import com.example.music_show.model.*;
 import com.example.music_show.service.dto.Page;
+import com.example.music_show.service.dto.TicketDto;
 import com.example.music_show.utils.DateTimeUtils;
 
 import javax.servlet.ServletContext;
@@ -32,7 +33,7 @@ public class ShowService {
     private LocationService locationService = new LocationService();
 
     private final String UPLOAD_DIRECTORY = "D:\\C0623G1\\Module-3\\Case study\\music_show\\src\\main\\webapp\\images";
-    public Page<Show> getAllShow(int page, String search){
+    public Page<TicketDto> getAllShow(int page, String search){
         return showDAO.getAllShow(page, search);
     }
     public void create(HttpServletRequest req) throws ServletException, IOException {

@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -128,110 +130,56 @@
             </div>
         </article>
 
-        <!-- List event mucsic -->
+        <!-- List event music -->
         <article id="list">
-            <div class="card" style="width: 100%;">
-                <img src="./images/list-pic1.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Bùi Lan Hương</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 100%;">
-                <img src="./images/list-pic2.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Lê Hiếu</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
+
+            <c:forEach var="show" items="${paperShow.content}">
+                <div class="card" style="width: 100%;">
+                    <img src="./images/list-pic1.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="#">${show.singers}</a></h5>
+                        <div class="d-flex justify-content-between">
+                            <div class="mp-stage-title">${show.showName}</div>
+                            <div class="mp-time">${show.timeStart}</div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <div class="mp-singer-name">${show.showName}</div>
+                            <div class="mp-branch-title"><a href="#">CN: ${show.location.city}</a></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <div class="mp-price-title">Giá vé ${show.ticketInfor.standard} VND</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card" style="width: 100%;">
-                <img src="./images/list-pic3.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Thanh Hà</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 100%;">
-                <img src="./images/list-pic4.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Thu Minh</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 100%;">
-                <img src="./images/list-pic5.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Mai Tiến Dũng & Thảo Trang</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 100%;">
-                <img src="./images/list-pic6.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Tăng Phúc</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
+
+            <nav aria-label="...">
+                <c:set var="url" value="/show?page="/>
+                <ul class="pagination" style="background: white;">
+                    <li class="page-item <c:if test="${paperShow.currentPage == 1}" >disabled</c:if>"
+                        style="line-height: 12px; margin: 0;">
+                        <a class="page-link" href="${url}${(paperShow.currentPage - 1)}" tabindex="-1"
+                           aria-disabled="true">Previous</a>
+                    </li>
+                    <c:forEach var="number" begin="1" end="${paperShow.totalPage}">
+                        <c:if test="${number == paperShow.currentPage}">
+                            <li class="page-item active" aria-current="page" style="line-height: 12px; margin: 0;">
+                                <a class="page-link" href="${url}${number}">${number}</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${number != paperShow.currentPage}">
+                            <li class="page-item" style="line-height: 12px; margin: 0;">
+                                <a class="page-link" href="${url}${number}">${number}</a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                    <li class="page-item <c:if test="${paperShow.currentPage == paperShow.totalPage}">disabled</c:if>"
+                        style="line-height: 12px; margin: 0;">
+                        <a class="page-link" href="${url}${(paperShow.currentPage + 1)}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
         </article>
     </section>
 
@@ -262,6 +210,15 @@
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/bootstrap.bundle.min.js"></script>
 <script src="./js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script>
+    const message = document.getElementById('message');
+    if (message !== null && message.innerHTML) {
+        toastr.success(message.innerHTML);
+    }
+</script>
 </body>
 
 </html>

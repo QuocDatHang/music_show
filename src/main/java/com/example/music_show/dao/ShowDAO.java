@@ -3,6 +3,7 @@ package com.example.music_show.dao;
 import com.example.music_show.model.Show;
 import com.example.music_show.model.Singer;
 import com.example.music_show.service.dto.Page;
+import com.example.music_show.service.dto.TicketDto;
 import com.example.music_show.utils.DateTimeUtils;
 
 import java.sql.*;
@@ -12,27 +13,27 @@ public class ShowDAO extends DatabaseConnection {
     private LocationDAO locationDAO = new LocationDAO();
     private TicketInforDAO ticketInforDAO = new TicketInforDAO();
 
-    public Page<Show> getAllShow(int page, String search) {
-        var result = new Page<Show>();
+    public Page<TicketDto> getAllShow(int page, String search) {
+        var result = new Page<TicketDto>();
         final int TOTAL_ELEMENT = 9;
         result.setCurrentPage(page);
-        var content = new ArrayList<Show>();
+        var content = new ArrayList<TicketDto>();
         if (search == null) {
             search = "";
         }
         search = "%" + search.toLowerCase() + "%";
 
-        String SELECT_ALL = "SELECT s.*, l.city, GROUP_CONCAT(singers.name SEPARATOR ' - ') as singers FROM shows s" +
-                "JOIN show_details sd ON s.id = sd.show_id" +
-                "JOIN singers ON sd.singer_id = singers.id" +
-                "JOIN locations l ON s.location_id = l.id" +
-                "WHERE LOWER(s.showName) LIKE ?" +
-                "OR LOWER(singers.name) LIKE ? group by s.id LIMIT ? OFFSET ?";
-        String SELECT_COUNT = "SELECT count(1) as count from (" +
-                "SELECT  group_concat(singers.name) as singers FROM shows s" +
-                "JOIN show_details sd ON s.id = sd.show_id" +
-                "JOIN singers ON sd.singer_id = singers.id" +
-                "WHERE LOWER(s.showName) LIKE ?" +
+        String SELECT_ALL = "SELECT s.*, l.city, GROUP_CONCAT(singers.name SEPARATOR ' - ') as singers FROM shows s " +
+                "JOIN show_details sd ON s.id = sd.show_id " +
+                "JOIN singers ON sd.singer_id = singers.id " +
+                "JOIN locations l ON s.location_id = l.id " +
+                "WHERE LOWER(s.showName) LIKE ? " +
+                "OR LOWER(singers.name) LIKE ? group by s.id LIMIT ? OFFSET ? ";
+        String SELECT_COUNT = "SELECT count(1) as count from ( " +
+                "SELECT group_concat(singers.name) as singers FROM shows s " +
+                "JOIN show_details sd ON s.id = sd.show_id " +
+                "JOIN singers ON sd.singer_id = singers.id " +
+                "WHERE LOWER(s.showName) LIKE ? " +
                 "OR LOWER(singers.name) LIKE ? group by s.id ) as list";
         try {
             Connection connection = getConnection();
@@ -43,12 +44,13 @@ public class ShowDAO extends DatabaseConnection {
             preparedStatement.setInt(4, (page - 1) * TOTAL_ELEMENT);
             var rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                content.add(getShowByResultSet(rs));
+                content.add(getTicketDtoByResultSet(rs));
             }
             result.setContent(content);
 
             PreparedStatement preparedStatementCount = connection.prepareStatement(SELECT_COUNT);
             preparedStatementCount.setString(1, search);
+            preparedStatementCount.setString(2, search);
             var rsCount = preparedStatementCount.executeQuery();
             if (rsCount.next()) {
                 result.setTotalPage((int) Math.ceil((double) rsCount.getInt("count") / TOTAL_ELEMENT));
@@ -127,5 +129,18 @@ public class ShowDAO extends DatabaseConnection {
         show.setTicketInfor(ticketInforDAO.findById(rs.getInt("ticket_infor_id")));
         show.setSeatDiagramImage(rs.getString("seatDiagramImage"));
         return show;
+    }
+    public TicketDto getTicketDtoByResultSet(ResultSet rs) throws SQLException {
+        TicketDto ticketDto = new TicketDto();
+        ticketDto.setId(rs.getInt("id"));
+        ticketDto.setShowName(rs.getString("showName"));
+        ticketDto.setTimeStart(rs.getString("timeStart"));
+        ticketDto.setTimeEnd((rs.getString("timeEnd")));
+        ticketDto.setLocation(locationDAO.findById(rs.getInt("location_id")));
+        ticketDto.setPoster(rs.getString("poster"));
+        ticketDto.setTicketInfor(ticketInforDAO.findById(rs.getInt("ticket_infor_id")));
+        ticketDto.setSeatDiagramImage(rs.getString("seatDiagramImage"));
+        ticketDto.setSingers(rs.getString("singers"));
+        return ticketDto;
     }
 }
