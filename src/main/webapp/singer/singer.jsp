@@ -101,12 +101,12 @@
                     </td>
                     <td style="text-align: center">
                         <a class="btn btn-info" href="/singer?action=edit&id=${singer.id}">
-                            Edit
+                            Sửa
                         </a>
                         <a class="btn btn-danger"
                            onclick="return confirm('Do you want remove ${singer.name} ?')"
                            href="/singer?action=delete&id=${singer.id}">
-                            Delete
+                            Xóa
                         </a>
                     </td>
                 </tr>

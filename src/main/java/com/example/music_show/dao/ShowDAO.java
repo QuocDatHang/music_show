@@ -8,6 +8,7 @@ import com.example.music_show.utils.DateTimeUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShowDAO extends DatabaseConnection {
     private LocationDAO locationDAO = new LocationDAO();
@@ -15,7 +16,7 @@ public class ShowDAO extends DatabaseConnection {
 
     public Page<TicketDto> getAllShow(int page, String search) {
         var result = new Page<TicketDto>();
-        final int TOTAL_ELEMENT = 9;
+        final int TOTAL_ELEMENT = 3;
         result.setCurrentPage(page);
         var content = new ArrayList<TicketDto>();
         if (search == null) {
@@ -51,6 +52,74 @@ public class ShowDAO extends DatabaseConnection {
             PreparedStatement preparedStatementCount = connection.prepareStatement(SELECT_COUNT);
             preparedStatementCount.setString(1, search);
             preparedStatementCount.setString(2, search);
+            var rsCount = preparedStatementCount.executeQuery();
+            if (rsCount.next()) {
+                result.setTotalPage((int) Math.ceil((double) rsCount.getInt("count") / TOTAL_ELEMENT));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    public List<TicketDto> findAll() {
+        var result = new ArrayList<TicketDto>();
+        String SELECT_ALL = "SELECT s.*, l.city, GROUP_CONCAT(singers.name SEPARATOR ' - ') as singers FROM shows s " +
+                "JOIN show_details sd ON s.id = sd.show_id " +
+                "JOIN singers ON sd.singer_id = singers.id " +
+                "JOIN locations l ON s.location_id = l.id " +
+                " group by s.id ";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
+            var rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                result.add(getTicketDtoByResultSet(rs));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    public Page<TicketDto> findByLocation(int page, String search) {
+        var result = new Page<TicketDto>();
+        final int TOTAL_ELEMENT = 6;
+        result.setCurrentPage(page);
+        var content = new ArrayList<TicketDto>();
+        if (search == null) {
+            search = "";
+        }
+        search = "%" + search.toLowerCase() + "%";
+
+        String SELECT_ALL = "SELECT s.*, l.city, GROUP_CONCAT(singers.name SEPARATOR ' - ') as singers FROM shows s " +
+                "JOIN show_details sd ON s.id = sd.show_id " +
+                "JOIN singers ON sd.singer_id = singers.id " +
+                "JOIN locations l ON s.location_id = l.id " +
+                "WHERE LOWER(l.city) LIKE ? " +
+                "GROUP BY s.id LIMIT ? OFFSET ? ";
+        String SELECT_COUNT = "SELECT count(1) as count from ( " +
+                "SELECT group_concat(singers.name) as singers FROM shows s " +
+                "JOIN show_details sd ON s.id = sd.show_id " +
+                "JOIN singers ON sd.singer_id = singers.id " +
+                "JOIN locations l ON s.location_id = l.id " +
+                "WHERE LOWER(l.city) LIKE ? " +
+                "GROUP BY s.id ) as list";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
+            preparedStatement.setString(1, search);
+            preparedStatement.setInt(2, TOTAL_ELEMENT);
+            preparedStatement.setInt(3, (page - 1) * TOTAL_ELEMENT);
+            var rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                content.add(getTicketDtoByResultSet(rs));
+            }
+            result.setContent(content);
+
+            PreparedStatement preparedStatementCount = connection.prepareStatement(SELECT_COUNT);
+            preparedStatementCount.setString(1, search);
             var rsCount = preparedStatementCount.executeQuery();
             if (rsCount.next()) {
                 result.setTotalPage((int) Math.ceil((double) rsCount.getInt("count") / TOTAL_ELEMENT));

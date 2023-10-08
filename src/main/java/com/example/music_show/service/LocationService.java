@@ -61,4 +61,5 @@ public class LocationService {
     public Location findByAddress(String address){
         return locationDAO.findByAddress(address);
     }
+
 }

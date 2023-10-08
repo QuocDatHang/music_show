@@ -12,11 +12,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Trang Admin</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/4f6aa91745.js" crossorigin="anonymous"></script>
+
+    <style>
+        .background-div {
+            background-image: url("./images/adminPage.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            width: 100%; /* Đảm bảo rằng div chiếm toàn bộ chiều ngang */
+            height: 100vh; /* Đặt chiều cao của div bằng chiều cao của viewport */
+        }
+    </style>
 </head>
 
 <body>
@@ -36,17 +47,41 @@
     <div class="d-flex justify-content-between" id="link">
         <div class="top-misc-layout"></div>
         <ul>
+            <li><a href="./homePage">Trang chủ</a></li>
             <li><a href="./show">Show</a></li>
-            <li><a href="#">Địa điểm</a></li>
-            <li><a href="#">Doanh thu</a></li>
+            <li><a href="./location">Địa điểm</a></li>
+            <li><a href="./revenue">Doanh thu</a></li>
             <li><a href="./singer">Ca sĩ</a></li>
-            <li><a href="#">Hóa đơn</a></li>
+            <li><a href="./bill">Hóa đơn</a></li>
         </ul>
         <div class="top-misc-layout"></div>
     </div>
 </nav>
 
+<div class="background-div"></div>
 
+<footer id="footer">
+    <div class="d-flex justify-content-center align-items-center footer-logo" id="footer-logo">
+        <image class="footer-logo__img" src="images/MAYLANGTHANG_LOGO_WHITE.png"></image>
+    </div>
+
+    <div class="footer-copy">
+        <p class="footer-copy__text">All Rights Reserved</p>
+        <ul>
+            <li>
+                <a class="footer-copy__link" href="#">Về chúng tôi</a>
+                <span>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;</span>
+            </li>
+            <li>
+                <a class="footer-copy__link" href="#"> Liên hệ</a>
+                <span>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;</span>
+            </li>
+            <li>
+                <a class="footer-copy__link" href="#"> Diều khoản và chính sách</a>
+            </li>
+        </ul>
+    </div>
+</footer>
 
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/bootstrap.bundle.min.js"></script>

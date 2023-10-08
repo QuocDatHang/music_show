@@ -36,6 +36,12 @@ public class ShowService {
     public Page<TicketDto> getAllShow(int page, String search){
         return showDAO.getAllShow(page, search);
     }
+    public List<TicketDto> findAll(){
+        return showDAO.findAll();
+    }
+    public Page<TicketDto> findByLocation(int page, String search){
+        return showDAO.findByLocation(page, search);
+    }
     public void create(HttpServletRequest req) throws ServletException, IOException {
         Part part = req.getPart("poster");
         String poster = extractFileName(part);

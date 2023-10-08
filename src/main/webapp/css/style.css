@@ -231,7 +231,7 @@ nav ul li a:hover {
 
 #footer {
   background-color: var(--black-color);
-  padding: 45px 0;
+  padding-bottom: 35px;
 }
 
 #footer .footer-logo .footer-logo__img {
