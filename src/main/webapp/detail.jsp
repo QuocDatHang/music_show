@@ -206,6 +206,8 @@
             <div class="col-5" id="inputTicket">
                 <div id="inputTicket-in-list">
                     <ul id="selected-seats-list">
+
+
                     </ul>
                 </div>
                 <div class="col-2 d-flex justify-content-end">
@@ -214,9 +216,9 @@
             </div>
         </div>
         <form action="/ticket?action=createBill&userId=${user.id}" method="post">
-        <div id="selected-seats-container">
+            <div id="selected-seats-container">
 
-        </div>
+            </div>
         </form>
         <article>
 
@@ -331,8 +333,9 @@
         }
         var totalSeats = listSeat.length;
 
-        var totalSeatsElement = document.createElement('p');
+        var totalSeatsElement = document.createElement('input');
         totalSeatsElement.textContent = 'Tổng số ghế đã chọn: ' + totalSeats;
+        totalSeatsElement.classList.add(totalSeats);
         selectedSeatsList.appendChild(totalSeatsElement);
 
         let totalPaymentElement = document.createElement('div');
@@ -346,11 +349,10 @@
         } else {
             discount = totalPayment;
         }
-
+        // <input type="text" readonly class="form-control-plaintext" value="\${discountBill}" name="total">`;
         var discountBill = document.createElement('p');
-        discountBill.textContent = 'Tổng số ghế đã chọn: ' + discount;
-        selectedSeatsList.innerHTML =`
-        <input type="text" readonly class="form-control-plaintext" value="\${discountBill}" name="total">`;
+        discountBill.textContent = 'discount: ' + discount;
+        selectedSeatsList.appendChild(discountBill);
     }
 
     function deleteSeat(id) {
@@ -380,13 +382,16 @@
 
 
         // Lặp qua các ghế đã chọn trong danh sách
-        for (var i = 0; i < selectedSeatsList.children.length; i++) {
-            var listItem = selectedSeatsList.children[i];
-            var seatInfo = listItem.innerHTML;
+        // for (var i = 0; i < selectedSeatsList.children.length; i++) {
+            // var listItem = selectedSeatsList.children[i];
+            // var seatInfo = listItem.innerText.replace("\n", " ");
+        for (var i = 0; i < listSeat.length; i++) {
+            let seatTemp = listSeat[i];
+            let seatInfo = seatTemp.position + seatTemp.type + "120000"
 
             // Tạo một phần tử div mới cho mỗi ghế và thêm vào selected-seats-container
-            var seatElement = document.createElement('div');
-            seatElement.innerHTML = seatInfo;
+            var seatElement = document.createElement('input');
+            seatElement.value = seatInfo;
             selectedSeatsContainer.appendChild(seatElement);
         }
 
