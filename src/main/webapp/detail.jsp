@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.example.music_show.model.enumeration.EType" %>
+<%@ page import="java.math.BigDecimal" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -203,13 +204,20 @@
                 </div>
             </div>
             <div class="col-5" id="inputTicket">
-                <ul id="selected-seats-list">
-
-                </ul>
-
+                <div id="inputTicket-in-list">
+                    <ul id="selected-seats-list">
+                    </ul>
+                </div>
+                <div class="col-2 d-flex justify-content-end">
+                    <label class="btn btn-primary mb-2" id="inputbill">Đặt chỗ</label>
+                </div>
             </div>
         </div>
+        <form action="/ticket?action=createBill&userId=${user.id}" method="post">
+        <div id="selected-seats-container">
 
+        </div>
+        </form>
         <article>
 
         </article>
@@ -254,6 +262,8 @@
     const seatListJson = ${seatListJson};
     const showJSON = ${showJSON};
     let listSeat = [];
+    const userJSON =${userJSON};
+    let discount = 0;
 
     function toggleSeat(id) {
         var seat;
@@ -273,10 +283,11 @@
             listSeat.push(seat);
         }
 
-        console.log(listSeat);
+        // console.log(listSeat);
 
         // Cập nhật danh sách ghế đã chọn trên giao diện
         selectedSeatsList.innerHTML = '';
+        let totalPayment = 0;
         for (var i = 0; i < listSeat.length; i++) {
             var seatTemp = listSeat[i];
             var listItem = document.createElement('li');
@@ -294,28 +305,128 @@
             if (seatTemp.type === "PREMIUM") {
                 // console.log(seatTemp.position, seatTemp.type)
                 listItem.innerHTML =
-                    `<div class="seat-info">\${seatTemp.position}</div>
+                    `<div class="" style="border: 2px solid black; display: flex; background: white">
+                       <div class="seat-info">\${seatTemp.position}</div>
                         <div class="seat-info">\${seatTemp.type}</div>
                         <div class="seat-info">\${showJSON.ticketInfor.premium}</div>`
+                totalPayment += showJSON.ticketInfor.premium;
             }
             if (seatTemp.type === "VIP") {
                 listItem.innerHTML =
                     `<div class="seat-info">\${seatTemp.position}</div>
                     <div class="seat-info">\${seatTemp.type}</div>
-                    <div class="seat-info">\${showJSON.ticketInfor.vip}</div>`
+                    <div class="seat-info">\${showJSON.ticketInfor.vip}</div>`;
+                totalPayment += showJSON.ticketInfor.vip;
             }
             if (seatTemp.type === "STANDARD") {
                 listItem.innerHTML =
                     `<div class="seat-info">\${seatTemp.position}</div>
                         <div class="seat-info">\${seatTemp.type}</div>
                         <div class="seat-info">\${showJSON.ticketInfor.standard}</div>`
+                totalPayment += showJSON.ticketInfor.standard;
 
             }
             selectedSeatsList.appendChild(listItem);
+
         }
+        var totalSeats = listSeat.length;
+
+        var totalSeatsElement = document.createElement('p');
+        totalSeatsElement.textContent = 'Tổng số ghế đã chọn: ' + totalSeats;
+        selectedSeatsList.appendChild(totalSeatsElement);
+
+        let totalPaymentElement = document.createElement('div');
+        totalPaymentElement.textContent = 'Total Payment: ' + totalPayment;
+        selectedSeatsList.appendChild(totalPaymentElement);
+
+        if (totalSeats >= 5 && totalSeats <= 10) {
+            discount = totalPayment * 0.95;
+        } else if (totalSeats >= 10) {
+            discount = totalPayment * 0.9;
+        } else {
+            discount = totalPayment;
+        }
+
+        var discountBill = document.createElement('p');
+        discountBill.textContent = 'Tổng số ghế đã chọn: ' + discount;
+        selectedSeatsList.innerHTML =`
+        <input type="text" readonly class="form-control-plaintext" value="\${discountBill}" name="total">`;
     }
 
+    function deleteSeat(id) {
+        var seat;
 
+        for (let i = 0; i < seatListJson.length; i++) {
+            if (seatListJson[i].id === id) {
+                seat = seatListJson[i];
+                break;
+            }
+        }
+
+        var index = listSeat.indexOf(seat);
+        if (index !== -1) {
+            listSeat.splice(index, 1);
+        }
+
+        toggleSeat(); // Gọi lại hàm toggleSeat để tính lại giá sau khi xóa ghế
+    }
+
+    document.getElementById('inputbill').addEventListener('click', function () {
+        var selectedSeatsList = document.getElementById('selected-seats-list');
+        var selectedSeatsContainer = document.getElementById('selected-seats-container');
+
+        // Xóa nội dung của selected-seats-container
+        selectedSeatsContainer.innerHTML = '';
+
+
+        // Lặp qua các ghế đã chọn trong danh sách
+        for (var i = 0; i < selectedSeatsList.children.length; i++) {
+            var listItem = selectedSeatsList.children[i];
+            var seatInfo = listItem.innerHTML;
+
+            // Tạo một phần tử div mới cho mỗi ghế và thêm vào selected-seats-container
+            var seatElement = document.createElement('div');
+            seatElement.innerHTML = seatInfo;
+            selectedSeatsContainer.appendChild(seatElement);
+        }
+
+        // var totalSeats = selectedSeatsList.children.length;
+        //
+        // var totalSeatsElement = document.createElement('p');
+        // totalSeatsElement.textContent = 'Tổng số ghế đã chọn: ' + totalSeats;
+        // selectedSeatsContainer.appendChild(listSeat);
+        //  selectedSeatsContainer.innerHTML =`
+        //    <div class="">\${userJSON.name}</div>
+        //      <div class="">\${userJSON.phoneNumber}</div>
+        //   <div class="">\${userJSON.email}</div>
+        //     `;
+
+        // selectedSeatsContainer.innerHTML = `
+        //     <div class="">\${userJSON.name}</div>
+        //     <div class="">\${userJSON.phoneNumber}</div>
+        //  <div class="">\${userJSON.email}</div>
+        //   <div class="">\${seatTemp.position}</div>
+        //             <div class="">\${seatTemp.type}</div>
+        //             <div class="">\${showJSON.ticketInfor.vip}</div>`;
+
+        selectedSeatsContainer.insertAdjacentHTML('beforeend', `
+    <div class="">\${userJSON.name}</div>
+    <div class="">\${userJSON.phoneNumber}</div>
+    <div class="">\${userJSON.email}</div>
+    <button type="submit" class="btn btn-primary">submit</button>
+`);
+
+        selectedSeatsContainer.insertAdjacentHTML('beforeend', `
+    <div class="">\${seatTemp.position}</div>
+    <div class="">\${seatTemp.type}</div>
+    <div class="">\${showJSON.ticketInfor.vip}</div>
+`);
+
+        selectedSeatsContainer.appendChild(totalSeatsElement);
+        selectedSeatsContainer.appendChild(totalPaymentElement);
+        selectedSeatsContainer.appendChild(discountBill);
+
+    });
 </script>
 </body>
 

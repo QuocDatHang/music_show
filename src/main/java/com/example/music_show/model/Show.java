@@ -13,6 +13,11 @@ public class Show {
     private List<ShowDetail> showDetailList;
     public Show() {
     }
+
+    public Show(int id) {
+        this.id = id;
+    }
+
     public Show(int id, String showName, LocalDateTime timeStart, LocalDateTime timeEnd, String poster, Location location, TicketInfor ticketInfor, String seatDiagramImage) {
         this.id = id;
         this.showName = showName;

@@ -19,18 +19,10 @@ public class TicketDto {
     private Location location;
     private TicketInfor ticketInfor;
     private String seatDiagramImage;
+    private String singers;
     private List<ShowDetail> showDetailList;
 
-    public TicketDto(int id, String showName, String timeStart, String timeEnd, String poster, Location location, TicketInfor ticketInfor, String seatDiagramImage) {
-        this.id = id;
-        this.showName = showName;
-        this.timeStart = timeStart;
-        this.timeEnd = timeEnd;
-        this.poster = poster;
-        this.location = location;
-        this.ticketInfor = ticketInfor;
-        this.seatDiagramImage = seatDiagramImage;
-    }
+
 
     public TicketDto() {
     }
@@ -97,6 +89,14 @@ public class TicketDto {
 
     public void setSeatDiagramImage(String seatDiagramImage) {
         this.seatDiagramImage = seatDiagramImage;
+    }
+
+    public String getSingers() {
+        return singers;
+    }
+
+    public void setSingers(String singers) {
+        this.singers = singers;
     }
 
     public List<ShowDetail> getShowDetailList() {

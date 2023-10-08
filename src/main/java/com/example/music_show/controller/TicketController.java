@@ -1,12 +1,10 @@
 package com.example.music_show.controller;
 
 import com.example.music_show.dao.LocationDAO;
+import com.example.music_show.dao.UserDAO;
 import com.example.music_show.model.*;
 import com.example.music_show.model.enumeration.EType;
-import com.example.music_show.service.LocationService;
-import com.example.music_show.service.SeatService;
-import com.example.music_show.service.ShowService;
-import com.example.music_show.service.TicketService;
+import com.example.music_show.service.*;
 import com.example.music_show.service.dto.TicketDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,6 +25,9 @@ public class TicketController extends HttpServlet {
     private TicketService ticketService;
     private LocationDAO locationDAO;
 
+    private UserService userService;
+    private BillService billService;
+
     @Override
     public void init() throws ServletException {
         seatService = new SeatService();
@@ -34,6 +35,8 @@ public class TicketController extends HttpServlet {
         locationService = new LocationService();
         locationDAO = new LocationDAO();
         ticketService = new TicketService();
+        userService = new UserService();
+        billService = new BillService();
     }
     // getShowById return TicketDto (List<Seat>)
 
@@ -44,8 +47,8 @@ public class TicketController extends HttpServlet {
             action="";
         }
         switch (action){
-            case "create":
-                showDetail(req,resp);
+            case "showBill":
+                showBillDetail(req,resp);
                 break;
             default:
                 showDetail(req,resp);
@@ -53,9 +56,11 @@ public class TicketController extends HttpServlet {
         }
     }
 
-    private void createTicket(HttpServletRequest req, HttpServletResponse resp) {
+    private void showBillDetail(HttpServletRequest req, HttpServletResponse resp) {
 
     }
+
+
 
     public void showDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -63,6 +68,9 @@ public class TicketController extends HttpServlet {
         Show showdetail = showService.findById(id);
         TicketDto dto = ticketService.detailShow(id);
         req.setAttribute("show", showdetail);
+        User user = userService.findById(Integer.parseInt(req.getParameter("userId"))) ;
+        req.setAttribute("user", user);
+        req.setAttribute("userJSON", new ObjectMapper().writeValueAsString(user));
         List<Seat> seats = locationDAO.getSeatList(showdetail.getLocation().getId());
         req.setAttribute("seats", seats);
         req.setAttribute("seatListJson", new ObjectMapper().writeValueAsString(seats));
@@ -71,14 +79,15 @@ public class TicketController extends HttpServlet {
 
 
     }
+
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         if (action == null) {
             action = "";
         }
         switch (action) {
-            case "create":
-                createTicket(req, resp);
+            case "createBill":
+                createBill(req, resp);
                 break;
 //            case "edit":
 //                update(req,resp);
@@ -86,6 +95,11 @@ public class TicketController extends HttpServlet {
 //            default:
 //                showList(req,resp);
         }
+    }
+
+    private void createBill(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+         billService.createBill(req);
+         resp.sendRedirect("/detail?message=Created Successfully");
     }
 }
 

@@ -7,7 +7,7 @@
 }
 .square-container {
   flex-basis: 40%;
-  width: 600px; /* Đặt kích thước chiều rộng */
+  width: 500px; /* Đặt kích thước chiều rộng */
   height: 500px; /* Đặt kích thước chiều cao */
   border: 1px solid #ccc; /* Đặt viền cho khung hình */
   display: flex; /* Sử dụng flexbox để căn giữa nội dung */
@@ -16,6 +16,9 @@
   margin-top: 50px;
   margin-left: 100px;
   padding: 50px;
+  margin-bottom: 50px;
+  text-align: center; /* Căn giữa theo chiều ngang */
+  vertical-align: middle; /* Căn giữa theo chiều dọc */
 }
 .diagram {
   display: flex;
@@ -160,6 +163,7 @@
   position: relative;
   top: 1px;
   margin: 5px;
+
 }
 
 .seat.selected {
@@ -202,4 +206,46 @@
   grid-gap: 10px;
   align-items: center;
   padding: 5px;
+}
+.seat-info {
+  background-color: #e32020;
+  padding: 5px;
+  text-align: center;
+
+
+}
+#inputTicket {
+  /*flex-basis: 40%;*/
+  width: 600px; /* Đặt kích thước chiều rộng */
+  height: 500px; /* Đặt kích thước chiều cao */
+  /*border: 1px solid #ccc; !* Đặt viền cho khung hình *!*/
+  display: flex; /* Sử dụng flexbox để căn giữa nội dung */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  margin-top: 50px;
+  margin-left: 100px;
+  padding: 50px;
+}
+#inputTicket-in-list {
+  /*flex-basis: 40%;*/
+  width: 100%; /* Đặt kích thước chiều rộng */
+  height: 400px; /* Đặt kích thước chiều cao */
+  border: 1px solid #ccc; /* Đặt viền cho khung hình */
+  display: flex; /* Sử dụng flexbox để căn giữa nội dung */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  align-items: end; /* Căn giữa theo chiều dọc */
+  /*margin-top: 50px;*/
+  /*margin-left: 100px;*/
+  /*padding: 50px;*/
+  background-color: #fff;
+  transform: translateY(0%);
+  transition: all 0.5s ease-in;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
+.seat{
+  cursor: pointer;
+}
+.seat:hover{
+  background-color: #0b5ed7;
 }

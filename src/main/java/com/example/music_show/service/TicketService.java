@@ -18,11 +18,6 @@ public class TicketService {
 
     private TicketDAO ticketDAO = new TicketDAO();
     public void createTicket(HttpServletRequest req){
-        int showId = 1;
-        int billId =0;
-
-        EStatus status = EStatus.AVAILABLE;
-
 
     }
 
