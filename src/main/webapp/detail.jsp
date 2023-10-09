@@ -286,7 +286,7 @@
         }
 
         // console.log(listSeat);
-
+        //123
         // Cập nhật danh sách ghế đã chọn trên giao diện
         selectedSeatsList.innerHTML = '';
         let totalPayment = 0;
