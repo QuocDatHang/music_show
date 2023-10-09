@@ -2,8 +2,13 @@ package com.example.music_show.service;
 
 import com.example.music_show.dao.UserDAO;
 import com.example.music_show.model.User;
+import com.example.music_show.model.enumeration.ERole;
 import com.example.music_show.utils.PasswordUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 public class UserService {
@@ -14,9 +19,9 @@ public class UserService {
     public List<User> getAllUsers(){
         return userDAO.findAll();
     }
-    public void create(User user){
+    public void register(User user){
         user.setPassword(PasswordUtils.encryptPassword(user.getPassword()));
-        userDAO.create(user);
+        userDAO.register(user);
     }
     public void update(User user, int id){
         user.setPassword(PasswordUtils.encryptPassword(user.getPassword()));
@@ -28,23 +33,23 @@ public class UserService {
     public User findById(int id){
         return userDAO.findById(id);
     }
-//    public boolean login(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        String userName = req.getParameter("userName");
-//        String password = req.getParameter("password");
-//        var user = userDAO.findByUserName(userName);
-//        if (user != null && PasswordUtils.checkPassword(password, user.getPassword())){
-//            HttpSession session = req.getSession();
-//            session.setAttribute("user", user);
-//            if (user.getRole().getName().equals("Admin")){
-//                resp.sendRedirect("/user?message=Login Successful");
-//            } else if (user.getRole().getName().equals("User")) {
-//                resp.sendRedirect("/user?action=showRestore&message=Login Successful");
-//            }
-//            else {
-//                resp.sendRedirect("/index.jsp?message=Login Successful");
-//            }
-//            return true;
-//        }
-//        return false;
-//    }
+    public boolean login(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String userName = req.getParameter("userName");
+        String password = req.getParameter("password");
+        User user = userDAO.findByUserName(userName);
+        if (user != null && PasswordUtils.checkPassword(password, user.getPassword())){
+            HttpSession session = req.getSession();
+            session.setAttribute("user", user);
+            if (user.getRole()==ERole.ADMIN){
+                resp.sendRedirect("/location?id=${user.id}&message=Login Successful");
+            } else if (user.getRole() == ERole.USER) {
+                resp.sendRedirect("/ticket?userId=" + user.getId() + "&message=Login Successful");
+
+            } else {
+                resp.sendRedirect("/homePage?message=Login Success");
+            }
+            return true;
+        }
+        return false;
+    }
 }

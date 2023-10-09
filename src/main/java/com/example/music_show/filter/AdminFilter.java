@@ -1,5 +1,8 @@
 package com.example.music_show.filter;
 
+import com.example.music_show.model.User;
+import com.example.music_show.model.enumeration.ERole;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -7,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/book/*")
+@WebFilter("/location/*")
 public class AdminFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -17,7 +20,7 @@ public class AdminFilter implements Filter {
             ((HttpServletResponse) servletResponse).sendRedirect("/auth");
             return;
         }
-        if (!user.getRole().getName().equals("ADMIN")) {
+        if (!(user.getRole() == ERole.ADMIN)) {
             ((HttpServletResponse) servletResponse).sendRedirect("/auth");
             return;
         }

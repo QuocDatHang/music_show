@@ -1,88 +1,109 @@
-package com.example.music_show.model;
+package com.example.music_show.service.dto;
+
+import com.example.music_show.model.Location;
+import com.example.music_show.model.Seat;
+import com.example.music_show.model.ShowDetail;
+import com.example.music_show.model.TicketInfor;
+
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
-public class Show {
+
+public class TicketDto {
+
     private int id;
     private String showName;
-    private LocalDateTime timeStart;
-    private LocalDateTime timeEnd;
+    private String timeStart;
+    private String timeEnd;
     private String poster;
     private Location location;
     private TicketInfor ticketInfor;
     private String seatDiagramImage;
+    private String singers;
     private List<ShowDetail> showDetailList;
-    public Show() {
+
+
+
+    public TicketDto() {
     }
 
-    public Show(int id) {
-        this.id = id;
-    }
-
-    public Show(int id, String showName, LocalDateTime timeStart, LocalDateTime timeEnd, String poster, Location location, TicketInfor ticketInfor, String seatDiagramImage) {
-        this.id = id;
-        this.showName = showName;
-        this.timeStart = timeStart;
-        this.timeEnd = timeEnd;
-        this.poster = poster;
-        this.location = location;
-        this.ticketInfor = ticketInfor;
-        this.seatDiagramImage = seatDiagramImage;
-    }
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public String getShowName() {
         return showName;
     }
+
     public void setShowName(String showName) {
         this.showName = showName;
     }
-    public LocalDateTime getTimeStart() {
+
+    public String getTimeStart() {
         return timeStart;
     }
-    public void setTimeStart(LocalDateTime timeStart) {
+
+    public void setTimeStart(String timeStart) {
         this.timeStart = timeStart;
     }
-    public LocalDateTime getTimeEnd() {
+
+    public String getTimeEnd() {
         return timeEnd;
     }
-    public void setTimeEnd(LocalDateTime timeEnd) {
+
+    public void setTimeEnd(String timeEnd) {
         this.timeEnd = timeEnd;
     }
+
     public String getPoster() {
         return poster;
     }
+
     public void setPoster(String poster) {
         this.poster = poster;
     }
-    public TicketInfor getTicketInfor() {
-        return ticketInfor;
-    }
-    public void setTicketInfor(TicketInfor ticketInfor) {
-        this.ticketInfor = ticketInfor;
-    }
-    public String getSeatDiagramImage() {
-        return seatDiagramImage;
-    }
-    public void setSeatDiagramImage(String seatDiagramImage) {
-        this.seatDiagramImage = seatDiagramImage;
-    }
+
     public Location getLocation() {
         return location;
     }
+
     public void setLocation(Location location) {
         this.location = location;
     }
+
+    public TicketInfor getTicketInfor() {
+        return ticketInfor;
+    }
+
+    public void setTicketInfor(TicketInfor ticketInfor) {
+        this.ticketInfor = ticketInfor;
+    }
+
+    public String getSeatDiagramImage() {
+        return seatDiagramImage;
+    }
+
+    public void setSeatDiagramImage(String seatDiagramImage) {
+        this.seatDiagramImage = seatDiagramImage;
+    }
+
+    public String getSingers() {
+        return singers;
+    }
+
+    public void setSingers(String singers) {
+        this.singers = singers;
+    }
+
+    public List<ShowDetail> getShowDetailList() {
+        return showDetailList;
+    }
+
+    public void setShowDetailList(List<ShowDetail> showDetailList) {
+        this.showDetailList = showDetailList;
+    }
 }
-
-
-
-
-
-
-
-
-

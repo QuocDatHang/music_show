@@ -37,7 +37,7 @@ public class UserDAO extends DatabaseConnection {
 
 
     public User findById(int id) {
-        String FIND_BY_ID = "SELECT u.*, r.name roleName FROM users u JOIN roles r on u.role_id = r.id HAVING u.id = ?";
+        String FIND_BY_ID = "SELECT * FROM users u WHERE u.id = ?";
         Connection connection = getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID);
@@ -60,17 +60,16 @@ public class UserDAO extends DatabaseConnection {
         return null;
     }
 
-    public void create(User user) {
+    public void register(User user) {
         String CREATE_USER = "INSERT INTO users (`userName`, `password`, `name`, `email`, `phoneNumber`, `role`) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
-        Connection connection = getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USER);
 
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USER)){
             preparedStatement.setString(1, user.getUserName());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getName());
-            preparedStatement.setString(5, user.getEmail());
+            preparedStatement.setString(4, user.getEmail());
             preparedStatement.setString(5, user.getPhoneNumber());
             preparedStatement.setString(6, String.valueOf(user.getRole()));
 
