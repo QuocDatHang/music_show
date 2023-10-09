@@ -34,12 +34,31 @@ public class ShowController extends HttpServlet {
         switch (action) {
             case "showCreate" -> showCreate(req, resp);
             case "showEdit" -> showEdit(req, resp);
+            case "delete" -> delete(req, resp);
             default -> showList(req, resp);
         }
     }
 
-    private void showEdit(HttpServletRequest req, HttpServletResponse resp) {
+    private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String pageString = req.getParameter("page");
+        if (pageString == null) {
+            pageString = "1";
+        }
+        showService.delete(Integer.parseInt(req.getParameter("id")));
+        resp.sendRedirect("/show?page=" + pageString);
+    }
 
+    private void showEdit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pageString = req.getParameter("page");
+        if(pageString == null){
+            pageString="1";
+        }
+        req.setAttribute("singers", singerService.getAllSinger());
+        req.setAttribute("pageLocation", locationService.getAllLocation(Integer.parseInt(pageString),req.getParameter("search")));
+        req.setAttribute("singersEdit", singerService.findSingersByShowId(Integer.parseInt(req.getParameter("id"))));
+        req.setAttribute("showEdit", showService.findById(Integer.parseInt(req.getParameter("id"))));
+        req.setAttribute("showEditJSON", new ObjectMapper().writeValueAsString(showService.findDtoById(Integer.parseInt(req.getParameter("id")))));
+        req.getRequestDispatcher("./show/edit.jsp").forward(req, resp);
     }
 
     private void showList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -69,7 +88,13 @@ public class ShowController extends HttpServlet {
         }
         switch (action){
             case "create" -> create(req, resp);
+            case "edit" -> edit(req, resp);
         }
+    }
+
+    private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        showService.update(req);
+        resp.sendRedirect("/show");
     }
 
     public void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

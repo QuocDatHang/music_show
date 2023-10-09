@@ -48,5 +48,20 @@ public class TicketInforDAO extends DatabaseConnection {
         }
         return -1;
     }
+    public void update(TicketInfor ticketInfor) {
+        String UPDATE_TICKET_INFO = "UPDATE `music_show_db`.`ticket_infors`" +
+                "SET `premium` = ?, `vip` = ?, `standard` = ? WHERE (`id` = ?)";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_TICKET_INFO);
+            preparedStatement.setBigDecimal(1, ticketInfor.getPremium());
+            preparedStatement.setBigDecimal(2, ticketInfor.getVip());
+            preparedStatement.setBigDecimal(3, ticketInfor.getStandard());
+            preparedStatement.setInt(4, ticketInfor.getId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 }

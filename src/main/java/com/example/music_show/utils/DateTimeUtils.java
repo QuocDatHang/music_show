@@ -9,4 +9,8 @@ public class DateTimeUtils {
         LocalDateTime localDateTime = LocalDateTime.parse(dateString, formatter);
         return localDateTime;
     }
+    public static String format(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return dateTime.format(formatter);
+    }
 }

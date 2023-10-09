@@ -26,31 +26,32 @@ public class SingerDAO extends DatabaseConnection {
         var SELECT_ALL = "SELECT * FROM singers WHERE LOWER(name) LIKE ? LIMIT ? OFFSET ?";
         var SELECT_COUNT = "SELECT COUNT(1) AS count FROM singers WHERE LOWER(name) LIKE ?";
 
-            try (Connection connection = getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
-                preparedStatement.setString(1, search);
-                preparedStatement.setInt(2, TOTAL_ELEMENT);
-                preparedStatement.setInt(3, (page - 1) * TOTAL_ELEMENT);
-                var rs = preparedStatement.executeQuery();
-                while (rs.next()) {
-                    content.add(getSingerByResultSet(rs));
-                }
-                result.setContent(content);
-
-                PreparedStatement preparedStatementCount = connection.prepareStatement(SELECT_COUNT);
-                preparedStatementCount.setString(1, search);
-                var rsCount = preparedStatementCount.executeQuery();
-                if(rsCount.next()){
-                    result.setTotalPage((int) Math.ceil((double) rsCount.getInt("count") /TOTAL_ELEMENT));
-                }
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
+            preparedStatement.setString(1, search);
+            preparedStatement.setInt(2, TOTAL_ELEMENT);
+            preparedStatement.setInt(3, (page - 1) * TOTAL_ELEMENT);
+            var rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                content.add(getSingerByResultSet(rs));
             }
-            return result;
+            result.setContent(content);
+
+            PreparedStatement preparedStatementCount = connection.prepareStatement(SELECT_COUNT);
+            preparedStatementCount.setString(1, search);
+            var rsCount = preparedStatementCount.executeQuery();
+            if (rsCount.next()) {
+                result.setTotalPage((int) Math.ceil((double) rsCount.getInt("count") / TOTAL_ELEMENT));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 
-    public List<Singer> getAllSinger(){
+    public List<Singer> getAllSinger() {
         List<Singer> singers = new ArrayList<>();
         String SELECT_ALL = "SELECT * FROM singers ";
         try (Connection connection = getConnection();
@@ -60,7 +61,24 @@ public class SingerDAO extends DatabaseConnection {
             while (rs.next()) {
                 singers.add(getSingerByResultSet(rs));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return singers;
+    }
+
+    public List<Singer> findSingersByShowId(int id) {
+        List<Singer> singers = new ArrayList<>();
+        String FIND_SINGERS = "SELECT s.* FROM show_details sd JOIN singers s ON sd.singer_id = s.id WHERE sd.show_id = ?";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_SINGERS);
+            preparedStatement.setInt(1, id);
+            var rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                singers.add(getSingerByResultSet(rs));
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return singers;

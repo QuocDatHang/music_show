@@ -11,4 +11,7 @@ public class TicketInforService {
     public int create(TicketInfor ticketInfor){
         return ticketInforDAO.create(ticketInfor);
     }
+    public void update (TicketInfor ticketInfor){
+        ticketInforDAO.update(ticketInfor);
+    }
 }

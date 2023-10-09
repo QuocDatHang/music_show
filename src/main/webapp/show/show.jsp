@@ -14,7 +14,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show Management Page</title>
+    <title>Trang quản lý show</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -49,21 +49,18 @@
 </nav>
 
 <main>
-    <!-- List event mucsic -->
-    <%--    <article id="list">--%>
-    <%--        <c:forEach var="show" items="${paperShow.content}">--%>
 
-
-    <%--        </c:forEach>--%>
-    <%--    </article>--%>
-    <div class="card container px-6" style="height: 150vh; width: 100%">
+    <div class="card container px-6" style="height: 220vh; width: 100%">
         <c:if test="${message != null}">
             <h6 class="d-none" id="message">${message}</h6>
         </c:if>
 
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
-                <a class="btn btn-warning" href="/show?action=showCreate">Tạo show mới</a>
+                <div>
+                    <a class="btn btn-outline-secondary" href="/admin">Quay lại</a>
+                    <a class="btn btn-outline-warning" href="/show?action=showCreate">Tạo show mới</a>
+                </div>
                 <form class="d-flex" action="/show?page=${pageShow.currentPage}">
                     <input class="form-control me-2" style="width: 300px" type="text" id="searchShow"
                            value="${searchShow}"
@@ -93,7 +90,7 @@
                 <td>
                     Ca sĩ
                 </td>
-                <td>
+                <td style="width: 153px">
                     Thông tin vé
                 </td>
                 <td>
@@ -138,12 +135,12 @@
                         <img src="../images/${show.seatDiagramImage}">
                     </td>
                     <td style="text-align: center">
-                        <a class="btn btn-info" href="/show?action=edit&id=${show.id}">
+                        <a class="btn btn-info" href="/show?action=showEdit&id=${show.id}">
                             Sửa
                         </a>
                         <a class="btn btn-danger"
                            onclick="return confirm('Do you want remove ${show.showName} ?')"
-                           href="/show?action=delete&id=${show.id}">
+                           href="/show?action=delete&id=${show.id}&page=${pageShow.currentPage}">
                             Xóa
                         </a>
                     </td>

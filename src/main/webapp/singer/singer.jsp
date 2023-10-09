@@ -63,7 +63,10 @@
 
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
-                <a class="btn btn-warning" href="/singer?action=showCreate">Thêm Ca Sĩ Mới</a>
+                <div>
+                    <a class="btn btn-outline-secondary" href="/admin">Quay lại</a>
+                    <a class="btn btn-outline-warning" href="/singer?action=showCreate">Thêm Ca Sĩ Mới</a>
+                </div>
                 <form class="d-flex" action="/singer?page=${pageSinger.currentPage}">
                     <input class="form-control me-2" style="width: 300px" type="text" id="searchSinger" value="${searchSinger}"
                            name="searchSinger" placeholder="Tìm tên ca sĩ" aria-label="Search">

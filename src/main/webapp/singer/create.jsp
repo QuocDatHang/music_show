@@ -52,10 +52,10 @@ s
 
 <main>
     <div style="text-align: center; font-size: large; font-weight: bold; padding-top:10px;">
-        Thêm Ca Sĩ Mới
+        THÊM CA SĨ MỚI
     </div>
-    <div class="container" style="height: 100vh; width: 40%">
-        <form action="/singer?action=create" method="post">
+    <div class="card container px-6" style="height: 100vh; width: 45%; background-color: #eceeee">
+        <form action="/singer?action=create" method="post" style="padding: 0 20px">
             <div class=" row mb-3" style="padding-top:10px;">
                 <label for="singerName" class="form-label">Tên ca sĩ:</label>
                 <input type="text" class="form-control" id="singerName" name="singerName" required>

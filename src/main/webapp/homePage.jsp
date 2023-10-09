@@ -61,7 +61,7 @@
     <section class="d-flex flex-wrap" id="content">
         <!-- parallax -->
         <article id="parallax">
-            <div id="carouselExample" class="carousel slide">
+            <div id="carouselExample" class="carousel slide" data-bs-interval="3000">
                 <div class="carousel-inner">
                     <c:forEach var="show" items="${shows}">
                         <div class="carousel-item active">
@@ -98,7 +98,7 @@
         <article id="list">
 
             <c:forEach var="show" items="${pageShow.content}">
-                <a href="/detail.jsp?showId=${show.id}" class="card" style="width: 100%; text-decoration: none">
+                <a class="card" href="/detail.jsp?showId=${show.id}" style="text-decoration: none">
                     <img src="./images/${show.poster}" class="card-img-top" alt="...">
                     <div class="card-body ">
                         <h5 class="card-title" style="padding-bottom: 10px">
@@ -140,39 +140,41 @@
                 </a>
             </c:forEach>
         </article>
-        <div class="nav-container" style="justify-content: center">
-            <c:if test="${pageShow.content.size() != null}">
-                <nav aria-label="...">
-                    <c:set var="url" value="/homePage?page="/>
-                    <ul class="pagination" style="background: white;">
-                        <li class="page-item <c:if test="${pageShow.currentPage == 1}" >disabled</c:if>"
-                            style="line-height: 12px; margin: 0;">
-                            <a class="page-link" href="${url}${(pageShow.currentPage - 1)}" tabindex="-1"
-                               aria-disabled="true">Previous</a>
-                        </li>
-                        <c:forEach var="number" begin="1" end="${pageShow.totalPage}">
-                            <c:if test="${number == pageShow.currentPage}">
-                                <li class="page-item active" aria-current="page" style="line-height: 12px; margin: 0;">
-                                    <a class="page-link" href="${url}${number}">${number}</a>
-                                </li>
-                            </c:if>
-                            <c:if test="${number != pageShow.currentPage}">
-                                <li class="page-item" style="line-height: 12px; margin: 0;">
-                                    <a class="page-link" href="${url}${number}">${number}</a>
-                                </li>
-                            </c:if>
-                        </c:forEach>
-                        <li class="page-item <c:if test="${pageShow.currentPage == pageShow.totalPage}">disabled</c:if>"
-                            style="line-height: 12px; margin: 0;">
-                            <a class="page-link" href="${url}${(pageShow.currentPage + 1)}">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </c:if>
-            <c:if test="${pageShowsByCity.content.size() != null}">
+
+
+        <c:if test="${pageShow.content.size() != null}">
             <nav aria-label="...">
                 <c:set var="url" value="/homePage?page="/>
-                <ul class="pagination" style="background: white;">
+                <ul class="pagination" style="background: white; display: flex; justify-content: center">
+                    <li class="page-item <c:if test="${pageShow.currentPage == 1}" >disabled</c:if>"
+                        style="line-height: 12px; margin: 0;">
+                        <a class="page-link" href="${url}${(pageShow.currentPage - 1)}" tabindex="-1"
+                           aria-disabled="true">Previous</a>
+                    </li>
+                    <c:forEach var="number" begin="1" end="${pageShow.totalPage}">
+                        <c:if test="${number == pageShow.currentPage}">
+                            <li class="page-item active" aria-current="page" style="line-height: 12px; margin: 0;">
+                                <a class="page-link" href="${url}${number}">${number}</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${number != pageShow.currentPage}">
+                            <li class="page-item" style="line-height: 12px; margin: 0;">
+                                <a class="page-link" href="${url}${number}">${number}</a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                    <li class="page-item <c:if test="${pageShow.currentPage == pageShow.totalPage}">disabled</c:if>"
+                        style="line-height: 12px; margin: 0;">
+                        <a class="page-link" href="${url}${(pageShow.currentPage + 1)}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </c:if>
+
+        <c:if test="${pageShowsByCity.content.size() != null}">
+            <nav aria-label="...">
+                <c:set var="url" value="/homePage?page="/>
+                <ul class="pagination" style="background: white; display: flex; justify-content: center">
                     <li class="page-item <c:if test="${pageShowsByCity.currentPage == 1}" >disabled</c:if>"
                         style="line-height: 12px; margin: 0;">
                         <a class="page-link" href="${url}${(pageShowsByCity.currentPage - 1)}" tabindex="-1"
@@ -196,8 +198,8 @@
                     </li>
                 </ul>
             </nav>
-            </c:if>
-        </div>
+        </c:if>
+
     </section>
 
     <footer id="footer">

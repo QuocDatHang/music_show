@@ -16,7 +16,7 @@ public class ShowDAO extends DatabaseConnection {
 
     public Page<TicketDto> getAllShow(int page, String search) {
         var result = new Page<TicketDto>();
-        final int TOTAL_ELEMENT = 3;
+        final int TOTAL_ELEMENT = 6;
         result.setCurrentPage(page);
         var content = new ArrayList<TicketDto>();
         if (search == null) {
@@ -147,6 +147,26 @@ public class ShowDAO extends DatabaseConnection {
         return null;
     }
 
+    public TicketDto findDtoById(int id) {
+        var FIND_BY_ID = "SELECT s. *, l.city, GROUP_CONCAT(singers.name SEPARATOR ' - ')as singers FROM shows s " +
+                "JOIN show_details sd ON s.id = sd.show_id " +
+                "JOIN singers ON sd.singer_id = singers.id " +
+                "JOIN locations l ON s.location_id = l.id " +
+                "WHERE s.id = ? ";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                return getTicketDtoByResultSet(rs);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     public int create(Show show) {
         String CREATE_SHOW = "INSERT INTO `shows` (`showName`, `timeStart`, `timeEnd`, `location_id`," +
                 " `poster`, `ticket_infor_id`, `seatDiagramImage`) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -175,6 +195,27 @@ public class ShowDAO extends DatabaseConnection {
         return -1;
     }
 
+    public void update(Show show) {
+        String UPDATE_SHOW = "UPDATE `shows` SET `showName` = ?, `timeStart` = ?, `timeEnd` = ?, " +
+                "`location_id` = ?, `poster` = ?, `ticket_infor_id` = ?, `seatDiagramImage` = ? " +
+                "WHERE (`id` = ?)";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SHOW);
+            preparedStatement.setString(1, show.getShowName());
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(show.getTimeStart()));
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(show.getTimeEnd()));
+            preparedStatement.setInt(4, show.getLocation().getId());
+            preparedStatement.setString(5, show.getPoster());
+            preparedStatement.setInt(6, show.getTicketInfor().getId());
+            preparedStatement.setString(7, show.getSeatDiagramImage());
+            preparedStatement.setInt(8, show.getId());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void createShowDetail(int showId, int singerId) {
         String CREATE_SHOW_DETAIL = "INSERT INTO `show_details` (`show_id`, `singer_id`) VALUES (?, ?)";
         try {
@@ -187,6 +228,7 @@ public class ShowDAO extends DatabaseConnection {
             System.out.println(e.getMessage());
         }
     }
+
     public Show getShowByResultSet(ResultSet rs) throws SQLException {
         Show show = new Show();
         show.setId(rs.getInt("id"));
@@ -199,6 +241,7 @@ public class ShowDAO extends DatabaseConnection {
         show.setSeatDiagramImage(rs.getString("seatDiagramImage"));
         return show;
     }
+
     public TicketDto getTicketDtoByResultSet(ResultSet rs) throws SQLException {
         TicketDto ticketDto = new TicketDto();
         ticketDto.setId(rs.getInt("id"));
@@ -211,5 +254,22 @@ public class ShowDAO extends DatabaseConnection {
         ticketDto.setSeatDiagramImage(rs.getString("seatDiagramImage"));
         ticketDto.setSingers(rs.getString("singers"));
         return ticketDto;
+    }
+
+    public void delete(int id) {
+        String DELETE_SHOW_DETAIL = "DELETE FROM `show_details` WHERE (`show_id` = ?)";
+        String DELETE_SHOW = "DELETE FROM `shows` WHERE (`id` = ?)";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SHOW_DETAIL);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+
+            PreparedStatement preparedStatement1 = connection.prepareStatement(DELETE_SHOW);
+            preparedStatement1.setInt(1, id);
+            preparedStatement1.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

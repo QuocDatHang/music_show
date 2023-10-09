@@ -15,6 +15,9 @@ public class SingerService {
     public List<Singer> getAllSinger(){
         return singerDAO.getAllSinger();
     }
+    public List<Singer> findSingersByShowId(int id){
+        return singerDAO.findSingersByShowId(id);
+    }
     public void create(String singerName, String salary){
         singerDAO.create(singerName, salary);
     }

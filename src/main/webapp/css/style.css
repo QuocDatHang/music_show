@@ -188,7 +188,7 @@ nav ul li a:hover {
 #list {
   display: grid;
   gap: 40px 40px;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 #list .card {
