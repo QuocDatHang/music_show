@@ -13,10 +13,7 @@
   display: flex; /* Sử dụng flexbox để căn giữa nội dung */
   justify-content: center; /* Căn giữa theo chiều ngang */
   align-items: center; /* Căn giữa theo chiều dọc */
-  margin-top: 50px;
-  margin-left: 100px;
   padding: 50px;
-  margin-bottom: 50px;
   text-align: center; /* Căn giữa theo chiều ngang */
   vertical-align: middle; /* Căn giữa theo chiều dọc */
 }
@@ -201,11 +198,11 @@
 }
 #selected-seats-list li {
   list-style-type: none;
-  display: grid;
+  /*display: grid;*/
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   align-items: center;
-  padding: 5px;
+  /*padding: 5px;*/
 }
 .seat-info {
   background-color: #e32020;
@@ -216,24 +213,21 @@
 }
 #inputTicket {
   /*flex-basis: 40%;*/
-  width: 600px; /* Đặt kích thước chiều rộng */
+  width: 450px; /* Đặt kích thước chiều rộng */
   height: 500px; /* Đặt kích thước chiều cao */
   /*border: 1px solid #ccc; !* Đặt viền cho khung hình *!*/
-  display: flex; /* Sử dụng flexbox để căn giữa nội dung */
-  justify-content: center; /* Căn giữa theo chiều ngang */
+  /*display: flex; !* Sử dụng flexbox để căn giữa nội dung *!*/
+  /*justify-content: center; !* Căn giữa theo chiều ngang *!*/
   align-items: center; /* Căn giữa theo chiều dọc */
-  margin-top: 50px;
-  margin-left: 100px;
-  padding: 50px;
 }
 #inputTicket-in-list {
   /*flex-basis: 40%;*/
   width: 100%; /* Đặt kích thước chiều rộng */
-  height: 400px; /* Đặt kích thước chiều cao */
+  height: 250px; /* Đặt kích thước chiều cao */
   border: 1px solid #ccc; /* Đặt viền cho khung hình */
   display: flex; /* Sử dụng flexbox để căn giữa nội dung */
-  justify-content: center; /* Căn giữa theo chiều ngang */
-  align-items: end; /* Căn giữa theo chiều dọc */
+  /*justify-content: center; !* Căn giữa theo chiều ngang *!*/
+  /*align-items: end; !* Căn giữa theo chiều dọc *!*/
   /*margin-top: 50px;*/
   /*margin-left: 100px;*/
   /*padding: 50px;*/
@@ -242,6 +236,23 @@
   transition: all 0.5s ease-in;
   overflow-x: scroll;
   scroll-behavior: smooth;
+}
+.selectedPosition{
+  width: 50px;
+  text-align: center;
+}
+.selectedType{
+  width: 110px;
+  text-align: center;
+}
+.selectedPrice{
+  width: 100px;
+  text-align: center;
+ }
+.payment{
+  width: 100%;
+  border: 0;
+  padding: 10px;
 }
 .seat{
   cursor: pointer;

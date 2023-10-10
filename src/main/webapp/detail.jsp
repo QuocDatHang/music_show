@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.example.music_show.model.enumeration.EType" %>
 <%@ page import="java.math.BigDecimal" %>
 <!DOCTYPE html>
@@ -40,12 +41,12 @@
     <div class="d-flex justify-content-between" id="link">
         <div class="top-misc-layout"></div>
         <ul>
-            <li><a href="#">Trang chủ</a></li>
-            <li><a href="#">Đà lạt</a></li>
-            <li><a href="#">Đà nẵng</a></li>
-            <li><a href="#">Cần Thơ</a></li>
-            <li><a href="#">Sài Gòn</a></li>
-            <li><a href="#">Hà Nội</a></li>
+            <li><a href="/homePage">Trang chủ</a></li>
+            <li><a href="/homePage?action=findByCity&city=HA NOI">Hà Nội</a></li>
+            <li><a href="/homePage?action=findByCity&city=HUE">Huế</a></li>
+            <li><a href="/homePage?action=findByCity&city=DA NANG">Đà nẵng</a></li>
+            <li><a href="/homePage?action=findByCity&city=DA LAT">Đà lạt</a></li>
+            <li><a href="/homePage?action=findByCity&city=SAI GON">Sài Gòn</a></li>
         </ul>
         <div class="top-misc-layout"></div>
     </div>
@@ -56,46 +57,42 @@
     <section>
         <article class="grid site-details">
             <div class="site-details__image">
-                <image src="./images/list-pic1.jpg"></image>
+                <image src="./images/${show.poster}"></image>
             </div>
             <div class="site-details__info">
-                <h2 class="site-details__singer">Bùi Lan Hương</h2>
-                <h2 class="site-details__branch">Sài Gòn</h2>
-                <p class="site-details__subsinger">Bùi Lan Hương</p>
+                <h2 class="site-details__singer">${show.singers}</h2>
+                <h2 class="site-details__branch">${show.showName}</h2>
                 <div class="site-details__time">
-                    <p>06/10/2023</p>
-                    <p>17:00</p>
+                    <p>${show.timeStart}</p>
+                    <p>${show.timeEnd}</p>
                 </div>
                 <h2 class="site-details__infoticket">Thông tin vé</h2>
                 <table class="site-details__tbticket">
                     <tr>
                         <td>Premium</td>
-                        <td>1.800.000 VND</td>
+                        <td><fmt:setLocale value="vi_VN"/>
+                            <fmt:formatNumber value="${show.ticketInfor.premium}" pattern="#,##0 ¤"/>
+                        </td>
                     </tr>
                     <tr>
                         <td>Vip</td>
-                        <td>1.300.000 VND</td>
+                        <td><fmt:setLocale value="vi_VN"/>
+                            <fmt:formatNumber value="${show.ticketInfor.vip}" pattern="#,##0 ¤"/>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Standard 1</td>
-                        <td>950.000 VND</td>
-                    </tr>
-                    <tr>
-                        <td>Standard 2</td>
-                        <td>650.000 VND</td>
+                        <td>Standard</td>
+                        <td><fmt:setLocale value="vi_VN"/>
+                            <fmt:formatNumber value="${show.ticketInfor.standard}" pattern="#,##0 ¤"/>
+                        </td>
                     </tr>
                 </table>
                 <h2 class="site-details__description">Mô tả</h2>
                 <div class="site-details__phrasedesc">
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam minima ut voluptatibus
-                        necessitatibus
-                        nam tempore consequatur quam laudantium pariatur architecto sequi, molestias tempora officia
-                        eius deserunt
-                        fuga, explicabo totam incidunt.</p>
-                    <p><strong>Lưu ý:</strong></p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt quidem perferendis error aspernatur
-                        unde
-                        vitae a pariatur. </p>
+                    <p>
+                        - Mua trên 5 vé để được giảm 5% <br>
+                        - Mua trên 10 vé để được giảm 10%
+                    </p>
                 </div>
             </div>
         </article>
@@ -116,7 +113,6 @@
             <div class="col-7 square-container">
                 <div class="screen"></div>
                 <div class="container">
-                    <%--                <div class="container">--%>
                     <div class="row mx-lg-auto">
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('A')}">
@@ -159,6 +155,7 @@
                             </c:if>
                         </c:forEach>
                     </div>
+                    <%--DÃY GHẾ B--%>
                     <div class="row mx-lg-auto">
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('C')}">
@@ -180,6 +177,7 @@
                             </c:if>
                         </c:forEach>
                     </div>
+                    <%--DÃY GHẾ C--%>
                     <div class="row mx-lg-auto">
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('D')}">
@@ -201,38 +199,86 @@
                             </c:if>
                         </c:forEach>
                     </div>
+                    <%--DÃY GHẾ D--%>
                 </div>
             </div>
             <div class="col-5" id="inputTicket">
+                <div id="selectedSeats" style="width: 100%">Các ghế đã đặt</div>
                 <div id="inputTicket-in-list">
                     <ul id="selected-seats-list">
 
-
                     </ul>
                 </div>
-                <div class="col-2 d-flex justify-content-end">
-                    <label class="btn btn-primary mb-2" id="inputbill">Đặt chỗ</label>
+                <div style="width: 100%; height: 150px">
+                    <input readonly class="payment" value="Tổng tiền:  $">
+                    <input readonly class="payment" value="Giảm:  $">
+                    <input readonly class="payment" value="Thành tiền:  $">
                 </div>
+                <div>
+                    <label class="btn btn-danger mb-2" style="width: 100%" id="inputbill">Đặt chỗ</label>
+                </div>
+
             </div>
         </div>
-        <form action="/ticket?action=createBill&userId=${user.id}" method="post">
-            <div id="selected-seats-container">
+        <%--        <form action="/ticket?action=createBill&userId=${user.id}" method="post">--%>
+        <%--            <div id="selected-seats-container">--%>
 
-            </div>
-        </form>
-        <article>
+        <%--            </div>--%>
+        <%--        </form>--%>
+        <div class="card container px-6" style="height: 100vh; width: 45%; background-color: #eceeee; margin-top: 30px">
+            <form action="/ticket?action=createBill&userId=${user.id}" method="post" style="padding: 0 20px">
+                <h3>XÁC NHẬN THÔNG TIN</h3>
+                <h5 class="site-details__infoticket">THÔNG TIN KHÁCH HÀNG</h5>
+                <table class="site-details__tbticket">
+                    <tr>
+                        <td>Tên</td>
+                        <td>
+                            ${user.name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Số điện thoại</td>
+                        <td>
+                            ${user.phoneNumber}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>
+                            ${user.email}
+                        </td>
+                    </tr>
+                </table>
 
-        </article>
+                <h5 class="site-details__infoticket">THÔNG TIN VÉ</h5>
+                <table class="site-details__tbticket">
+                    <tr>
+                        <td>PREMIUM</td>
+                        <td>
 
-        <article>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>VIP</td>
+                        <td>
 
-        </article>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>STANDARD</td>
+                        <td>
 
-        <article>
-
-        </article>
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit" class="btn btn-primary mb-2">Đặt chỗ</button>
+                <a href="/singer" class="btn btn-success mb-2">Huỷ</a>
+            </form>
+        </div>
     </section>
 
+
+    <%--    ======================================FOOTER==================================================--%>
     <footer id="footer">
         <div class="d-flex justify-content-center align-items-center footer-logo" id="footer-logo">
             <image class="footer-logo__img" src="images/MAYLANGTHANG_LOGO_WHITE.png"></image>
@@ -264,7 +310,7 @@
     const seatListJson = ${seatListJson};
     const showJSON = ${showJSON};
     let listSeat = [];
-    const userJSON =${userJSON};
+    const userJSON = ${userJSON};
     let discount = 0;
 
     function toggleSeat(id) {
@@ -285,75 +331,65 @@
             listSeat.push(seat);
         }
 
-        // console.log(listSeat);
-        //123
-        // Cập nhật danh sách ghế đã chọn trên giao diện
         selectedSeatsList.innerHTML = '';
         let totalPayment = 0;
         for (var i = 0; i < listSeat.length; i++) {
             var seatTemp = listSeat[i];
-            var listItem = document.createElement('li');
-            // if (seatTemp.type === "PREMIUM"){
-            //     listItem.textContent = seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.premium;
-            // }
-            // if (seatTemp.type === "VIP"){
-            //     listItem.textContent = seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.vip;
-            // }
-            // if (seatTemp.type === "STANDARD"){
-            //     listItem.textContent =  seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.standard;
-            // }
-
-
             if (seatTemp.type === "PREMIUM") {
-                // console.log(seatTemp.position, seatTemp.type)
-                listItem.innerHTML =
-                    `<div class="" style="border: 2px solid black; display: flex; background: white">
-                       <div class="seat-info">\${seatTemp.position}</div>
-                        <div class="seat-info">\${seatTemp.type}</div>
-                        <div class="seat-info">\${showJSON.ticketInfor.premium}</div>`
+                selectedSeatsList.innerHTML +=
+                    `<li>
+                            <input class="selectedPosition" name="selectedPosition" readonly value="\${seatTemp.position}">
+                            <input class="selectedType" name="selectedType" readonly value="\${seatTemp.type}">
+                            <input class="selectedPrice" name="selectedPrice" value="\${showJSON.ticketInfor.premium}">
+                        <li>`
                 totalPayment += showJSON.ticketInfor.premium;
             }
             if (seatTemp.type === "VIP") {
-                listItem.innerHTML =
-                    `<div class="seat-info">\${seatTemp.position}</div>
-                    <div class="seat-info">\${seatTemp.type}</div>
-                    <div class="seat-info">\${showJSON.ticketInfor.vip}</div>`;
+                selectedSeatsList.innerHTML +=
+                    `<li>
+                            <input class="selectedPosition" name="selectedPosition" readonly value="\${seatTemp.position}">
+                            <input class="selectedType" name="selectedType" readonly value="\${seatTemp.type}">
+                            <input class="selectedPrice" name="selectedPrice" value="\${showJSON.ticketInfor.vip}">
+                        <li>`
                 totalPayment += showJSON.ticketInfor.vip;
             }
             if (seatTemp.type === "STANDARD") {
-                listItem.innerHTML =
-                    `<div class="seat-info">\${seatTemp.position}</div>
-                        <div class="seat-info">\${seatTemp.type}</div>
-                        <div class="seat-info">\${showJSON.ticketInfor.standard}</div>`
+                selectedSeatsList.innerHTML +=
+                    `<li>
+                            <input class="selectedPosition" name="selectedPosition" readonly value="\${seatTemp.position}">
+                            <input class="selectedType" name="selectedType" readonly value="\${seatTemp.type}">
+                            <input class="selectedPrice" name="selectedPrice" readonly value="\${showJSON.ticketInfor.premium}">
+                        <li>`
                 totalPayment += showJSON.ticketInfor.standard;
-
             }
-            selectedSeatsList.appendChild(listItem);
-
         }
-        var totalSeats = listSeat.length;
-
-        var totalSeatsElement = document.createElement('input');
-        totalSeatsElement.textContent = 'Tổng số ghế đã chọn: ' + totalSeats;
-        totalSeatsElement.classList.add(totalSeats);
-        selectedSeatsList.appendChild(totalSeatsElement);
-
-        let totalPaymentElement = document.createElement('div');
-        totalPaymentElement.textContent = 'Total Payment: ' + totalPayment;
-        selectedSeatsList.appendChild(totalPaymentElement);
-
-        if (totalSeats >= 5 && totalSeats <= 10) {
-            discount = totalPayment * 0.95;
-        } else if (totalSeats >= 10) {
-            discount = totalPayment * 0.9;
-        } else {
-            discount = totalPayment;
-        }
-        // <input type="text" readonly class="form-control-plaintext" value="\${discountBill}" name="total">`;
-        var discountBill = document.createElement('p');
-        discountBill.textContent = 'discount: ' + discount;
-        selectedSeatsList.appendChild(discountBill);
+        var totalSeatsElement = document.getElementById('selectedSeats');
+        totalSeatsElement.innerHTML = "Các ghế đã đặt (" + listSeat.length +")";
     }
+
+
+
+    // totalSeatsElement.textContent = 'Tổng số ghế đã chọn: ' + totalSeats;
+    // totalSeatsElement.classList.add(totalSeats);
+    // selectedSeatsList.appendChild(totalSeatsElement);
+
+    // let totalPaymentElement = document.createElement('div');
+    // totalPaymentElement.textContent = 'Total Payment: ' + totalPayment;
+    // selectedSeatsList.appendChild(totalPaymentElement);
+    //
+    // if (totalSeats >= 5 && totalSeats <= 10) {
+    //     discount = totalPayment * 0.95;
+    // } else if (totalSeats >= 10) {
+    //     discount = totalPayment * 0.9;
+    // } else {
+    //     discount = totalPayment;
+    // }
+    // // <input type="text" readonly class="form-control-plaintext" value="\${discountBill}" name="total">`;
+    // var discountBill = document.createElement('p');
+    // discountBill.textContent = 'discount: ' + discount;
+    // selectedSeatsList.appendChild(discountBill);
+
+
 
     function deleteSeat(id) {
         var seat;
@@ -383,8 +419,8 @@
 
         // Lặp qua các ghế đã chọn trong danh sách
         // for (var i = 0; i < selectedSeatsList.children.length; i++) {
-            // var listItem = selectedSeatsList.children[i];
-            // var seatInfo = listItem.innerText.replace("\n", " ");
+        // var listItem = selectedSeatsList.children[i];
+        // var seatInfo = listItem.innerText.replace("\n", " ");
         for (var i = 0; i < listSeat.length; i++) {
             let seatTemp = listSeat[i];
             let seatInfo = seatTemp.position + seatTemp.type + "120000"
