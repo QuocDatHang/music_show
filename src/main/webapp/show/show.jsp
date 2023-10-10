@@ -39,7 +39,7 @@
         <div class="top-misc-layout"></div>
         <ul>
             <li><a href="./show">Show</a></li>
-            <li><a href="#">Địa điểm</a></li>
+            <li><a href="./location">Địa điểm</a></li>
             <li><a href="#">Doanh thu</a></li>
             <li><a href="./singer">Ca sĩ</a></li>
             <li><a href="#">Hóa đơn</a></li>

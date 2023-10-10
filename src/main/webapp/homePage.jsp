@@ -31,6 +31,7 @@
         </div>
         <image class="header-logo" src="images/MAYLANGTHANG_LOGO.png"></image>
         <div class="top-misc-layout"></div>
+
     </div>
 </header>
 
@@ -44,6 +45,7 @@
             <li><a href="/homePage?action=findByCity&city=DA NANG">Đà nẵng</a></li>
             <li><a href="/homePage?action=findByCity&city=DA LAT">Đà lạt</a></li>
             <li><a href="/homePage?action=findByCity&city=SAI GON">Sài Gòn</a></li>
+            <li><a href="./auth" class="btn btn-primary" class="login-button" style=" width: 130px; display: flex;align-content: center; justify-content: center; border-radius: 8px">Đăng nhập</a></li>
         </ul>
         <div class="top-misc-layout"></div>
     </div>

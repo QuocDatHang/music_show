@@ -40,12 +40,11 @@
     <div class="d-flex justify-content-between" id="link">
         <div class="top-misc-layout"></div>
         <ul>
-            <li><a href="#">Location Management</a></li>
-<%--            <li><a href="#">Đà lạt</a></li>--%>
-<%--            <li><a href="#">Đà nẵng</a></li>--%>
-<%--            <li><a href="#">Cần Thơ</a></li>--%>
-<%--            <li><a href="#">Sài Gòn</a></li>--%>
-<%--            <li><a href="#">Hà Nội</a></li>--%>
+            <li><a href="./show">Show</a></li>
+            <li><a href="./location">Địa điểm</a></li>
+            <li><a href="#">Doanh thu</a></li>
+            <li><a href="./singer">Ca sĩ</a></li>
+            <li><a href="#">Hóa đơn</a></li>
         </ul>
         <div class="top-misc-layout"></div>
     </div>
@@ -93,19 +92,19 @@
 <%-->>>>>>> main--%>
         <table class="table table-striped" style="width: 100%">
             <tr>
-                <td>
-                    Id
+                <td style="font-weight: bolder;">
+                    ID
                 </td>
-                <td>
+                <td style="font-weight: bolder;">
                     CITY
                 </td>
-                <td>
+                <td style="font-weight: bolder;">
                     ADDRESS
                 </td>
-                <td>
+                <td style="font-weight: bolder;">
                     QUANTITY
                 </td>
-                <td>
+                <td style="font-weight: bolder;">
                     ACTION
                 </td>
             </tr>

@@ -65,6 +65,7 @@ public class LocationService {
 
         String[] typeValues = req.getParameterValues("type");
         String position = req.getParameter("position");
+        String[] positionValues = req.getParameterValues("position");
         EStatus status = EStatus.AVAILABLE;
         EType[] types = new EType[typeValues.length];
 
@@ -75,7 +76,7 @@ public class LocationService {
 
         for(int i=0;i<seatList.size();i++){
             Seat seat = seatList.get(i);
-            seatDAO.update(seat.getId(), position, typeValues[i]);
+            seatDAO.update(seat.getId(), positionValues[i], typeValues[i]);
         }
 
     }
