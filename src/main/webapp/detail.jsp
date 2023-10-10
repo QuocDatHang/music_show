@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="com.example.music_show.model.enumeration.EType" %>
+<%@ page import="java.math.BigDecimal" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +20,7 @@
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/4f6aa91745.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/styles.css"/>
 </head>
 
 <body>
@@ -95,7 +99,127 @@
                 </div>
             </div>
         </article>
+        <div class="progress-bar" role="progressbar"
+             style="width: 100%; height: 50px; background: #22326c; color: white" aria-valuenow="100"
+             aria-valuemin="0" aria-valuemax="100">SƠ ĐỒ CHÕ NGỒI
+        </div>
+        <div class="movie-container">
+            <%--    <label> Select a movie:</label>--%>
+            <div id="movie">
+                <%--        <option value="220">Godzilla vs Kong (RS.220)</option>--%>
+                <%--        <option value="320">Radhe (RS.320)</option>--%>
+                <%--        <option value="250">RRR (RS.250)</option>--%>
+                <%--        <option value="260">F9 (RS.260)</option>--%>
+            </div>
+        </div>
+        <div class="diagram">
+            <div class="col-7 square-container">
+                <div class="screen"></div>
+                <div class="container">
+                    <%--                <div class="container">--%>
+                    <div class="row mx-lg-auto">
+                        <c:forEach var="seat" items="${seats}">
+                            <c:if test="${(seat.position).contains('A')}">
+                                <div class="seat" id="seat${seat.id}" value="${seat.type}"
+                                     onclick="toggleSeat(${seat.id})"
+                                     data-seat-id="seat${seat.id}"
+                                        <c:choose>
+                                            <c:when test="${seat.type == 'VIP'}">
+                                                style="background-color: yellow;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'PREMIUM'}">
+                                                style="background-color: pink;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'STANDARD'}">
+                                                style="background-color: green;"
+                                            </c:when>
+                                        </c:choose>
+                                >${seat.position}</div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                    <div class="row mx-lg-auto">
+                        <c:forEach var="seat" items="${seats}">
+                            <c:if test="${(seat.position).contains('B')}">
+                                <div class="seat" id="seat${seat.id}" value="${seat.type}"
+                                     onclick="toggleSeat(${seat.id})"
+                                     data-seat-id="seat${seat.id}"
+                                        <c:choose>
+                                            <c:when test="${seat.type == 'VIP'}">
+                                                style="background-color: yellow;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'PREMIUM'}">
+                                                style="background-color: pink;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'STANDARD'}">
+                                                style="background-color: green;"
+                                            </c:when>
+                                        </c:choose>
+                                >${seat.position}</div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                    <div class="row mx-lg-auto">
+                        <c:forEach var="seat" items="${seats}">
+                            <c:if test="${(seat.position).contains('C')}">
+                                <div class="seat" id="seat${seat.id}" value="${seat.type}"
+                                     onclick="toggleSeat(${seat.id})"
+                                     data-seat-id="seat${seat.id}"
+                                        <c:choose>
+                                            <c:when test="${seat.type == 'VIP'}">
+                                                style="background-color: yellow;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'PREMIUM'}">
+                                                style="background-color: pink;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'STANDARD'}">
+                                                style="background-color: green;"
+                                            </c:when>
+                                        </c:choose>
+                                >${seat.position}</div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                    <div class="row mx-lg-auto">
+                        <c:forEach var="seat" items="${seats}">
+                            <c:if test="${(seat.position).contains('D')}">
+                                <div class="seat" id="${seat.id}" value="${seat.type}"
+                                     onclick="toggleSeat(${seat.id})"
+                                     data-seat-id="seat${seat.id}"
+                                        <c:choose>
+                                            <c:when test="${seat.type == 'VIP'}">
+                                                style="background-color: yellow;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'PREMIUM'}">
+                                                style="background-color: pink;"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'STANDARD'}">
+                                                style="background-color: green;"
+                                            </c:when>
+                                        </c:choose>
+                                >${seat.position}</div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5" id="inputTicket">
+                <div id="inputTicket-in-list">
+                    <ul id="selected-seats-list">
 
+
+                    </ul>
+                </div>
+                <div class="col-2 d-flex justify-content-end">
+                    <label class="btn btn-primary mb-2" id="inputbill">Đặt chỗ</label>
+                </div>
+            </div>
+        </div>
+        <form action="/ticket?action=createBill&userId=${user.id}" method="post">
+            <div id="selected-seats-container">
+
+            </div>
+        </form>
         <article>
 
         </article>
@@ -132,10 +256,183 @@
         </div>
     </footer>
 </main>
-
+<script src="./js/scripts.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/bootstrap.bundle.min.js"></script>
 <script src="./js/script.js"></script>
+<script>
+    const seatListJson = ${seatListJson};
+    const showJSON = ${showJSON};
+    let listSeat = [];
+    const userJSON =${userJSON};
+    let discount = 0;
+
+    function toggleSeat(id) {
+        var seat;
+
+        for (let i = 0; i < seatListJson.length; i++) {
+            if (seatListJson[i].id === id) {
+                seat = seatListJson[i];
+                break;
+            }
+        }
+        var selectedSeatsList = document.getElementById('selected-seats-list');
+
+        var index = listSeat.indexOf(seat);
+        if (index !== -1) {
+            listSeat.splice(index, 1);
+        } else {
+            listSeat.push(seat);
+        }
+
+        // console.log(listSeat);
+        //123
+        // Cập nhật danh sách ghế đã chọn trên giao diện
+        selectedSeatsList.innerHTML = '';
+        let totalPayment = 0;
+        for (var i = 0; i < listSeat.length; i++) {
+            var seatTemp = listSeat[i];
+            var listItem = document.createElement('li');
+            // if (seatTemp.type === "PREMIUM"){
+            //     listItem.textContent = seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.premium;
+            // }
+            // if (seatTemp.type === "VIP"){
+            //     listItem.textContent = seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.vip;
+            // }
+            // if (seatTemp.type === "STANDARD"){
+            //     listItem.textContent =  seatTemp.position + '       ' + seatTemp.type + '       ' + showJSON.ticketInfor.standard;
+            // }
+
+
+            if (seatTemp.type === "PREMIUM") {
+                // console.log(seatTemp.position, seatTemp.type)
+                listItem.innerHTML =
+                    `<div class="" style="border: 2px solid black; display: flex; background: white">
+                       <div class="seat-info">\${seatTemp.position}</div>
+                        <div class="seat-info">\${seatTemp.type}</div>
+                        <div class="seat-info">\${showJSON.ticketInfor.premium}</div>`
+                totalPayment += showJSON.ticketInfor.premium;
+            }
+            if (seatTemp.type === "VIP") {
+                listItem.innerHTML =
+                    `<div class="seat-info">\${seatTemp.position}</div>
+                    <div class="seat-info">\${seatTemp.type}</div>
+                    <div class="seat-info">\${showJSON.ticketInfor.vip}</div>`;
+                totalPayment += showJSON.ticketInfor.vip;
+            }
+            if (seatTemp.type === "STANDARD") {
+                listItem.innerHTML =
+                    `<div class="seat-info">\${seatTemp.position}</div>
+                        <div class="seat-info">\${seatTemp.type}</div>
+                        <div class="seat-info">\${showJSON.ticketInfor.standard}</div>`
+                totalPayment += showJSON.ticketInfor.standard;
+
+            }
+            selectedSeatsList.appendChild(listItem);
+
+        }
+        var totalSeats = listSeat.length;
+
+        var totalSeatsElement = document.createElement('input');
+        totalSeatsElement.textContent = 'Tổng số ghế đã chọn: ' + totalSeats;
+        totalSeatsElement.classList.add(totalSeats);
+        selectedSeatsList.appendChild(totalSeatsElement);
+
+        let totalPaymentElement = document.createElement('div');
+        totalPaymentElement.textContent = 'Total Payment: ' + totalPayment;
+        selectedSeatsList.appendChild(totalPaymentElement);
+
+        if (totalSeats >= 5 && totalSeats <= 10) {
+            discount = totalPayment * 0.95;
+        } else if (totalSeats >= 10) {
+            discount = totalPayment * 0.9;
+        } else {
+            discount = totalPayment;
+        }
+        // <input type="text" readonly class="form-control-plaintext" value="\${discountBill}" name="total">`;
+        var discountBill = document.createElement('p');
+        discountBill.textContent = 'discount: ' + discount;
+        selectedSeatsList.appendChild(discountBill);
+    }
+
+    function deleteSeat(id) {
+        var seat;
+
+        for (let i = 0; i < seatListJson.length; i++) {
+            if (seatListJson[i].id === id) {
+                seat = seatListJson[i];
+                break;
+            }
+        }
+
+        var index = listSeat.indexOf(seat);
+        if (index !== -1) {
+            listSeat.splice(index, 1);
+        }
+
+        toggleSeat(); // Gọi lại hàm toggleSeat để tính lại giá sau khi xóa ghế
+    }
+
+    document.getElementById('inputbill').addEventListener('click', function () {
+        var selectedSeatsList = document.getElementById('selected-seats-list');
+        var selectedSeatsContainer = document.getElementById('selected-seats-container');
+
+        // Xóa nội dung của selected-seats-container
+        selectedSeatsContainer.innerHTML = '';
+
+
+        // Lặp qua các ghế đã chọn trong danh sách
+        // for (var i = 0; i < selectedSeatsList.children.length; i++) {
+            // var listItem = selectedSeatsList.children[i];
+            // var seatInfo = listItem.innerText.replace("\n", " ");
+        for (var i = 0; i < listSeat.length; i++) {
+            let seatTemp = listSeat[i];
+            let seatInfo = seatTemp.position + seatTemp.type + "120000"
+
+            // Tạo một phần tử div mới cho mỗi ghế và thêm vào selected-seats-container
+            var seatElement = document.createElement('input');
+            seatElement.value = seatInfo;
+            selectedSeatsContainer.appendChild(seatElement);
+        }
+
+        // var totalSeats = selectedSeatsList.children.length;
+        //
+        // var totalSeatsElement = document.createElement('p');
+        // totalSeatsElement.textContent = 'Tổng số ghế đã chọn: ' + totalSeats;
+        // selectedSeatsContainer.appendChild(listSeat);
+        //  selectedSeatsContainer.innerHTML =`
+        //    <div class="">\${userJSON.name}</div>
+        //      <div class="">\${userJSON.phoneNumber}</div>
+        //   <div class="">\${userJSON.email}</div>
+        //     `;
+
+        // selectedSeatsContainer.innerHTML = `
+        //     <div class="">\${userJSON.name}</div>
+        //     <div class="">\${userJSON.phoneNumber}</div>
+        //  <div class="">\${userJSON.email}</div>
+        //   <div class="">\${seatTemp.position}</div>
+        //             <div class="">\${seatTemp.type}</div>
+        //             <div class="">\${showJSON.ticketInfor.vip}</div>`;
+
+        selectedSeatsContainer.insertAdjacentHTML('beforeend', `
+    <div class="">\${userJSON.name}</div>
+    <div class="">\${userJSON.phoneNumber}</div>
+    <div class="">\${userJSON.email}</div>
+    <button type="submit" class="btn btn-primary">submit</button>
+`);
+
+        selectedSeatsContainer.insertAdjacentHTML('beforeend', `
+    <div class="">\${seatTemp.position}</div>
+    <div class="">\${seatTemp.type}</div>
+    <div class="">\${showJSON.ticketInfor.vip}</div>
+`);
+
+        selectedSeatsContainer.appendChild(totalSeatsElement);
+        selectedSeatsContainer.appendChild(totalPaymentElement);
+        selectedSeatsContainer.appendChild(discountBill);
+
+    });
+</script>
 </body>
 
 </html>

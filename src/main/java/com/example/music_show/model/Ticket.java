@@ -20,6 +20,13 @@ public class Ticket {
         this.price = price;
     }
 
+    public Ticket(Bill bill, Show show, Seat seat, BigDecimal price) {
+        this.bill = bill;
+        this.show = show;
+        this.seat = seat;
+        this.price = price;
+    }
+
     public int getId() {
         return id;
     }

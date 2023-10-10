@@ -2,14 +2,12 @@ package com.example.music_show.controller;
 
 import com.example.music_show.service.LocationService;
 import com.example.music_show.service.ShowService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 @WebServlet(name = "userController", value = "/homePage")
 public class UserController extends HttpServlet {

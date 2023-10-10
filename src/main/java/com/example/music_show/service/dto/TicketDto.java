@@ -1,7 +1,13 @@
 package com.example.music_show.service.dto;
 
 import com.example.music_show.model.Location;
+import com.example.music_show.model.Seat;
+import com.example.music_show.model.ShowDetail;
 import com.example.music_show.model.TicketInfor;
+
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class TicketDto {
     private int id;
@@ -13,6 +19,7 @@ public class TicketDto {
     private TicketInfor ticketInfor;
     private String seatDiagramImage;
     private String singers;
+    private List<ShowDetail> showDetailList;
 
     public TicketDto() {
     }
@@ -87,5 +94,13 @@ public class TicketDto {
 
     public void setSingers(String singers) {
         this.singers = singers;
+    }
+
+    public List<ShowDetail> getShowDetailList() {
+        return showDetailList;
+    }
+
+    public void setShowDetailList(List<ShowDetail> showDetailList) {
+        this.showDetailList = showDetailList;
     }
 }

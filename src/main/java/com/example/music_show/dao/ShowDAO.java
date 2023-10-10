@@ -1,11 +1,8 @@
 package com.example.music_show.dao;
 
 import com.example.music_show.model.Show;
-import com.example.music_show.model.Singer;
 import com.example.music_show.service.dto.Page;
 import com.example.music_show.service.dto.TicketDto;
-import com.example.music_show.utils.DateTimeUtils;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

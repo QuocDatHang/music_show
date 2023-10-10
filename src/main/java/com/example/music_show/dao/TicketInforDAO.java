@@ -13,8 +13,9 @@ public class TicketInforDAO extends DatabaseConnection {
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                var ticketInfor = new TicketInfor();
+
+            while (rs.next()){
+                TicketInfor ticketInfor = new TicketInfor();
                 ticketInfor.setId(rs.getInt("id"));
                 ticketInfor.setPremium(rs.getBigDecimal("premium"));
                 ticketInfor.setVip(rs.getBigDecimal("vip"));
@@ -63,5 +64,5 @@ public class TicketInforDAO extends DatabaseConnection {
             System.out.println(e.getMessage());
         }
     }
-
 }
+

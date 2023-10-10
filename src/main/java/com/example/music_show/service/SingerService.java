@@ -3,8 +3,6 @@ package com.example.music_show.service;
 import com.example.music_show.dao.SingerDAO;
 import com.example.music_show.model.Singer;
 import com.example.music_show.service.dto.Page;
-
-import java.math.BigDecimal;
 import java.util.List;
 
 public class SingerService {

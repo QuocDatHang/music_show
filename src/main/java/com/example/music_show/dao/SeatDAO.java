@@ -1,5 +1,5 @@
 package com.example.music_show.dao;
-import com.example.music_show.model.Location;
+
 import com.example.music_show.model.Seat;
 import com.example.music_show.model.enumeration.EStatus;
 import com.example.music_show.model.enumeration.EType;
@@ -50,3 +50,4 @@ public class SeatDAO extends DatabaseConnection{
         return null;
     }
 }
+

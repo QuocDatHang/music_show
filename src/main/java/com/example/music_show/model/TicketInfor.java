@@ -7,7 +7,6 @@ public class TicketInfor {
     private BigDecimal premium;
     private BigDecimal vip;
     private BigDecimal standard;
-
     public TicketInfor(int id, BigDecimal premium, BigDecimal vip, BigDecimal standard) {
         this.id = id;
         this.premium = premium;
@@ -50,3 +49,4 @@ public class TicketInfor {
         this.standard = standard;
     }
 }
+

@@ -1,10 +1,7 @@
 package com.example.music_show.model;
 
-
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-
 public class Show {
     private int id;
     private String showName;
@@ -30,18 +27,19 @@ public class Show {
         this.seatDiagramImage = seatDiagramImage;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    public Show(int id) {
         this.id = id;
     }
 
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getShowName() {
         return showName;
     }
-
     public void setShowName(String showName) {
         this.showName = showName;
     }
@@ -65,7 +63,6 @@ public class Show {
     public String getPoster() {
         return poster;
     }
-
     public void setPoster(String poster) {
         this.poster = poster;
     }
@@ -89,7 +86,6 @@ public class Show {
     public Location getLocation() {
         return location;
     }
-
     public void setLocation(Location location) {
         this.location = location;
     }
@@ -102,3 +98,12 @@ public class Show {
         this.showDetailList = showDetailList;
     }
 }
+
+
+
+
+
+
+
+
+

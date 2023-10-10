@@ -96,9 +96,8 @@
 
         <!-- List event music -->
         <article id="list">
-
             <c:forEach var="show" items="${pageShow.content}">
-                <a class="card" href="/detail.jsp?showId=${show.id}" style="text-decoration: none">
+                <a class="card" href="/ticket?showId=${show.id}" style="text-decoration: none">
                     <img src="./images/${show.poster}" class="card-img-top" alt="...">
                     <div class="card-body ">
                         <h5 class="card-title" style="padding-bottom: 10px">
@@ -119,7 +118,7 @@
                 </a>
             </c:forEach>
             <c:forEach var="show" items="${pageShowsByCity.content}">
-                <a href="/detail.jsp?showId=${show.id}" class="card" style="width: 100%; text-decoration: none">
+                <a href="/ticket?showId=${show.id}" class="card" style="width: 100%; text-decoration: none">
                     <img src="./images/${show.poster}" class="card-img-top" alt="...">
                     <div class="card-body ">
                         <h5 class="card-title" style="padding-bottom: 10px">
