@@ -2,12 +2,13 @@ package com.example.music_show.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class Bill {
     private int id;
     private User user;
-    private double discount;
-    private Date createAt;
+    private BigDecimal discount;
+    private LocalDateTime createAt;
     private BigDecimal total;
 
     public Bill() {
@@ -18,14 +19,14 @@ public class Bill {
     }
 
 
-    public Bill(int id, User user, Date createAt, BigDecimal total) {
+    public Bill(int id, User user, LocalDateTime createAt, BigDecimal total) {
         this.id = id;
         this.user = user;
         this.createAt = createAt;
         this.total = total;
     }
 
-    public Bill(int id, User user, double discount, Date createAt, BigDecimal total) {
+    public Bill(int id, User user, BigDecimal discount, LocalDateTime createAt, BigDecimal total) {
         this.id = id;
         this.user = user;
         this.discount = discount;
@@ -49,19 +50,19 @@ public class Bill {
         this.user = user;
     }
 
-    public double getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 
-    public Date getCreateAt() {
+    public LocalDateTime getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(Date createAt) {
+    public void setCreateAt(LocalDateTime createAt) {
         this.createAt = createAt;
     }
 

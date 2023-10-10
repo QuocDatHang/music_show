@@ -66,28 +66,28 @@
                     <p>${show.timeStart}</p>
                     <p>${show.timeEnd}</p>
                 </div>
-                <h2 class="site-details__infoticket">Thông tin vé</h2>
+                <h3 class="site-details__infoticket">Thông tin vé</h3>
                 <table class="site-details__tbticket">
                     <tr>
-                        <td>Premium</td>
+                        <td style="padding-left: 20px">Premium</td>
                         <td><fmt:setLocale value="vi_VN"/>
                             <fmt:formatNumber value="${show.ticketInfor.premium}" pattern="#,##0 ¤"/>
                         </td>
                     </tr>
                     <tr>
-                        <td>Vip</td>
+                        <td style="padding-left: 20px">Vip</td>
                         <td><fmt:setLocale value="vi_VN"/>
                             <fmt:formatNumber value="${show.ticketInfor.vip}" pattern="#,##0 ¤"/>
                         </td>
                     </tr>
                     <tr>
-                        <td>Standard</td>
+                        <td style="padding-left: 20px">Standard</td>
                         <td><fmt:setLocale value="vi_VN"/>
                             <fmt:formatNumber value="${show.ticketInfor.standard}" pattern="#,##0 ¤"/>
                         </td>
                     </tr>
                 </table>
-                <h2 class="site-details__description">Mô tả</h2>
+                <h3 class="site-details__description" style="padding-top: 20px">Mô tả</h3>
                 <div class="site-details__phrasedesc">
                     <p>
                         - Mua trên 5 vé để được giảm 5% <br>
@@ -209,12 +209,27 @@
 
                     </ul>
                 </div>
-                <div style="width: 100%; height: 150px">
-                    <input readonly class="payment" value="Tổng tiền:  $">
-                    <input readonly class="payment" value="Giảm:  $">
-                    <input readonly class="payment" value="Thành tiền:  $">
-                </div>
-                <div>
+                <table class="tableBill" style="width: 100%; height: 150px">
+                    <tr>
+                        <td style="text-align: left; padding-left: 20px">Tổng tiền:</td>
+                        <td>
+                            <input readonly class="payment" id="totalBill">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; padding-left: 20px">Giảm:</td>
+                        <td>
+                            <input readonly class="payment" id="discount">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; padding-left: 20px">Thành tiền:</td>
+                        <td>
+                            <input readonly class="payment" id="payment">
+                        </td>
+                    </tr>
+                </table>
+                <div style="padding-top: 15px">
                     <label class="btn btn-danger mb-2" style="width: 100%" id="inputbill">Đặt chỗ</label>
                 </div>
 
@@ -225,49 +240,84 @@
 
         <%--            </div>--%>
         <%--        </form>--%>
-        <div class="card container px-6" style="height: 100vh; width: 45%; background-color: #eceeee; margin-top: 30px">
-            <form action="/ticket?action=createBill&userId=${user.id}" method="post" style="padding: 0 20px">
-                <h3>XÁC NHẬN THÔNG TIN</h3>
-                <h5 class="site-details__infoticket">THÔNG TIN KHÁCH HÀNG</h5>
-                <table class="site-details__tbticket">
+        <div class="card container px-6" style="height: 120vh; width: 45%; background-color: #eceeee; margin-top: 30px">
+            <form action="/ticket?action=createBill&userId=${user.id}&showId=${show.id}" method="post"
+                  style="padding: 20px; text-align: center">
+                <h5>XÁC NHẬN THÔNG TIN</h5>
+                <h7>THÔNG TIN KHÁCH HÀNG</h7>
+                <table class="table table-bordered" style="width:100%; text-align: left">
                     <tr>
-                        <td>Tên</td>
+                        <td style="width: 35%">Tên</td>
                         <td>
                             ${user.name}
                         </td>
                     </tr>
                     <tr>
-                        <td>Số điện thoại</td>
+                        <td style="width: 35%">Số điện thoại</td>
                         <td>
                             ${user.phoneNumber}
                         </td>
                     </tr>
                     <tr>
-                        <td>Email</td>
+                        <td style="width: 35%">Email</td>
                         <td>
                             ${user.email}
                         </td>
                     </tr>
                 </table>
 
-                <h5 class="site-details__infoticket">THÔNG TIN VÉ</h5>
-                <table class="site-details__tbticket">
+                <h7>THÔNG TIN VÉ</h7>
+                <table class="table table-bordered" style="width:100%; text-align: left">
                     <tr>
-                        <td>PREMIUM</td>
+                        <td style="width: 35%">PREMIUM</td>
                         <td>
-
+                            <input readonly id="premiumSeats" name="premiumSeats" style="width: 100%; border: 0">
                         </td>
                     </tr>
                     <tr>
-                        <td>VIP</td>
+                        <td style="width: 35%">VIP</td>
                         <td>
-
+                            <input readonly id="vipSeats" name="vipSeats" style="width: 100%; border: 0">
                         </td>
                     </tr>
                     <tr>
-                        <td>STANDARD</td>
+                        <td style="width: 35%">STANDARD</td>
                         <td>
+                            <input readonly id="standardSeats" name="standardSeats" style="width: 100%; border: 0">
+                        </td>
+                    </tr>
+                </table>
 
+                <h7>THANH TOÁN</h7>
+                <table class="table table-bordered" style="width:100%; text-align: left">
+                    <tr>
+                        <td style="width: 35%">THỜI GIAN ĐẶT VÉ</td>
+                        <td>
+                            <input readonly id="createAt" name="createAt" style="width: 100%; border: 0">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 35%">SỐ GHẾ</td>
+                        <td>
+                            <input readonly id="seatQuantities" name="seatQuantities" style="width: 100%; border: 0">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 35%">TỔNG</td>
+                        <td>
+                            <input readonly id="total" name="total" style="width: 100%; border: 0">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 35%">GIẢM GIÁ</td>
+                        <td>
+                            <input readonly id="discountBill" name="discountBill" style="width: 100%; border: 0">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 35%">TỔNG THANH TOÁN</td>
+                        <td>
+                            <input readonly id="totalPay" name="totalPay" style="width: 100%; border: 0">
                         </td>
                     </tr>
                 </table>
@@ -323,6 +373,9 @@
             }
         }
         var selectedSeatsList = document.getElementById('selected-seats-list');
+        var premiumSeats = "";
+        var vipSeats = "";
+        var standardSeats = "";
 
         var index = listSeat.indexOf(seat);
         if (index !== -1) {
@@ -332,7 +385,14 @@
         }
 
         selectedSeatsList.innerHTML = '';
-        let totalPayment = 0;
+        // premiumSeats.innerHTML = '';
+        // vipSeats.innerHTML = '';
+        // standardSeats.innerHTML = '';
+        // seatQuantities.value = '';
+        // total.value = '';
+        // discountBill.value = '';
+        // totalPay.value = '';
+        let totalBill = 0;
         for (var i = 0; i < listSeat.length; i++) {
             var seatTemp = listSeat[i];
             if (seatTemp.type === "PREMIUM") {
@@ -342,7 +402,8 @@
                             <input class="selectedType" name="selectedType" readonly value="\${seatTemp.type}">
                             <input class="selectedPrice" name="selectedPrice" value="\${showJSON.ticketInfor.premium}">
                         <li>`
-                totalPayment += showJSON.ticketInfor.premium;
+                totalBill += showJSON.ticketInfor.premium;
+                premiumSeats += `\${seatTemp.position} `;
             }
             if (seatTemp.type === "VIP") {
                 selectedSeatsList.innerHTML +=
@@ -351,7 +412,8 @@
                             <input class="selectedType" name="selectedType" readonly value="\${seatTemp.type}">
                             <input class="selectedPrice" name="selectedPrice" value="\${showJSON.ticketInfor.vip}">
                         <li>`
-                totalPayment += showJSON.ticketInfor.vip;
+                totalBill += showJSON.ticketInfor.vip;
+                vipSeats += `\${seatTemp.position} `;
             }
             if (seatTemp.type === "STANDARD") {
                 selectedSeatsList.innerHTML +=
@@ -360,36 +422,52 @@
                             <input class="selectedType" name="selectedType" readonly value="\${seatTemp.type}">
                             <input class="selectedPrice" name="selectedPrice" readonly value="\${showJSON.ticketInfor.premium}">
                         <li>`
-                totalPayment += showJSON.ticketInfor.standard;
+                totalBill += showJSON.ticketInfor.standard;
+                standardSeats += `\${seatTemp.position} `;
             }
         }
         var totalSeatsElement = document.getElementById('selectedSeats');
-        totalSeatsElement.innerHTML = "Các ghế đã đặt (" + listSeat.length +")";
+        totalSeatsElement.innerHTML = "Các ghế đã đặt (" + listSeat.length + ")";
+        document.getElementById("seatQuantities").value = `\${listSeat.length}`;
+
+        if (listSeat.length >= 5 && listSeat.length < 10) {
+            discount = totalBill * 0.05;
+        } else if (listSeat.length >= 10) {
+            discount = totalBill * 0.1;
+        } else {
+            discount = 0;
+        }
+        var totalBillFormat = parseFloat(totalBill);
+        var formattedTotalBill = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND"
+        }).format(totalBillFormat);
+
+        var discountFormat = parseFloat(discount);
+        var formattedDiscount = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND"
+        }).format(discountFormat);
+
+        var paymentFormat = parseFloat(totalBill - discount);
+        var formattedPayment = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND"
+        }).format(paymentFormat);
+
+        document.getElementById("totalBill").value = formattedTotalBill;
+        document.getElementById("discount").value = formattedDiscount;
+        document.getElementById("payment").value = formattedPayment;
+        document.getElementById("premiumSeats").value = premiumSeats;
+        document.getElementById("vipSeats").value = vipSeats;
+        document.getElementById("standardSeats").value = standardSeats;
+        document.getElementById('total').value = formattedTotalBill;
+        document.getElementById('discountBill').value = formattedDiscount;
+        document.getElementById('totalPay').value = formattedPayment;
+
+        // Lấy giá trị số tiền khi không có chữ VNĐ
+        // var numericValue = parseFloat(totalBillInput.value.replace(/[^0-9.-]+/g,""));
     }
-
-
-
-    // totalSeatsElement.textContent = 'Tổng số ghế đã chọn: ' + totalSeats;
-    // totalSeatsElement.classList.add(totalSeats);
-    // selectedSeatsList.appendChild(totalSeatsElement);
-
-    // let totalPaymentElement = document.createElement('div');
-    // totalPaymentElement.textContent = 'Total Payment: ' + totalPayment;
-    // selectedSeatsList.appendChild(totalPaymentElement);
-    //
-    // if (totalSeats >= 5 && totalSeats <= 10) {
-    //     discount = totalPayment * 0.95;
-    // } else if (totalSeats >= 10) {
-    //     discount = totalPayment * 0.9;
-    // } else {
-    //     discount = totalPayment;
-    // }
-    // // <input type="text" readonly class="form-control-plaintext" value="\${discountBill}" name="total">`;
-    // var discountBill = document.createElement('p');
-    // discountBill.textContent = 'discount: ' + discount;
-    // selectedSeatsList.appendChild(discountBill);
-
-
 
     function deleteSeat(id) {
         var seat;
@@ -409,65 +487,19 @@
         toggleSeat(); // Gọi lại hàm toggleSeat để tính lại giá sau khi xóa ghế
     }
 
-    document.getElementById('inputbill').addEventListener('click', function () {
-        var selectedSeatsList = document.getElementById('selected-seats-list');
-        var selectedSeatsContainer = document.getElementById('selected-seats-container');
+    // LẤY THỜI GIAN TẠO BILL
+    var inputBillLabel = document.getElementById("inputbill");
 
-        // Xóa nội dung của selected-seats-container
-        selectedSeatsContainer.innerHTML = '';
+    function setTimeNow() {
+        var current = new Date();
+
+        var formattedTime = current.toISOString().substring(0, 19).replace('T', ' ');
+        document.getElementById("createAt").value = formattedTime;
+    }
+
+    inputBillLabel.addEventListener("click", setTimeNow);
 
 
-        // Lặp qua các ghế đã chọn trong danh sách
-        // for (var i = 0; i < selectedSeatsList.children.length; i++) {
-        // var listItem = selectedSeatsList.children[i];
-        // var seatInfo = listItem.innerText.replace("\n", " ");
-        for (var i = 0; i < listSeat.length; i++) {
-            let seatTemp = listSeat[i];
-            let seatInfo = seatTemp.position + seatTemp.type + "120000"
-
-            // Tạo một phần tử div mới cho mỗi ghế và thêm vào selected-seats-container
-            var seatElement = document.createElement('input');
-            seatElement.value = seatInfo;
-            selectedSeatsContainer.appendChild(seatElement);
-        }
-
-        // var totalSeats = selectedSeatsList.children.length;
-        //
-        // var totalSeatsElement = document.createElement('p');
-        // totalSeatsElement.textContent = 'Tổng số ghế đã chọn: ' + totalSeats;
-        // selectedSeatsContainer.appendChild(listSeat);
-        //  selectedSeatsContainer.innerHTML =`
-        //    <div class="">\${userJSON.name}</div>
-        //      <div class="">\${userJSON.phoneNumber}</div>
-        //   <div class="">\${userJSON.email}</div>
-        //     `;
-
-        // selectedSeatsContainer.innerHTML = `
-        //     <div class="">\${userJSON.name}</div>
-        //     <div class="">\${userJSON.phoneNumber}</div>
-        //  <div class="">\${userJSON.email}</div>
-        //   <div class="">\${seatTemp.position}</div>
-        //             <div class="">\${seatTemp.type}</div>
-        //             <div class="">\${showJSON.ticketInfor.vip}</div>`;
-
-        selectedSeatsContainer.insertAdjacentHTML('beforeend', `
-    <div class="">\${userJSON.name}</div>
-    <div class="">\${userJSON.phoneNumber}</div>
-    <div class="">\${userJSON.email}</div>
-    <button type="submit" class="btn btn-primary">submit</button>
-`);
-
-        selectedSeatsContainer.insertAdjacentHTML('beforeend', `
-    <div class="">\${seatTemp.position}</div>
-    <div class="">\${seatTemp.type}</div>
-    <div class="">\${showJSON.ticketInfor.vip}</div>
-`);
-
-        selectedSeatsContainer.appendChild(totalSeatsElement);
-        selectedSeatsContainer.appendChild(totalPaymentElement);
-        selectedSeatsContainer.appendChild(discountBill);
-
-    });
 </script>
 </body>
 

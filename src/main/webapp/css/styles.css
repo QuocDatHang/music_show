@@ -252,7 +252,8 @@
 .payment{
   width: 100%;
   border: 0;
-  padding: 10px;
+  padding: 10px 25px;
+  text-align: right;
 }
 .seat{
   cursor: pointer;
@@ -260,3 +261,4 @@
 .seat:hover{
   background-color: #0b5ed7;
 }
+
