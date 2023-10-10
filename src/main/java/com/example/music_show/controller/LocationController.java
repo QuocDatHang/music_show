@@ -6,8 +6,6 @@ import com.example.music_show.model.enumeration.EStatus;
 import com.example.music_show.model.enumeration.EType;
 import com.example.music_show.service.LocationService;
 import com.example.music_show.service.SeatService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,12 +50,10 @@ public class LocationController extends HttpServlet {
                 showLocation(req,resp);
         }
     }
-
     private void showSeat(HttpServletRequest req, HttpServletResponse resp) {
         req.setAttribute("show", locationService.findBySeat(Integer.parseInt(req.getParameter("id"))));
 
     }
-
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         locationService.deleteLocation(id);
@@ -85,12 +81,9 @@ public class LocationController extends HttpServlet {
            if(pageString == null){
                pageString="1";
            }
-//           int id = Integer.parseInt(req.getParameter("id"));
            req.setAttribute("page", locationService.getAllLocation(Integer.parseInt(pageString),req.getParameter("search")));
-//           req.setAttribute("id", locationService.amountSeat(id));
            req.setAttribute("search", req.getParameter("search"));
            req.getRequestDispatcher("location/location.jsp").forward(req,resp);
-
     }
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
@@ -104,18 +97,14 @@ public class LocationController extends HttpServlet {
             case "edit":
                 update(req,resp);
                 break;
-//            default:
-//                showList(req,resp);
         }
-
     }
     private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        locationService.update(req);
+        locationService.updateLocation(req);
         resp.sendRedirect("/location?message=Edited Successfully");
     }
     private void create(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         locationService.create(req);
         resp.sendRedirect("/location?message=Created Successfully");
     }
-
 }

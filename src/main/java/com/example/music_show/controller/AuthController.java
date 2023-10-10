@@ -1,25 +1,18 @@
 package com.example.music_show.controller;
 
-
 import com.example.music_show.model.User;
 import com.example.music_show.model.enumeration.ERole;
 import com.example.music_show.service.UserService;
-
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
 
 @WebServlet(name = "authController", urlPatterns = "/auth")
 public class AuthController extends HttpServlet {
     private UserService userService;
-
-
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
@@ -32,11 +25,8 @@ public class AuthController extends HttpServlet {
                 break;
             default:
                 showLogin(req,resp);
-
         }
-
     }
-
     private void showLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("message", req.getParameter("message"));
         req.getRequestDispatcher("/auth/login.jsp").forward(req,resp);
@@ -81,13 +71,10 @@ public class AuthController extends HttpServlet {
         String email = req.getParameter("email");
         String phoneNumber = req.getParameter("phoneNumber");
         ERole role = ERole.USER;
-
-
         return new User(username,password,fullName,email,phoneNumber,role);
     }
     @Override
     public void init() throws ServletException {
         userService = new UserService();
-
     }
 }

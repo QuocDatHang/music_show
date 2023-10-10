@@ -1,20 +1,17 @@
 package com.example.music_show.controller;
 
 import com.example.music_show.dao.LocationDAO;
-import com.example.music_show.dao.UserDAO;
 import com.example.music_show.model.*;
-import com.example.music_show.model.enumeration.EType;
 import com.example.music_show.service.*;
 import com.example.music_show.service.dto.TicketDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 
 @WebServlet(name="TicketController", urlPatterns = "/ticket")
@@ -63,21 +60,19 @@ public class TicketController extends HttpServlet {
 
 
     public void showDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
 
-        int id = 1;
-        Show showdetail = showService.findById(id);
-        TicketDto dto = ticketService.detailShow(id);
-        req.setAttribute("show", showdetail);
-        User user = userService.findById(Integer.parseInt(req.getParameter("userId"))) ;
+        int showId = Integer.parseInt(req.getParameter("showId"));
+        TicketDto showDto = showService.findDtoById(showId);
+        req.setAttribute("show", showDto);
         req.setAttribute("user", user);
         req.setAttribute("userJSON", new ObjectMapper().writeValueAsString(user));
-        List<Seat> seats = locationDAO.getSeatList(showdetail.getLocation().getId());
+        List<Seat> seats = locationDAO.getSeatList(showDto.getLocation().getId());
         req.setAttribute("seats", seats);
         req.setAttribute("seatListJson", new ObjectMapper().writeValueAsString(seats));
-        req.setAttribute("showJSON", new ObjectMapper().writeValueAsString(dto));
+        req.setAttribute("showJSON", new ObjectMapper().writeValueAsString(showDto));
         req.getRequestDispatcher("detail.jsp").forward(req, resp);
-
-
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

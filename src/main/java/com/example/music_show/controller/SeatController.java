@@ -1,7 +1,6 @@
 package com.example.music_show.controller;
 
 import com.example.music_show.service.SeatService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,12 +38,12 @@
     <div class="d-flex justify-content-between" id="link">
         <div class="top-misc-layout"></div>
         <ul>
-            <li><a href="#">Trang chủ</a></li>
-            <li><a href="#">Đà lạt</a></li>
-            <li><a href="#">Đà nẵng</a></li>
-            <li><a href="#">Cần Thơ</a></li>
-            <li><a href="#">Sài Gòn</a></li>
-            <li><a href="#">Hà Nội</a></li>
+            <li><a href="/homePage">Trang chủ</a></li>
+            <li><a href="/homePage?action=findByCity&city=HA NOI">Hà Nội</a></li>
+            <li><a href="/homePage?action=findByCity&city=HUE">Huế</a></li>
+            <li><a href="/homePage?action=findByCity&city=DA NANG">Đà nẵng</a></li>
+            <li><a href="/homePage?action=findByCity&city=DA LAT">Đà lạt</a></li>
+            <li><a href="/homePage?action=findByCity&city=SAI GON">Sài Gòn</a></li>
         </ul>
         <div class="top-misc-layout"></div>
     </div>
@@ -51,7 +53,7 @@
     <section class="d-flex flex-wrap" id="header">
         <!-- Phrase: about to happen -->
         <article id="phrase">
-            <span>Sắp diễn ra</span>
+            <span>SẮP DIỄN RA</span>
         </article>
     </section>
 
@@ -59,17 +61,13 @@
     <section class="d-flex flex-wrap" id="content">
         <!-- parallax -->
         <article id="parallax">
-            <div id="carouselExample" class="carousel slide">
+            <div id="carouselExample" class="carousel slide" data-bs-interval="3000">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="./images/pic1.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="./images/pic2.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="./images/pic3.jpg" class="d-block w-100" alt="...">
-                    </div>
+                    <c:forEach var="show" items="${shows}">
+                        <div class="carousel-item active">
+                            <img src="./images/${show.seatDiagramImage}" class="d-block w-100" alt="...">
+                        </div>
+                    </c:forEach>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
                         data-bs-slide="prev">
@@ -85,154 +83,122 @@
         </article>
 
         <!-- Search -->
-        <article class="mt-2" id="search">
-            <form action="" class="d-flex">
-                <div class="p-2 flex-grow-1">
-                    <input type="text" placeholder="Tìm kiếm theo show">
-                </div>
-                <div class="p-2 flex-grow-1">
-                    <input type="text" placeholder="hoặc tìm kiếm theo ca sĩ">
-                </div>
-                <div class="p-2">
-                    <button class="btn" type="submit">Tìm kiếm</button>
-                </div>
+        <article class="mt-2">
+            <form class="d-flex" style="justify-content: center; margin: 15px 0 60px 0;"
+                  action="/homePage?page=${pageSinger.currentPage}">
+                <input class="form-control me-2" style="width: 86%;border-width: 1px;border-color: #7c7e80;" type="text"
+                       id="searchShow" value="${searchShow}"
+                       name="searchShow" placeholder="Tìm show hoặc ca sĩ" aria-label="Search">
+                <button class="btn btn-secondary" type="submit">Tìm kiếm</button>
             </form>
         </article>
 
-        <!-- Sort -->
-        <article id="sort">
-            <div class="d-flex justify-content-between">
-                <div class="p-2 d-flex flex-column sort">
-                    <span class="sort-text mb-2">Chọn chi nhánh</span>
-                    <select class="sort-select">
-                        <option value="1" selected>Tất cả chi nhánh</option>
-                        <option value="2">Đà lạt</option>
-                        <option value="3">Đà Nẵng</option>
-                        <option value="4">Cần Thơ</option>
-                        <option value="5">Sài Gòn</option>
-                        <option value="6">Hà Nội</option>
-                    </select>
-                </div>
-                <div class="p-2"></div>
-                <div class="p-2 d-flex flex-column sort">
-                    <span class="sort-text mb-2">Chọn chi nhánh</span>
-                    <select class="sort-select">
-                        <option value="1" selected>Tất cả chi nhánh</option>
-                        <option value="2">Đà lạt</option>
-                        <option value="3">Đà Nẵng</option>
-                        <option value="4">Cần Thơ</option>
-                        <option value="5">Sài Gòn</option>
-                        <option value="6">Hà Nội</option>
-                    </select>
-                </div>
-            </div>
+
+        <!-- List event music -->
+        <article id="list">
+            <c:forEach var="show" items="${pageShow.content}">
+                <a class="card" href="/ticket?showId=${show.id}" style="text-decoration: none">
+                    <img src="./images/${show.poster}" class="card-img-top" alt="...">
+                    <div class="card-body ">
+                        <h5 class="card-title" style="padding-bottom: 10px">
+                            <span style="color: #030378; text-transform: uppercase">${show.singers}</span>
+                        </h5>
+                        <div class="d-flex justify-content-between">
+                            <div class="mp-stage-title">${show.showName}</div>
+                            <div class="mp-time">${show.timeStart}</div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <div class="mp-singer-name">${show.singers}</div>
+                            <div class="mp-branch-title"><span>CN: ${show.location.city}</span></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <div class="mp-price-title">Giá chỉ từ ${show.ticketInfor.standard} VND</div>
+                        </div>
+                    </div>
+                </a>
+            </c:forEach>
+            <c:forEach var="show" items="${pageShowsByCity.content}">
+                <a href="/ticket?showId=${show.id}" class="card" style="width: 100%; text-decoration: none">
+                    <img src="./images/${show.poster}" class="card-img-top" alt="...">
+                    <div class="card-body ">
+                        <h5 class="card-title" style="padding-bottom: 10px">
+                            <span style="color: #030378; text-transform: uppercase">${show.singers}</span>
+                        </h5>
+                        <div class="d-flex justify-content-between">
+                            <div class="mp-stage-title">${show.showName}</div>
+                            <div class="mp-time">${show.timeStart}</div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <div class="mp-singer-name">${show.singers}</div>
+                            <div class="mp-branch-title"><span>CN: ${show.location.city}</span></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <div class="mp-price-title">Giá chỉ từ ${show.ticketInfor.standard} VND</div>
+                        </div>
+                    </div>
+                </a>
+            </c:forEach>
         </article>
 
-        <!-- List event mucsic -->
-        <article id="list">
-            <div class="card" style="">
-                <img src="./images/list-pic1.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Bùi Lan Hương</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 100%;">
-                <img src="./images/list-pic2.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Lê Hiếu</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 100%;">
-                <img src="./images/list-pic3.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Thanh Hà</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 100%;">
-                <img src="./images/list-pic4.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Thu Minh</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 100%;">
-                <img src="./images/list-pic5.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Mai Tiến Dũng & Thảo Trang</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 100%;">
-                <img src="./images/list-pic6.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="#">Tăng Phúc</a></h5>
-                    <div class="d-flex justify-content-between">
-                        <div class="mp-stage-title">Chiều nhạc trên mây</div>
-                        <div class="mp-time">06/10/2023 17:00</div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-singer-name">Lương Bích Hữu - Vicky Nhung & Khách mời: Vũ Thịnh</div>
-                        <div class="mp-branch-title"><a href="#">CN: Đà Lạt</a></div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="mp-price-title">Giá vé 100.000 VND</div>
-                    </div>
-                </div>
-            </div>
-        </article>
+
+        <c:if test="${pageShow.content.size() != null}">
+            <nav aria-label="...">
+                <c:set var="url" value="/homePage?page="/>
+                <ul class="pagination" style="background: white; display: flex; justify-content: center">
+                    <li class="page-item <c:if test="${pageShow.currentPage == 1}" >disabled</c:if>"
+                        style="line-height: 12px; margin: 0;">
+                        <a class="page-link" href="${url}${(pageShow.currentPage - 1)}" tabindex="-1"
+                           aria-disabled="true">Previous</a>
+                    </li>
+                    <c:forEach var="number" begin="1" end="${pageShow.totalPage}">
+                        <c:if test="${number == pageShow.currentPage}">
+                            <li class="page-item active" aria-current="page" style="line-height: 12px; margin: 0;">
+                                <a class="page-link" href="${url}${number}">${number}</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${number != pageShow.currentPage}">
+                            <li class="page-item" style="line-height: 12px; margin: 0;">
+                                <a class="page-link" href="${url}${number}">${number}</a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                    <li class="page-item <c:if test="${pageShow.currentPage == pageShow.totalPage}">disabled</c:if>"
+                        style="line-height: 12px; margin: 0;">
+                        <a class="page-link" href="${url}${(pageShow.currentPage + 1)}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </c:if>
+
+        <c:if test="${pageShowsByCity.content.size() != null}">
+            <nav aria-label="...">
+                <c:set var="url" value="/homePage?page="/>
+                <ul class="pagination" style="background: white; display: flex; justify-content: center">
+                    <li class="page-item <c:if test="${pageShowsByCity.currentPage == 1}" >disabled</c:if>"
+                        style="line-height: 12px; margin: 0;">
+                        <a class="page-link" href="${url}${(pageShowsByCity.currentPage - 1)}" tabindex="-1"
+                           aria-disabled="true">Previous</a>
+                    </li>
+                    <c:forEach var="number" begin="1" end="${pageShowsByCity.totalPage}">
+                        <c:if test="${number == pageShowsByCity.currentPage}">
+                            <li class="page-item active" aria-current="page" style="line-height: 12px; margin: 0;">
+                                <a class="page-link" href="${url}${number}">${number}</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${number != pageShowsByCity.currentPage}">
+                            <li class="page-item" style="line-height: 12px; margin: 0;">
+                                <a class="page-link" href="${url}${number}">${number}</a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                    <li class="page-item <c:if test="${pageShowsByCity.currentPage == pageShowsByCity.totalPage}">disabled</c:if>"
+                        style="line-height: 12px; margin: 0;">
+                        <a class="page-link" href="${url}${(pageShowsByCity.currentPage + 1)}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </c:if>
+
     </section>
 
     <footer id="footer">
@@ -262,6 +228,15 @@
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/bootstrap.bundle.min.js"></script>
 <script src="./js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script>
+    const message = document.getElementById('message');
+    if (message !== null && message.innerHTML) {
+        toastr.success(message.innerHTML);
+    }
+</script>
 </body>
 
 </html>

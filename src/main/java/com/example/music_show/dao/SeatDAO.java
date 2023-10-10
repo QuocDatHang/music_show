@@ -1,23 +1,19 @@
 package com.example.music_show.dao;
 
-import com.example.music_show.model.Location;
 import com.example.music_show.model.Seat;
 import com.example.music_show.model.enumeration.EStatus;
 import com.example.music_show.model.enumeration.EType;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 public class SeatDAO extends DatabaseConnection{
     public List<Seat> findAll(){
         List<Seat> content = new ArrayList<>();
         String SELECT_ALL = "SELECT * " +
                 " FROM seats ";
-
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
             System.out.println(preparedStatement);
@@ -53,4 +49,18 @@ public class SeatDAO extends DatabaseConnection{
         }
         return null;
     }
+    public void update(int seatID, String position, String type){
+
+        String UPDATE_SEAT= "UPDATE `music_show_db`.`seats` SET `position` = ?, `type` = ? where id=?";
+        try(Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SEAT)){
+            preparedStatement.setString(1, position);
+            preparedStatement.setString(2, String.valueOf(type));
+            preparedStatement.setInt(3, seatID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+

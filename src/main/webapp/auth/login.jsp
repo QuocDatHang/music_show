@@ -50,8 +50,10 @@
             <div id="nameError" class="error-message" style="display: none;"></div>
             <input type="text" placeholder="Phone number" name="phoneNumber" id="phone" required/>
             <div id="phoneError" class="error-message" style="display: none;"></div>
+
 <%--            <input type="text" placeholder="Address" name="name" id="address" required/>--%>
 <%--            <div id="addressError" class="error-message" style="display: none;"></div>--%>
+
             <input type="password" placeholder="Password" id="re_password" name="password"  required>
             <div id="passwordError" class="error-message" style="display: none;"></div>
             <input type="password" placeholder="Re_Password" id="password" name="re_password" onblur="checkPassword()" required />
@@ -70,7 +72,10 @@
             <span>or use your account</span>
             <input type="text" placeholder="userName" name="userName" required/>
             <input type="password" placeholder="Password" name="password" required/>
+
 <%--            <a href="/auth/ForgotPassword.jsp">Forgot your password?</a>--%>
+
+
             <button>Sign In</button>
         </form>
     </div>
@@ -235,7 +240,6 @@
             return false;
         }
 
-        return true;
     }
 </script>
 

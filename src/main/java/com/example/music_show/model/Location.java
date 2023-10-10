@@ -15,12 +15,12 @@ public class Location {
         this.id = id;
     }
 
+
     public Location(int id, String city, String address) {
         this.id = id;
         this.city = city;
         this.address = address;
     }
-
     public Location(int id, String city, String address, List<Seat> seatList) {
         this.id = id;
         this.city = city;
@@ -51,7 +51,6 @@ public class Location {
     public void setAddress(String address) {
         this.address = address;
     }
-
     public List<Seat> getSeatList() {
         return seatList;
     }

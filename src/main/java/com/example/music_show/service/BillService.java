@@ -4,13 +4,8 @@ import com.example.music_show.dao.BillDAO;
 import com.example.music_show.dao.TicketDAO;
 import com.example.music_show.dao.UserDAO;
 import com.example.music_show.model.*;
-import com.example.music_show.model.enumeration.EStatus;
-import com.example.music_show.model.enumeration.EType;
-import com.example.music_show.service.dto.Page;
-
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,8 +32,6 @@ public class BillService {
                 .map(Integer::parseInt).collect(Collectors.toList());
         List<BigDecimal> prices = Arrays.stream(req.getParameterValues("prices"))
                 .map(BigDecimal::new).collect(Collectors.toList());
-
-
 
        Bill bill = new Bill();
         bill.setId(billDAO.createBill(userId, createAT, total));

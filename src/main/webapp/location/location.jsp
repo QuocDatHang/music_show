@@ -9,6 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+
 <%--    <title>Title</title>--%>
 <%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>--%>
 <%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"--%>
@@ -55,27 +56,42 @@
         <c:if test="${message != null}">
             <h6 class="d-none" id="message">${message}</h6>
         </c:if>
-        <div >
-
-                <div>
-                    <a href="/location?action=create" class="btn btn-primary mb-2">Create</a>
-                </div>
-                <form class="d-flex" action="/location?page=${page.currentPage}">
-                    <input id="search" name="search" value="${searchs}" class="form-control me-2" type="text" placeholder="Enter key words to search" aria-label="search">
-                    <button class="btn btn-outline-success" id="searchButton">Search</button>
-                </form>
-
-                <%--                       <form action="/user?page=${page.currentPage}">--%>
-                <%--                         <input type="text" id="searchBook" value="${search}" name="search" class="form-control d-flex" style="width: 85%" placeholder="Search Book Title">--%>
-                <%--                       <button id="searchButton" class="btn btn-primary">Search</button>--%>
-                <%--                       </form>--%>
-
-                <div class="col-6">
-
-                </div>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <div>
+                <a class="btn btn-outline-secondary" href="/admin">Quay lại</a>
+                <a class="btn btn-outline-warning" href="/location?action=create">Thêm địa chỉ mới</a>
+            </div>
+            <form class="d-flex" action="/location?page=${page.currentPage}">
+                <input class="form-control me-2" style="width: 300px" type="text" id="searchSinger" value="${searchs}"
+                       name="search" placeholder="Tìm địa chỉ" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+            </form>
         </div>
+    </nav>
+<%--        <div >--%>
 
-        <table class="table table-striped">
+
+<%--                <div>--%>
+<%--                    <a href="/location?action=create" class="btn btn-primary mb-2">Create</a>--%>
+<%--                </div>--%>
+<%--                <form class="d-flex" action="/location?page=${page.currentPage}">--%>
+<%--                    <input id="search" name="search" value="${searchs}" class="form-control me-2" type="text" placeholder="Enter key words to search" aria-label="search">--%>
+<%--                    <button class="btn btn-outline-success" id="searchButton">Search</button>--%>
+<%--                </form>--%>
+
+<%--                &lt;%&ndash;                       <form action="/user?page=${page.currentPage}">&ndash;%&gt;--%>
+<%--                &lt;%&ndash;                         <input type="text" id="searchBook" value="${search}" name="search" class="form-control d-flex" style="width: 85%" placeholder="Search Book Title">&ndash;%&gt;--%>
+<%--                &lt;%&ndash;                       <button id="searchButton" class="btn btn-primary">Search</button>&ndash;%&gt;--%>
+<%--                &lt;%&ndash;                       </form>&ndash;%&gt;--%>
+
+<%--                <div class="col-6">--%>
+
+<%--                </div>--%>
+<%--        </div>--%>
+
+<%-->>>>>>> main--%>
+        <table class="table table-striped" style="width: 100%">
             <tr>
                 <td>
                     Id
@@ -125,18 +141,16 @@
                 </tr>
             </c:forEach>
         </table>
-
         <nav aria-label="...">
             <c:set var="url" value="/location?page="/>
-
-            <%--        <nav aria-label="...">--%>
-            <ul class="pagination">
-                <li class="page-item <c:if test="${page.currentPage == 1}">disabled</c:if>">
+            <ul class="pagination" style="background: white;">
+                <li class="page-item <c:if test="${page.currentPage == 1}">disabled</c:if>
+                    " style="line-height: 12px; margin: 0;">
                     <a class="page-link"  href="${url}${(page.currentPage - 1)}" tabindex="-1" aria-disabled="true">Previous</a>
                 </li>
                 <c:forEach var="number" begin="1" end="${page.totalPage}">
                     <c:if test="${number == page.currentPage}">
-                        <li class="page-item active" aria-current="page">
+                        <li class="page-item active" aria-current="page" style="line-height: 12px; margin: 0;">
                             <a class="page-link" href="${url}${number}">${number}</a>
                         </li>
                     </c:if>
@@ -146,12 +160,39 @@
                         </li>
                     </c:if>
                 </c:forEach>
-                <li class="page-item <c:if test="${page.currentPage == page.totalPage}">disabled</c:if>">
+                <li class="page-item <c:if test="${page.currentPage == page.totalPage}">disabled</c:if>" style="line-height: 12px; margin: 0;">
                     <a class="page-link" href="${url}${(page.currentPage + 1)}">Next</a>
                 </li>
             </ul>
         </nav>
+<%--    <nav aria-label="...">--%>
+<%--        <c:set var="url" value="/location?page="/>--%>
+<%--        <ul class="pagination" style="background: white;">--%>
+<%--            <li class="page-item <c:if test="${pageShow.currentPage == 1}" >disabled</c:if>"--%>
+<%--                style="line-height: 12px; margin: 0;">--%>
+<%--                <a class="page-link" href="${url}${(pageShow.currentPage - 1)}" tabindex="-1"--%>
+<%--                   aria-disabled="true">Previous</a>--%>
+<%--            </li>--%>
+<%--            <c:forEach var="number" begin="1" end="${pageShow.totalPage}">--%>
+<%--                <c:if test="${number == pageShow.currentPage}">--%>
+<%--                    <li class="page-item active" aria-current="page" style="line-height: 12px; margin: 0;">--%>
+<%--                        <a class="page-link" href="${url}${number}">${number}</a>--%>
+<%--                    </li>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${number != pageShow.currentPage}">--%>
+<%--                    <li class="page-item" style="line-height: 12px; margin: 0;">--%>
+<%--                        <a class="page-link" href="${url}${number}">${number}</a>--%>
+<%--                    </li>--%>
+<%--                </c:if>--%>
+<%--            </c:forEach>--%>
+<%--            <li class="page-item <c:if test="${pageShow.currentPage == pageShow.totalPage}">disabled</c:if>"--%>
+<%--                style="line-height: 12px; margin: 0;">--%>
+<%--                <a class="page-link" href="${url}${(pageShow.currentPage + 1)}">Next</a>--%>
+<%--            </li>--%>
+<%--        </ul>--%>
+<%--    </nav>--%>
     </div>
+
 
 </div>
 <footer id="footer">
@@ -176,10 +217,12 @@
         </ul>
     </div>
 </footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 <script>
+
     // const message = document.getElementById('message');
     // if (message !== null && message.innerHTML) {
     //     toastr.success(message.innerHTML);

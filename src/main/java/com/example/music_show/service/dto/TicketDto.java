@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class TicketDto {
-
     private int id;
     private String showName;
     private String timeStart;
@@ -21,8 +20,6 @@ public class TicketDto {
     private String seatDiagramImage;
     private String singers;
     private List<ShowDetail> showDetailList;
-
-
 
     public TicketDto() {
     }

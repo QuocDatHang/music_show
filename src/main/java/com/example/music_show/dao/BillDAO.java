@@ -1,10 +1,7 @@
 package com.example.music_show.dao;
 
-import com.example.music_show.model.Bill;
-
 import java.math.BigDecimal;
 import java.sql.*;
-import java.time.LocalDate;
 
 public class BillDAO extends DatabaseConnection {
     public int createBill(int userID, String createAt, BigDecimal total){
