@@ -37,14 +37,21 @@ public class UserController extends HttpServlet {
         req.setAttribute("pageShowsByCity", showService.findByLocation(Integer.parseInt(pageString), req.getParameter("city")));
         req.getRequestDispatcher("/homePage.jsp").forward(req, resp);
     }
+//    private void showShopping(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        HttpSession session = req.getSession();
+//        User user = (User) session.getAttribute("user");
+//        req.setAttribute("user", user);
+//        req.getRequestDispatcher("/detail.jsp").forward(req, resp);
+//    }
 
     private void showList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+        req.setAttribute("user",user);
         String pageString = req.getParameter("page");
         if (pageString == null) {
             pageString = "1";
         }
-        HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("user");
         if (user != null){
             req.setAttribute("userId", user.getId());
         }

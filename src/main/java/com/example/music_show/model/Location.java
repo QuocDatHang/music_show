@@ -15,6 +15,7 @@ public class Location {
         this.id = id;
     }
 
+
     public Location(int id, String city, String address) {
         this.id = id;
         this.city = city;

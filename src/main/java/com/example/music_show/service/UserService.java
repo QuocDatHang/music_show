@@ -41,7 +41,7 @@ public class UserService {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
             if (user.getRole()==ERole.ADMIN){
-                resp.sendRedirect("/admin?id=${user.id}&message=Login Successful");
+                resp.sendRedirect("/homePage?userId=" + user.getId() + "&message=Login Successful");
             } else if (user.getRole() == ERole.USER) {
                 resp.sendRedirect("/homePage?userId=" + user.getId() + "&message=Login Successful");
             } else {

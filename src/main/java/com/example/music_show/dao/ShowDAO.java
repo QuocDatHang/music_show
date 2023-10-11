@@ -1,6 +1,7 @@
 package com.example.music_show.dao;
 
 import com.example.music_show.model.Show;
+import com.example.music_show.model.ShowDetail;
 import com.example.music_show.service.dto.Page;
 import com.example.music_show.service.dto.TicketDto;
 import java.sql.*;
@@ -10,6 +11,7 @@ import java.util.List;
 public class ShowDAO extends DatabaseConnection {
     private LocationDAO locationDAO = new LocationDAO();
     private TicketInforDAO ticketInforDAO = new TicketInforDAO();
+    private SingerDAO singerDAO = new SingerDAO();
 
     public Page<TicketDto> getAllShow(int page, String search) {
         var result = new Page<TicketDto>();
@@ -225,6 +227,39 @@ public class ShowDAO extends DatabaseConnection {
             System.out.println(e.getMessage());
         }
     }
+    public void updateShowDetail(int id, int showId, int singerId) {
+        String UPDATE_SHOW_DETAIL = "UPDATE `show_details` SET `show_id` = ?, `singer_id` = ? WHERE (`id` = ?)";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SHOW_DETAIL);
+            preparedStatement.setInt(1, showId);
+            preparedStatement.setInt(2, singerId);
+            preparedStatement.setInt(3, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public List<ShowDetail> findShowDetail(int showId){
+        List<ShowDetail> showDetailList = new ArrayList<>();
+        String FIND_SHOW_DETAIL = "SELECT * FROM show_details WHERE show_id = ?";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_SHOW_DETAIL);
+            preparedStatement.setInt(1, showId);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                ShowDetail showDetail = new ShowDetail();
+                showDetail.setId(rs.getInt("id"));
+                showDetail.setShow(findById(rs.getInt("show_id")));
+                showDetail.setSinger(singerDAO.findById(rs.getInt("singer_id")));
+                showDetailList.add(showDetail);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return showDetailList;
+    }
 
     public Show getShowByResultSet(ResultSet rs) throws SQLException {
         Show show = new Show();
@@ -243,8 +278,8 @@ public class ShowDAO extends DatabaseConnection {
         TicketDto ticketDto = new TicketDto();
         ticketDto.setId(rs.getInt("id"));
         ticketDto.setShowName(rs.getString("showName"));
-        ticketDto.setTimeStart(rs.getString("timeStart"));
-        ticketDto.setTimeEnd((rs.getString("timeEnd")));
+        ticketDto.setTimeStart(rs.getString("timeStart").substring(0, rs.getString("timeStart").lastIndexOf(":")));
+        ticketDto.setTimeEnd(rs.getString("timeEnd").substring(0, rs.getString("timeEnd").lastIndexOf(":")));
         ticketDto.setLocation(locationDAO.findById(rs.getInt("location_id")));
         ticketDto.setPoster(rs.getString("poster"));
         ticketDto.setTicketInfor(ticketInforDAO.findById(rs.getInt("ticket_infor_id")));

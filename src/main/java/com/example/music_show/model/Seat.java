@@ -13,6 +13,7 @@ public class Seat {
     public Seat() {
     }
 
+
     public Seat(int id, String position, EStatus status, EType type, Location location) {
         this.id = id;
         this.position = position;

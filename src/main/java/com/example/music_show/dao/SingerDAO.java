@@ -81,6 +81,21 @@ public class SingerDAO extends DatabaseConnection {
         }
         return singers;
     }
+    public Singer findById(int id){
+        String FIND_SINGER = "SELECT * FROM music_show_db.singers where id = ?";
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_SINGER);
+            preparedStatement.setInt(1, id);
+            var rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                return getSingerByResultSet(rs);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
     public Singer getSingerByResultSet(ResultSet rs) throws SQLException {
         var singer = new Singer();

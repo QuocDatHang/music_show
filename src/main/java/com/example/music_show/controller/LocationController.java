@@ -100,7 +100,7 @@ public class LocationController extends HttpServlet {
         }
     }
     private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        locationService.update(req);
+        locationService.updateLocation(req);
         resp.sendRedirect("/location?message=Edited Successfully");
     }
     private void create(HttpServletRequest req, HttpServletResponse resp) throws IOException {

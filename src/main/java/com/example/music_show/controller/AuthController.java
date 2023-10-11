@@ -35,7 +35,7 @@ public class AuthController extends HttpServlet {
     private void showRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("Roles", ERole.values());
         req.setAttribute("message", req.getParameter("message"));
-        req.getRequestDispatcher("auth/register.jsp").forward(req,resp);
+        req.getRequestDispatcher("auth/login.jsp").forward(req,resp);
     }
 
     @Override

@@ -39,7 +39,7 @@
         <div class="top-misc-layout"></div>
         <ul>
             <li><a href="./show">Show</a></li>
-            <li><a href="#">Địa điểm</a></li>
+            <li><a href="./location">Địa điểm</a></li>
             <li><a href="#">Doanh thu</a></li>
             <li><a href="./singer">Ca sĩ</a></li>
             <li><a href="#">Hóa đơn</a></li>
@@ -50,7 +50,7 @@
 
 <main>
 
-    <div class="card container px-6" style="height: 220vh; width: 100%">
+    <div class="card container px-6" style="height: 250vh; width: 100%">
         <c:if test="${message != null}">
             <h6 class="d-none" id="message">${message}</h6>
         </c:if>

@@ -101,10 +101,10 @@ public class ShowService {
         showEdit.setSeatDiagramImage(seatDiagramImage);
 
         showDAO.update(showEdit);
-
+        List<ShowDetail> showDetailList = showDAO.findShowDetail(Integer.parseInt(req.getParameter("showId")));
         List<Integer> singerIDs = Arrays.stream((req.getParameterValues("singerIds"))).map(Integer::parseInt).collect(Collectors.toList());
-        for (Integer singerID : singerIDs) {
-            showDAO.createShowDetail(showEdit.getId(), singerID);
+        for (int i = 0; i < singerIDs.size(); i++) {
+            showDAO.updateShowDetail(showDetailList.get(i).getId(), showEdit.getId(), singerIDs.get(i));
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.music_show.controller;
 import com.example.music_show.service.LocationService;
 import com.example.music_show.service.ShowService;
 import com.example.music_show.service.SingerService;
+import com.example.music_show.service.dto.TicketDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -52,11 +53,13 @@ public class ShowController extends HttpServlet {
         if(pageString == null){
             pageString="1";
         }
+        TicketDto ticketDto = showService.findDtoById(Integer.parseInt(req.getParameter("id")));
+        req.setAttribute("showDtoEdit", ticketDto);
         req.setAttribute("singers", singerService.getAllSinger());
         req.setAttribute("pageLocation", locationService.getAllLocation(Integer.parseInt(pageString),req.getParameter("search")));
         req.setAttribute("singersEdit", singerService.findSingersByShowId(Integer.parseInt(req.getParameter("id"))));
         req.setAttribute("showEdit", showService.findById(Integer.parseInt(req.getParameter("id"))));
-        req.setAttribute("showEditJSON", new ObjectMapper().writeValueAsString(showService.findDtoById(Integer.parseInt(req.getParameter("id")))));
+        req.setAttribute("showEditJSON", new ObjectMapper().writeValueAsString(ticketDto));
         req.getRequestDispatcher("./show/edit.jsp").forward(req, resp);
     }
 

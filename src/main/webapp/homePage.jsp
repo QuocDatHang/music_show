@@ -30,6 +30,7 @@
         </div>
         <image class="header-logo" src="images/MAYLANGTHANG_LOGO.png"></image>
         <div class="top-misc-layout"></div>
+
     </div>
 </header>
 
@@ -43,6 +44,34 @@
             <li><a href="/homePage?action=findByCity&city=DA NANG">Đà nẵng</a></li>
             <li><a href="/homePage?action=findByCity&city=DA LAT">Đà lạt</a></li>
             <li><a href="/homePage?action=findByCity&city=SAI GON">Sài Gòn</a></li>
+            <c:if test="${user != null}">
+                <li><a href="#">
+                    <span class="padding_10"></span></a>
+                    <div class="dropdown" >
+
+                        <button  class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                                ${user.userName}
+                        </button>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="display: flex;flex-direction: column;">
+                           <ul style="padding-left: 0">
+                              <c:if test="${user.role == 'ADMIN'}">
+                               <li ><a style="color: #1b1e21; position: relative;" class="dropdown-item" href="/admin">Trang Quản lý</a></li>
+                              </c:if>
+                                <li ><a style="color: #1b1e21; position: relative;" class="dropdown-item" href="/auth?action=logout&message=Logout Success!">Logout</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </li>
+            </c:if>
+            <c:if test="${user == null}">
+                <li><a href="/auth">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span class="padding_10">Login/Register</span></a>
+                </li>
+            </c:if>
         </ul>
         <div class="top-misc-layout"></div>
     </div>
@@ -239,6 +268,9 @@
     if (message !== null && message.innerHTML) {
         toastr.success(message.innerHTML);
     }
+</script>
+<script>
+
 </script>
 </body>
 

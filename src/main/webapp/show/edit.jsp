@@ -8,7 +8,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,12 +66,12 @@
             <div class="mb-3">
                 <label for="timeStart" class="form-label">Thời gian bắt đầu</label>
                 <input type="text" class="form-control" id="timeStart" name="timeStart"
-                       value="${showEdit.timeStart}"
+                       value="${showDtoEdit.timeStart}"
                        required>
             </div>
             <div class="mb-3">
                 <label for="timeEnd" class="form-label">Thời gian kết thúc</label>
-                <input type="text" class="form-control" id="timeEnd" name="timeEnd" value="${showEdit.timeEnd}"
+                <input type="text" class="form-control" id="timeEnd" name="timeEnd" value="${showDtoEdit.timeEnd}"
                        required>
             </div>
             <div class="col-12" style="padding-bottom: 10px;">
