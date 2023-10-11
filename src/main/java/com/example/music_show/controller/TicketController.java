@@ -5,6 +5,7 @@ import com.example.music_show.model.*;
 import com.example.music_show.service.*;
 import com.example.music_show.service.dto.TicketDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name="TicketController", urlPatterns = "/ticket")
+@WebServlet(name = "TicketController", urlPatterns = "/ticket")
 public class TicketController extends HttpServlet {
     private SeatService seatService;
     private ShowService showService;
@@ -35,20 +36,19 @@ public class TicketController extends HttpServlet {
         userService = new UserService();
         billService = new BillService();
     }
-    // getShowById return TicketDto (List<Seat>)
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        if(action== null){
-            action="";
+        if (action == null) {
+            action = "";
         }
-        switch (action){
+        switch (action) {
             case "showBill":
-                showBillDetail(req,resp);
+                showBillDetail(req, resp);
                 break;
             default:
-                showDetail(req,resp);
+                showDetail(req, resp);
                 break;
         }
     }
@@ -56,7 +56,6 @@ public class TicketController extends HttpServlet {
     private void showBillDetail(HttpServletRequest req, HttpServletResponse resp) {
 
     }
-
 
 
     public void showDetail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -84,17 +83,12 @@ public class TicketController extends HttpServlet {
             case "createBill":
                 createBill(req, resp);
                 break;
-//            case "edit":
-//                update(req,resp);
-//                break;
-//            default:
-//                showList(req,resp);
         }
     }
 
     private void createBill(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-         billService.createBill(req);
-         resp.sendRedirect("/detail?message=Created Successfully");
+        billService.createBill(req);
+        resp.sendRedirect("/homePage");
     }
 }
 

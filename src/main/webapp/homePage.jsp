@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,7 +49,11 @@
 </nav>
 
 <main>
+
     <section class="d-flex flex-wrap" id="header">
+        <c:if test="${message != null}">
+            <h6 class="d-none" id="message">${message}</h6>
+        </c:if>
         <!-- Phrase: about to happen -->
         <article id="phrase">
             <span>SẮP DIỄN RA</span>
@@ -99,9 +102,9 @@
             <c:forEach var="show" items="${pageShow.content}">
                 <a class="card" href="/ticket?showId=${show.id}" style="text-decoration: none">
                     <img src="./images/${show.poster}" class="card-img-top" alt="...">
-                    <div class="card-body ">
+                    <div class="card-body">
                         <h5 class="card-title" style="padding-bottom: 10px">
-                            <span style="color: #030378; text-transform: uppercase">${show.singers}</span>
+                            <span style="color: #030378; text-transform: uppercase;">${show.singers}</span>
                         </h5>
                         <div class="d-flex justify-content-between">
                             <div class="mp-stage-title">${show.showName}</div>

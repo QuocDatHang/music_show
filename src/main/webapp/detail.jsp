@@ -25,6 +25,7 @@
 </head>
 
 <body>
+<div id="overlay" class="overlay"></div>
 <header>
     <div class="d-flex justify-content-between" id="logo">
         <div class="header-social d-flex align-self-center text-align-center">
@@ -111,44 +112,50 @@
         </div>
         <div class="diagram">
             <div class="col-7 square-container">
-                <div class="screen"></div>
-                <div class="container">
-                    <div class="row mx-lg-auto">
+                <div class="col-7" style="background: sandybrown; height: 40px;padding-top: 10px;margin-bottom: 35px;">
+                    SÂN KHẤU
+                </div>
+                <div class="container" style="min-height: 330px">
+                    <div class="row mx-lg-auto" style="justify-content: center">
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('A')}">
                                 <div class="seat" id="seat${seat.id}" value="${seat.type}"
-                                     onclick="toggleSeat(${seat.id})"
                                      data-seat-id="seat${seat.id}"
                                         <c:choose>
-                                            <c:when test="${seat.type == 'VIP'}">
-                                                style="background-color: yellow;"
+                                            <c:when test="${seat.type == 'VIP' && seat.status != 'SELECTED'}">
+                                                style="background-color: yellow ;" onclick="toggleSeat(${seat.id})"
                                             </c:when>
-                                            <c:when test="${seat.type == 'PREMIUM'}">
-                                                style="background-color: pink;"
+                                            <c:when test="${seat.type == 'PREMIUM' && seat.status != 'SELECTED'}">
+                                                style="background-color: pink ;" onclick="toggleSeat(${seat.id})"
                                             </c:when>
-                                            <c:when test="${seat.type == 'STANDARD'}">
-                                                style="background-color: green;"
+                                            <c:when test="${seat.type == 'STANDARD' && seat.status != 'SELECTED'}">
+                                                style="background-color: green ;" onclick="toggleSeat(${seat.id})"
+                                            </c:when>
+                                            <c:when test="${seat.status == 'SELECTED'}">
+                                                style="background-color: grey ;"
                                             </c:when>
                                         </c:choose>
                                 >${seat.position}</div>
                             </c:if>
                         </c:forEach>
                     </div>
-                    <div class="row mx-lg-auto">
+                    <div class="row mx-lg-auto" style="justify-content: center">
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('B')}">
                                 <div class="seat" id="seat${seat.id}" value="${seat.type}"
-                                     onclick="toggleSeat(${seat.id})"
                                      data-seat-id="seat${seat.id}"
                                         <c:choose>
-                                            <c:when test="${seat.type == 'VIP'}">
-                                                style="background-color: yellow;"
+                                            <c:when test="${seat.type == 'VIP' && seat.status != 'SELECTED'}">
+                                                style="background-color: yellow ;" onclick="toggleSeat(${seat.id})"
                                             </c:when>
-                                            <c:when test="${seat.type == 'PREMIUM'}">
-                                                style="background-color: pink;"
+                                            <c:when test="${seat.type == 'PREMIUM' && seat.status != 'SELECTED'}">
+                                                style="background-color: pink ;" onclick="toggleSeat(${seat.id})"
                                             </c:when>
-                                            <c:when test="${seat.type == 'STANDARD'}">
-                                                style="background-color: green;"
+                                            <c:when test="${seat.type == 'STANDARD' && seat.status != 'SELECTED'}">
+                                                style="background-color: green ;" onclick="toggleSeat(${seat.id})"
+                                            </c:when>
+                                            <c:when test="${seat.status == 'SELECTED'}">
+                                                style="background-color: grey ;"
                                             </c:when>
                                         </c:choose>
                                 >${seat.position}</div>
@@ -156,21 +163,23 @@
                         </c:forEach>
                     </div>
                     <%--DÃY GHẾ B--%>
-                    <div class="row mx-lg-auto">
+                    <div class="row mx-lg-auto" style="justify-content: center">
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('C')}">
                                 <div class="seat" id="seat${seat.id}" value="${seat.type}"
-                                     onclick="toggleSeat(${seat.id})"
                                      data-seat-id="seat${seat.id}"
                                         <c:choose>
-                                            <c:when test="${seat.type == 'VIP'}">
-                                                style="background-color: yellow;"
+                                            <c:when test="${seat.type == 'VIP' && seat.status != 'SELECTED'}">
+                                                style="background-color: yellow ;" onclick="toggleSeat(${seat.id})"
                                             </c:when>
-                                            <c:when test="${seat.type == 'PREMIUM'}">
-                                                style="background-color: pink;"
+                                            <c:when test="${seat.type == 'PREMIUM' && seat.status != 'SELECTED'}">
+                                                style="background-color: pink ;" onclick="toggleSeat(${seat.id})"
                                             </c:when>
-                                            <c:when test="${seat.type == 'STANDARD'}">
-                                                style="background-color: green;"
+                                            <c:when test="${seat.type == 'STANDARD' && seat.status != 'SELECTED'}">
+                                                style="background-color: green ;" onclick="toggleSeat(${seat.id})"
+                                            </c:when>
+                                            <c:when test="${seat.status == 'SELECTED'}">
+                                                style="background-color: grey ;"
                                             </c:when>
                                         </c:choose>
                                 >${seat.position}</div>
@@ -178,21 +187,23 @@
                         </c:forEach>
                     </div>
                     <%--DÃY GHẾ C--%>
-                    <div class="row mx-lg-auto">
+                    <div class="row mx-lg-auto" style="justify-content: center">
                         <c:forEach var="seat" items="${seats}">
                             <c:if test="${(seat.position).contains('D')}">
-                                <div class="seat" id="${seat.id}" value="${seat.type}"
-                                     onclick="toggleSeat(${seat.id})"
+                                <div class="seat" id="seat${seat.id}" value="${seat.type}"
                                      data-seat-id="seat${seat.id}"
                                         <c:choose>
-                                            <c:when test="${seat.type == 'VIP'}">
-                                                style="background-color: yellow;"
+                                            <c:when test="${seat.type == 'VIP' && seat.status != 'SELECTED'}">
+                                                style="background-color: yellow ;" onclick="toggleSeat(${seat.id})"
                                             </c:when>
-                                            <c:when test="${seat.type == 'PREMIUM'}">
-                                                style="background-color: pink;"
+                                            <c:when test="${seat.type == 'PREMIUM' && seat.status != 'SELECTED'}">
+                                                style="background-color: pink ;" onclick="toggleSeat(${seat.id})"
                                             </c:when>
-                                            <c:when test="${seat.type == 'STANDARD'}">
-                                                style="background-color: green;"
+                                            <c:when test="${seat.type == 'STANDARD' && seat.status != 'SELECTED'}">
+                                                style="background-color: green ;" onclick="toggleSeat(${seat.id})"
+                                            </c:when>
+                                            <c:when test="${seat.status == 'SELECTED'}">
+                                                style="background-color: grey ;"
                                             </c:when>
                                         </c:choose>
                                 >${seat.position}</div>
@@ -200,6 +211,39 @@
                         </c:forEach>
                     </div>
                     <%--DÃY GHẾ D--%>
+                    <div class="row mx-lg-auto" style="justify-content: center">
+                        <c:forEach var="seat" items="${seats}">
+                            <c:if test="${(seat.position).contains('E')}">
+                                <div class="seat" id="seat${seat.id}" value="${seat.type}"
+                                     data-seat-id="seat${seat.id}"
+                                        <c:choose>
+                                            <c:when test="${seat.type == 'VIP' && seat.status != 'SELECTED'}">
+                                                style="background-color: yellow ;" onclick="toggleSeat(${seat.id})"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'PREMIUM' && seat.status != 'SELECTED'}">
+                                                style="background-color: pink ;" onclick="toggleSeat(${seat.id})"
+                                            </c:when>
+                                            <c:when test="${seat.type == 'STANDARD' && seat.status != 'SELECTED'}">
+                                                style="background-color: green ;" onclick="toggleSeat(${seat.id})"
+                                            </c:when>
+                                            <c:when test="${seat.status == 'SELECTED'}">
+                                                style="background-color: grey ;"
+                                            </c:when>
+                                        </c:choose>
+                                >${seat.position}</div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+                <div class="row-7" style="display: flex; align-items: end">
+                    <div class="seat" style="background-color: pink; width: 50px;height: 40px; margin: 0 10px"></div>
+                    <label>PREMIUM</label>
+                    <div class="seat" style="background-color: yellow; width: 50px;height: 40px; margin: 0 10px"></div>
+                    <label>VIP</label>
+                    <div class="seat" style="background-color: green; width: 50px;height: 40px; margin: 0 10px"></div>
+                    <label>STANDARD</label>
+                    <div class="seat" style="background-color: grey; width: 50px;height: 40px; margin: 0 10px"></div>
+                    <label>ĐÃ ĐẶT</label>
                 </div>
             </div>
             <div class="col-5" id="inputTicket">
@@ -240,7 +284,7 @@
 
         <%--            </div>--%>
         <%--        </form>--%>
-        <div class="card container px-6" style="height: 120vh; width: 45%; background-color: #eceeee; margin-top: 30px">
+        <div id="tableContainer" class="card container px-6">
             <form action="/ticket?action=createBill&userId=${user.id}&showId=${show.id}" method="post"
                   style="padding: 20px; text-align: center">
                 <h5>XÁC NHẬN THÔNG TIN</h5>
@@ -322,7 +366,7 @@
                     </tr>
                 </table>
                 <button type="submit" class="btn btn-primary mb-2">Đặt chỗ</button>
-                <a href="/singer" class="btn btn-success mb-2">Huỷ</a>
+                <a class="btn btn-success mb-2" id="cancelBill">Huỷ</a>
             </form>
         </div>
     </section>
@@ -364,6 +408,7 @@
     let discount = 0;
 
     function toggleSeat(id) {
+        document.getElementById("seat" + id).classList.toggle("selected");
         var seat;
 
         for (let i = 0; i < seatListJson.length; i++) {
@@ -385,13 +430,6 @@
         }
 
         selectedSeatsList.innerHTML = '';
-        // premiumSeats.innerHTML = '';
-        // vipSeats.innerHTML = '';
-        // standardSeats.innerHTML = '';
-        // seatQuantities.value = '';
-        // total.value = '';
-        // discountBill.value = '';
-        // totalPay.value = '';
         let totalBill = 0;
         for (var i = 0; i < listSeat.length; i++) {
             var seatTemp = listSeat[i];
@@ -499,7 +537,16 @@
 
     inputBillLabel.addEventListener("click", setTimeNow);
 
-
+    // HIEN THI BILL
+    document.getElementById('inputbill').addEventListener('click', function (e) {
+        e.preventDefault(); // Ngăn chặn hành vi mặc định khi nhấp vào liên kết
+        document.getElementById('tableContainer').style.display = 'block'; // Hiển thị bảng
+        document.getElementById('overlay').style.display = 'block'; // Hiển thị overlay
+    });
+    document.getElementById('cancelBill').addEventListener('click', function () {
+        document.getElementById('tableContainer').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    });
 </script>
 </body>
 

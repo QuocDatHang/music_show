@@ -49,5 +49,30 @@ public class SeatDAO extends DatabaseConnection{
         }
         return null;
     }
+    public Seat findByPosition(int locationId, String position){
+        String SELECT_BY_POSITION = "SELECT * FROM seats WHERE location_id = ? AND position = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_POSITION)) {
+            preparedStatement.setInt(1, locationId);
+            preparedStatement.setString(2, position);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return getSeatByResultSet(rs);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    public void changeStatus(int id){
+        String CHANGE_STATUS = "UPDATE `seats` SET `status` = 'SELECTED' WHERE (`id` = ?)";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(CHANGE_STATUS)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
 
