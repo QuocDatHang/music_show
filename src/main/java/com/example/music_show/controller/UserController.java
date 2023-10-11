@@ -45,6 +45,9 @@ public class UserController extends HttpServlet {
 //    }
 
     private void showList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+        req.setAttribute("user",user);
         String pageString = req.getParameter("page");
         if (pageString == null) {
             pageString = "1";

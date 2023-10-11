@@ -35,7 +35,10 @@ public class LocationService {
         String city = req.getParameter("city");
         String address = req.getParameter("address");
         String[] typeValues = req.getParameterValues("type");
-        String position = req.getParameter("position");
+        String[] positionValues = req.getParameterValues("position");
+        for(int i=0;i<positionValues.length;i++){
+
+        }
         EStatus status = EStatus.AVAILABLE;
         EType[] types = new EType[typeValues.length];
         for (int i = 0; i < typeValues.length; i++) {
@@ -43,9 +46,10 @@ public class LocationService {
         }
         Location location = new Location(0, city, address);
         location.setId(locationDAO.create(location));
-        for (EType type : types) {
-            locationDAO.createSeat(position, status, type, location.getId());
+        for (int i = 0; i < positionValues.length; i++) {
+            locationDAO.createSeat(positionValues[i], status, EType.valueOf(typeValues[i]), location.getId());
         }
+
     }
 
     public void updateLocation (HttpServletRequest req) {

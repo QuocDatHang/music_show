@@ -27,21 +27,21 @@
         }
     </style>
 </head>
-<body>
-<h2>Sign in</h2>
+<body style="background-image: url(/images/anhlogin.jpg); background-position: left bottom; ">
+<h2>Đăng nhập</h2>
 <c:if test="${message != null}">
     <h6 class="d-none" id="message">${message}</h6>
 </c:if>
 <div class="container" id="container">
     <div class="container sign-up-container">
         <form action="/auth?action=register" method="POST" onsubmit="return validateForm()">
-            <h1>Create Account</h1>
+            <h1>TẠO TÀI KHOẢN</h1>
             <div class="social-container">
                 <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
-            <span>or use your email for registration</span>
+            <span></span>
             <input type="text" placeholder="userName" name="userName" id="address" required/>
             <div id="addressError" class="error-message" style="display: none;"></div>
             <input type="email" placeholder="Email" name="email" id="email"  required/>
@@ -58,38 +58,38 @@
             <div id="passwordError" class="error-message" style="display: none;"></div>
             <input type="password" placeholder="Re_Password" id="password" name="re_password" onblur="checkPassword()" required />
             <div id="passwordMatchError" class="error-message">Mật khẩu không trùng khớp</div>
-            <button type="submit" > Sign Up </button>
+            <button type="submit" > Đăng ký </button>
         </form>
     </div>
     <div class="form-container sign-in-container">
         <form action="/auth" method="POST" >
-            <h1>Sign in</h1>
+            <h1> Đăng ký </h1>
             <div class="social-container">
                 <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
-            <span>or use your account</span>
+            <span>Tên người dùng</span>
             <input type="text" placeholder="userName" name="userName" required/>
             <input type="password" placeholder="Password" name="password" required/>
 
 <%--            <a href="/auth/ForgotPassword.jsp">Forgot your password?</a>--%>
 
 
-            <button>Sign In</button>
+            <button>Đăng nhập</button>
         </form>
     </div>
     <div class="overlay-container">
-        <div class="overlay">
+        <div class="overlay" style="background-image: url(/images/sky.jpg); background-position: left bottom; ">
             <div class="overlay-panel overlay-left">
                 <h1>Welcome Back!</h1>
-                <p>To keep connected with us please login with your personal info</p>
-                <button class="ghost" id="signIn">Sign In</button>
+                <p>Để duy trì kết nối với chúng tôi vui lòng đăng nhập bằng thông tin cá nhân của bạn</p>
+                <button class="ghost" id="signIn">Đăng nhập</button>
             </div>
             <div class="overlay-panel overlay-right">
-                <h1>Hello, Friend!</h1>
-                <p>Enter your personal details and start journey with us</p>
-                <button class="ghost" id="signUp">Sign Up</button>
+                <h1>Chào mừng Quý khách hàng!</h1>
+                <p>Nhập thông tin cá nhân của bạn và bắt đầu hành trình với Mây Lang Thang!</p>
+                <button class="ghost" id="signUp">Đăng Ký</button>
             </div>
         </div>
     </div>
