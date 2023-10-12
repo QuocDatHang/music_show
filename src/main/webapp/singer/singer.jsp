@@ -14,8 +14,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang Quản Lý Ca Sĩ</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
@@ -49,7 +49,7 @@
             <li><a href="./location">Địa điểm</a></li>
             <li><a href="#">Doanh thu</a></li>
             <li><a href="./singer">Ca sĩ</a></li>
-            <li><a href="#">Hóa đơn</a></li>
+            <li><a href="./bill">Hóa đơn</a></li>
         </ul>
         <div class="top-misc-layout"></div>
     </div>

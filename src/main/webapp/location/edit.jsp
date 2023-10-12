@@ -52,7 +52,7 @@
     </div>
 </nav>
 <div class="container" >
-    <div class="card container px-6" style="height: 220vh">
+    <div class="card container px-6" style="max-height: 410vh">
         <%--        <h3 class="text-center">Location Management</h3>--%>
         <c:if test="${message != null}">
         <h6 class="d-none" id="message">${message}</h6>

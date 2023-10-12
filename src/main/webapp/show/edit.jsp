@@ -43,10 +43,10 @@
         <div class="top-misc-layout"></div>
         <ul>
             <li><a href="./show">Show</a></li>
-            <li><a href="#">Địa điểm</a></li>
+            <li><a href="./location">Địa điểm</a></li>
             <li><a href="#">Doanh thu</a></li>
             <li><a href="./singer">Ca sĩ</a></li>
-            <li><a href="#">Hóa đơn</a></li>
+            <li><a href="./bill">Hóa đơn</a></li>
         </ul>
         <div class="top-misc-layout"></div>
     </div>
@@ -144,7 +144,7 @@
                 <input type="file" name="poster" id="poster" value="${showEdit.poster}" required>
             </div>
             <div class="mb-3">
-                <label for="seatDiagramImage" class="form-label" style="padding-right: 10px;">Sơ đồ chỗ ngồi</label>
+                <label for="seatDiagramImage" class="form-label" style="padding-right: 10px;">Ảnh quảng cáo</label>
                 <input type="file" name="seatDiagramImage" id="seatDiagramImage" value="${showEdit.seatDiagramImage}"
                        required>
             </div>

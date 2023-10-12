@@ -6,7 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,11 +15,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang quản lý show</title>
+    <title>Trang Quản Lý Bill</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://kit.fontawesome.com/4f6aa91745.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body>
@@ -49,8 +55,7 @@
 </nav>
 
 <main>
-
-    <div class="card container px-6" style="min-height: 170vh; max-height: 300vh; width: 100%">
+    <div class="card container px-6" style="height: 100vh; width: 60%">
         <c:if test="${message != null}">
             <h6 class="d-none" id="message">${message}</h6>
         </c:if>
@@ -59,118 +64,80 @@
             <div class="container-fluid">
                 <div>
                     <a class="btn btn-outline-secondary" href="/admin">Quay lại</a>
-                    <a class="btn btn-outline-warning" href="/show?action=showCreate">Tạo show mới</a>
                 </div>
-                <form class="d-flex" action="/show?page=${pageShow.currentPage}">
-                    <input class="form-control me-2" style="width: 300px" type="text" id="searchShow"
-                           value="${searchShow}"
-                           name="searchShow" placeholder="Tìm tên show" aria-label="Search">
+                <form class="d-flex" action="/bill?page=${pageBill.currentPage}">
+                    <input class="form-control me-2" style="width: 300px" type="text" id="searchSinger"
+                           value="${searchBill}"
+                           name="searchSinger" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
                 </form>
             </div>
         </nav>
 
-        <table class="table table-striped" style="width: 100%">
+        <table class="table table-striped">
             <tr>
                 <td>
                     Id
                 </td>
                 <td>
-                    Tên show
+                    Tên nguời dùng
                 </td>
                 <td>
-                    Thời gian bắt đầu
+                    Giảm giá
                 </td>
                 <td>
-                    Thời gian kết thúc
+                    Thời gian tạo
                 </td>
                 <td>
-                    Địa điểm
-                </td>
-                <td>
-                    Ca sĩ
-                </td>
-                <td style="width: 153px">
-                    Thông tin vé
-                </td>
-                <td style="width: 110px">
-                    Ảnh bìa
-                </td>
-                <td style="width: 110px">
-                    Ảnh quảng cáo
-                </td>
-                <td style="text-align: center">
-                    Chọn
+                    Tổng hóa đơn
                 </td>
             </tr>
-            <c:forEach var="show" items="${pageShow.content}">
+            <c:forEach var="bill" items="${pageBill.content}">
                 <tr>
                     <td>
-                            ${show.id}
+                            ${bill.id}
                     </td>
                     <td>
-                            ${show.showName}
+                            ${bill.user.name}
                     </td>
                     <td>
-                            ${show.timeStart}
+                        <fmt:setLocale value="vi_VN"/>
+                        <fmt:formatNumber value="${bill.discount}" pattern="#,##0 ¤"/>
                     </td>
                     <td>
-                            ${show.timeEnd}
+                            ${bill.createAt.toString()}
                     </td>
                     <td>
-                            ${show.location.address}
-                    </td>
-                    <td>
-                            ${show.singers}
-                    </td>
-                    <td>
-                        Premium: ${show.ticketInfor.premium} <br>
-                        Vip: ${show.ticketInfor.vip} <br>
-                        Standard:${show.ticketInfor.standard}
-                    </td>
-                    <td>
-                        <img src="../images/${show.poster}">
-                    </td>
-                    <td>
-                        <img src="../images/${show.seatDiagramImage}">
-                    </td>
-                    <td style="text-align: center">
-                        <a class="btn btn-info" href="/show?action=showEdit&id=${show.id}">
-                            Sửa
-                        </a>
-                        <a class="btn btn-danger"
-                           onclick="return confirm('Do you want remove ${show.showName} ?')"
-                           href="/show?action=delete&id=${show.id}&page=${pageShow.currentPage}">
-                            Xóa
-                        </a>
+                        <fmt:setLocale value="vi_VN"/>
+                        <fmt:formatNumber value="${bill.total}" pattern="#,##0 ¤"/>
                     </td>
                 </tr>
             </c:forEach>
         </table>
 
         <nav aria-label="...">
-            <c:set var="url" value="/show?page="/>
+            <c:set var="url" value="/bill?page="/>
             <ul class="pagination" style="background: white;">
-                <li class="page-item <c:if test="${pageShow.currentPage == 1}" >disabled</c:if>"
+                <li class="page-item <c:if test="${pageBill.currentPage == 1}" >disabled</c:if>"
                     style="line-height: 12px; margin: 0;">
-                    <a class="page-link" href="${url}${(pageShow.currentPage - 1)}" tabindex="-1"
+                    <a class="page-link" href="${url}${(pageBill.currentPage - 1)}" tabindex="-1"
                        aria-disabled="true">Previous</a>
                 </li>
-                <c:forEach var="number" begin="1" end="${pageShow.totalPage}">
-                    <c:if test="${number == pageShow.currentPage}">
+                <c:forEach var="number" begin="1" end="${pageBill.totalPage}">
+                    <c:if test="${number == pageBill.currentPage}">
                         <li class="page-item active" aria-current="page" style="line-height: 12px; margin: 0;">
                             <a class="page-link" href="${url}${number}">${number}</a>
                         </li>
                     </c:if>
-                    <c:if test="${number != pageShow.currentPage}">
+                    <c:if test="${number != pageBill.currentPage}">
                         <li class="page-item" style="line-height: 12px; margin: 0;">
                             <a class="page-link" href="${url}${number}">${number}</a>
                         </li>
                     </c:if>
                 </c:forEach>
-                <li class="page-item <c:if test="${pageShow.currentPage == pageShow.totalPage}">disabled</c:if>"
+                <li class="page-item <c:if test="${pageBill.currentPage == pageBill.totalPage}">disabled</c:if>"
                     style="line-height: 12px; margin: 0;">
-                    <a class="page-link" href="${url}${(pageShow.currentPage + 1)}">Next</a>
+                    <a class="page-link" href="${url}${(pageBill.currentPage + 1)}">Next</a>
                 </li>
             </ul>
         </nav>
@@ -199,10 +166,18 @@
         </div>
     </footer>
 </main>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/bootstrap.bundle.min.js"></script>
 <script src="../js/script.js"></script>
+<script>
+    const message = document.getElementById('message');
+    if (message !== null && message.innerHTML) {
+        toastr.success(message.innerHTML);
+    }
+</script>
 </body>
 
 </html>

@@ -44,7 +44,7 @@
             <li><a href="./location">Địa điểm</a></li>
             <li><a href="#">Doanh thu</a></li>
             <li><a href="./singer">Ca sĩ</a></li>
-            <li><a href="#">Hóa đơn</a></li>
+            <li><a href="./bill">Hóa đơn</a></li>
         </ul>
         <div class="top-misc-layout"></div>
     </div>

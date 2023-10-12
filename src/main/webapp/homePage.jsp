@@ -57,9 +57,9 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="display: flex;flex-direction: column;">
                            <ul style="padding-left: 0">
                               <c:if test="${user.role == 'ADMIN'}">
-                               <li ><a style="color: #1b1e21; position: relative;" class="dropdown-item" href="/admin">Trang Quản lý</a></li>
+                               <li ><a style="color: #1b1e21; position: relative;" class="dropdown-item" href="/admin">Trang Admin</a></li>
                               </c:if>
-                                <li ><a style="color: #1b1e21; position: relative;" class="dropdown-item" href="/auth?action=logout&message=Logout Success!">Logout</a></li>
+                                <li ><a style="color: #1b1e21; position: relative;" class="dropdown-item" href="/auth?action=logout&message=Logout Success!">Đăng xuất</a></li>
                             </ul>
                         </div>
 

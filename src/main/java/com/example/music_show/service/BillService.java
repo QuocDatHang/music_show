@@ -2,6 +2,7 @@ package com.example.music_show.service;
 
 import com.example.music_show.dao.*;
 import com.example.music_show.model.*;
+import com.example.music_show.service.dto.Page;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
@@ -27,9 +28,9 @@ public class BillService {
         userDAO = new UserDAO();
     }
 
-    //    public Page<Bill> getAllBill(int page, boolean isShowRestore, String search){
-//        return BillDAO.findAll(page, isShowRestore,search);
-//    }
+        public Page<Bill> getAllBill(int page, String search){
+        return billDAO.findAll(page,search);
+    }
     public void createBill(HttpServletRequest req) {
 
         String createAt = req.getParameter("createAt");

@@ -70,8 +70,8 @@
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
             <span>Tên người dùng</span>
-            <input type="text" placeholder="userName" name="userName" required/>
-            <input type="password" placeholder="Password" name="password" required/>
+            <input type="text" placeholder="Tên người dùng" name="userName" required/>
+            <input type="password" placeholder="Mật khẩu" name="password" required/>
 
 <%--            <a href="/auth/ForgotPassword.jsp">Forgot your password?</a>--%>
 
